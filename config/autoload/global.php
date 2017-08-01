@@ -10,7 +10,17 @@
  * control, so do not include passwords or other sensitive information in this
  * file.
  */
-
+use Doctrine\DBAL\Driver\PDOPgSql\Driver as PDOPgSqlDriver;
 return [
-    // ...
+    'doctrine' => [        
+        // migrations configuration
+        'migrations_configuration' => [
+            'orm_default' => [
+                'directory' => 'data/Migrations',
+                'name'      => 'Doctrine Database Migrations',
+                'namespace' => 'Migrations',
+                'table'     => 'migrations',
+            ],
+        ],
+    ],
 ];
