@@ -1,0 +1,21 @@
+{
+  "name": "shopping_mall_03",
+  "homepage": "https://github.com/deviltruong/shopping_mall_03",
+  "authors": [
+    "deviltruong <truong21231995@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}

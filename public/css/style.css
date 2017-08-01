@@ -31,3 +31,11 @@ div.container a.navbar-brand > img {
     margin-right: 4px;
     margin-top: -2px;
 }
+:focus {
+    outline: none;
+}
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
