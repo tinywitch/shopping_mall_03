@@ -10,6 +10,20 @@
  * in ZendSkeletonApplication. This is a good practice, as it prevents sensitive
  * credentials from accidentally being committed into version control.
  */
-
+use Doctrine\DBAL\Driver\PDOPgSql\Driver as PDOPgSqlDriver;
 return [
+    'doctrine' => [
+        'connection' => [
+            'orm_default' => [
+                'driverClass' => PDOPgSqlDriver::class,
+                'params' => [
+                    'host'     => '127.0.0.1',
+                    'port'     => '5432',               
+                    'user'     => 'postgres_user',
+                    'password' => '<password>',
+                    'dbname'   => '<database_name',
+                ]
+            ],            
+        ],        
+    ],
 ];
