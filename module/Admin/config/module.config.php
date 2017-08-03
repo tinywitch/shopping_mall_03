@@ -3,7 +3,9 @@
 namespace Admin;
 
 use Zend\Router\Http\Literal;
+use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
+use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 return [
     // This lines opens the configuration for the RouteManager
     'router' => [
@@ -25,11 +27,27 @@ return [
                     ],
                 ],
             ],
+            'users' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/admin/users[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]*'
+                    ],
+                    'defaults' => [
+                        'controller'    => Controller\UserController::class,
+                        'action'        => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
+            Controller\UserController::class => 
+                Controller\Factory\UserControllerFactory::class,
         ],
     ],
     'view_manager' => [

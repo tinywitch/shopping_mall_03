@@ -42,7 +42,7 @@ class OrderItem
      * Returns associated order.
      * @return \Application\Entity\Order
      */
-    public function getProductImage() 
+    public function getOder() 
     {
         return $this->order;
     }
@@ -51,7 +51,7 @@ class OrderItem
      * Sets associated order.
      * @param \Application\Entity\Order $order
      */
-    public function setProductImage($order) 
+    public function setOder($order) 
     {
         $this->order = $order;
         $order->addOrderItem($this);
