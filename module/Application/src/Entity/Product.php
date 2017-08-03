@@ -28,11 +28,7 @@ class Product
      */
     protected $keywords;
 
-    /**
-     * @ORM\OneToMany(targetEntity="\Application\Entity\Product_image", mappedBy="products")
-     * @ORM\JoinColumn(name="id", referencedColumnName="product_id")
-     */
-    protected $product_images;
+   
 
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Rate", mappedBy="products")

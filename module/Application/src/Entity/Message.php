@@ -42,7 +42,7 @@ class Message
      * Returns associated chat_box.
      * @return \Application\Entity\Chat_box
      */
-    public function getUser() 
+    public function getChatBox() 
     {
         return $this->chat_box;
     }
@@ -51,7 +51,7 @@ class Message
      * Sets associated chat_box.
      * @param \Application\Entity\Chat_box $chat_box
      */
-    public function setUser($chat_box) 
+    public function setChatBox($chat_box) 
     {
         $this->chat_box = $chat_box;
         $chat_box->addMessage($this);

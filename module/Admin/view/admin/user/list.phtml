@@ -1,0 +1,31 @@
+<div class="box-body">
+    <a href="#" class="btn btn-primary">Tạo Mới</a><table id="example2" 
+        class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Option</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($users as $user): ?>
+            <tr>
+                <td><?php echo $user->getName() ?></td>
+                <td><?php echo $user->getEmail() ?></td>
+                <td><?php echo $user->getPhone() ?></td>
+                <td><?php echo $user->getAddress() ?></td>
+                <td><a class="btn btn-warning" href="#">Show</a>
+                    <form method="POST" action="#" accept-charset="UTF-8" 
+                        id="form-delete" style="display: inline-block;">
+                        <input class="btn btn-danger" type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<!-- /.box-body -->
+</div>

@@ -84,7 +84,7 @@ class User
      * Adds a new notification to this user.
      * @param $notification
      */
-    public function addComment($notification) 
+    public function addNotification($notification) 
     {
         $this->notifications[] = $notification;
     }
@@ -120,7 +120,7 @@ class User
      * Adds a new rate to this user.
      * @param $rate
      */
-    public function addComment($rate) 
+    public function addRate($rate) 
     {
         $this->rates[] = $rate;
     }
@@ -138,7 +138,7 @@ class User
      * Adds a new message to this user.
      * @param $message
      */
-    public function addComment($message) 
+    public function addMessage($message) 
     {
         $this->messages[] = $message;
     }
@@ -162,9 +162,9 @@ class User
     protected $password;
 
     /**
-     * @ORM\Column(name="level")
+     * @ORM\Column(name="role")
      */
-    protected $level;
+    protected $role;
 
     /**
      * @ORM\Column(name="phone")
@@ -223,14 +223,14 @@ class User
         $this->password = $password;
     }
 
-    public function getLevel() 
+    public function getRole() 
     {
-        return $this->level;
+        return $this->role;
     }
 
-    public function setLevel($level) 
+    public function setRole($role) 
     {
-        $this->level = $level;
+        $this->role = $role;
     }
 
     public function getPhone() 

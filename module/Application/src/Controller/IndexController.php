@@ -14,6 +14,7 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
+    	//var_dump(2);die();
         return new ViewModel();
     }
 }
