@@ -174,6 +174,13 @@ class UserForm extends Form
                             'max' => 512
                         ],
                     ],
+                    [
+                        'name'    => 'StringLength',
+                        'options' => [
+                            'min' => 1,
+                            'max' => 512
+                        ],
+                    ],
                 ],
             ]);
         

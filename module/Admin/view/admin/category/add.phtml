@@ -1,0 +1,19 @@
+<?= $this->form()->openTag($form); ?>
+
+<div class="form-group">
+    <?= $this->formLabel($form->get('name')); ?>
+    <?= $this->formElement($form->get('name')); ?>
+    <?= $this->formElementErrors($form->get('name')); ?>                
+</div>
+<div class="form-group">
+    <?= $this->formLabel($form->get('description')); ?>
+    <?= $this->formElement($form->get('description')); ?>
+    <?= $this->formElementErrors($form->get('description')); ?>                  
+</div>
+<div class="form-group">
+    <?= $this->formLabel($form->get('parent_id')); ?>
+    <?= $this->formElement($form->get('parent_id')); ?>
+    <?= $this->formElementErrors($form->get('parent_id')); ?>                  
+</div>
+<?= $this->formElement($form->get('submit')); ?>
+<?= $this->form()->closeTag(); ?>   
