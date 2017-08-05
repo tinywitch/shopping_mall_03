@@ -6,10 +6,10 @@
 
     <thead>
         <tr>
-            <th>Mã</th>
-            <th>Ảnh</th>
-            <th>Tên</th>
-            <th>Tùy Chọn</th>
+            <th>ID</th>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Option</th>
         </tr>
     </thead>
     <tbody>
@@ -21,10 +21,8 @@
             </td>
             <td><?php echo $product->getName(); ?></td>
             <td>
-                <a class="btn btn-warning" href="#">Sửa</a>
-                <form method="POST" action="#" accept-charset="UTF-8" id="form-delete" class="inline"><input name="_method" type="hidden" value="DELETE">
-                    <input class="btn btn-danger" type="submit" value="Xóa">
-                </form>
+                <a class="btn btn-warning" href="<?= $this->url('products', ['action'=>'edit','id'=> $product->getId() ]); ?>">Edit</a>
+                <a class="btn btn-danger inline" href="<?= $this->url('products', ['action'=>'delete','id'=> $product->getId() ]); ?>">Delete</a>
             </td>
         </tr>
     <?php endforeach; ?>    

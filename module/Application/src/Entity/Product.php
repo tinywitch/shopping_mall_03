@@ -21,7 +21,7 @@ class Product
 
     /**
      * @ORM\ManyToMany(targetEntity="\Application\Entity\Keyword", inversedBy="products")
-     * @ORM\JoinTable(name="product_keyword",
+     * @ORM\JoinTable(name="product_keywords",
      *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="keyword_id", referencedColumnName="id")}
      *      )

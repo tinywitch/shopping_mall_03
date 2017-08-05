@@ -1,0 +1,62 @@
+<?php $form = $this->form; 
+$form->get('submit')->setAttributes([
+    'value'=>'Edit',  
+    ]);
+
+    ?>
+    <h1>Edit Post</h1>
+
+    <div class="row">
+
+        <?= $this->form()->openTag($form); ?>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <?= $this->formLabel($form->get('name')); ?>
+                    <?= $this->formElement($form->get('name')); ?>
+                    <?= $this->formElementErrors($form->get('name')); ?>                  
+                </div>
+                <div class="form-group">
+                    <?= $this->formLabel($form->get('price')); ?>
+                    <?= $this->formElement($form->get('price')); ?>
+                    <?= $this->formElementErrors($form->get('price')); ?>                  
+                </div>
+                <div class="form-group">
+                    <?= $this->formLabel($form->get('sale')); ?>
+                    <?= $this->formElement($form->get('sale')); ?>
+                    <?= $this->formElementErrors($form->get('sale')); ?>                  
+                </div>
+                <div class="form-group">
+                    <?= $this->formLabel($form->get('status')); ?>
+                    <?= $this->formElement($form->get('status')); ?>
+                    <?= $this->formElementErrors($form->get('status')); ?>                  
+                </div>
+                <div class="form-group">
+                    <?= $this->formLabel($form->get('popular_level')); ?>
+                    <?= $this->formElement($form->get('popular_level')); ?>
+                    <?= $this->formElementErrors($form->get('popular_level')); ?>                  
+                </div>
+
+                <div class="form-group">
+                    <?= $this->formLabel($form->get('image')); ?>
+                    <?= $this->formFile($form->get('image')); ?>
+                    <?= $this->formElementErrors($form->get('image')); ?>                  
+                </div>
+                <img src="<?php echo $this->basePath($product->getImage()) ?>" class="image_product">
+                <div class="form-group">
+                    <?= $this->formLabel($form->get('intro')); ?>
+                    <?= $this->formElement($form->get('intro')); ?>
+                    <?= $this->formElementErrors($form->get('intro')); ?>                  
+                </div>
+                <div class="form-group">
+                    <?= $this->formLabel($form->get('description')); ?>
+                    <?= $this->formElement($form->get('description')); ?>
+                    <?= $this->formElementErrors($form->get('description')); ?>                  
+                </div>
+
+                <?= $this->formElement($form->get('submit')); ?>
+            </div> 
+        </div>
+        <?= $this->form()->closeTag(); ?>
+
+    </div>   
