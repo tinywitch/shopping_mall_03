@@ -13,14 +13,12 @@
 return [
     'Zend\Mvc\I18n',
     'Zend\Cache',
-    'Zend\Form',
     'Zend\InputFilter',
     'Zend\Filter',
     'Zend\Paginator',
     'Zend\Hydrator',
     'Zend\Router',
     'Zend\Validator',
-    
     'DoctrineModule',
     'DoctrineORMModule',
     'Application',

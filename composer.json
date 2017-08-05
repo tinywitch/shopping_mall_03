@@ -19,7 +19,9 @@
         "doctrine/doctrine-orm-module": "^1.1",
         "doctrine/migrations": "^1.5",
         "zendframework/zend-mvc-i18n": "^1.0",
-        "zendframework/zend-file": "^2.7"
+        "zendframework/zend-file": "^2.7",
+        "zendframework/zend-authentication": "^2.5",
+        "zendframework/zend-crypt": "^3.2"
     },
     "autoload": {
         "psr-4": {
