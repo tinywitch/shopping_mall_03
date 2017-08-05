@@ -6,6 +6,7 @@ use Zend\View\Model\ViewModel;
 use Admin\Form\UserForm;
 use Application\Entity\User;
 
+
 class UserController extends AbstractActionController
 {
     /**
@@ -38,8 +39,10 @@ class UserController extends AbstractActionController
     	return ViewModel();
     }
     public function listAction(){
+        //var_dump(2);die();
     	$users = $this->entityManager->getRepository(User::class)->findAll();
         // Render the view template
+
         return new ViewModel([
             'users' => $users
             ]);

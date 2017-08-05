@@ -143,7 +143,9 @@ class Product
      */
     public function setStore($store) 
     {
+        
         $this->store = $store;
+
         $store->addProduct($this);
     }
 
@@ -227,6 +229,28 @@ class Product
      * @ORM\Column(name="sale")
      */
     protected $sale;
+
+    /**
+     * @ORM\Column(name="popular_level")
+     */
+    protected $popular_level;
+
+     /**
+    * @ORM\Column(name="date_created")
+    */
+    protected $date_created;
+
+
+    public function getPopular_level() 
+    {
+        return $this->popular_level;
+    }
+
+    // Sets ID of this product.
+    public function setPopular_level($popular_level) 
+    {
+        $this->popular_level = $popular_level;
+    }
 
     // Returns ID of this product.
     public function getId() 
@@ -338,5 +362,17 @@ class Product
     public function setSale($sale) 
     {
         $this->sale = $sale;
+    }
+
+    
+    public function getDate_created() 
+    {
+        return $this->date_created;
+    }
+
+    // Sets ID of this product.
+    public function setDate_created($date_created) 
+    {
+        $this->date_created = $date_created;
     }
 }

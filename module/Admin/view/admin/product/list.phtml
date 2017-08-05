@@ -1,0 +1,35 @@
+
+<div class="box-body">
+
+
+<a href="<?= $this->url('products', ['action'=>'add']); ?>" class="btn btn-primary">Tạo Mới</a><table id="example2" class="table table-bordered table-hover">
+
+    <thead>
+        <tr>
+            <th>Mã</th>
+            <th>Ảnh</th>
+            <th>Tên</th>
+            <th>Tùy Chọn</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach($products as $product): ?>
+        <tr>
+            <td><?php echo $product->getId(); ?></td>
+            <td>
+                <img src="<?php echo $this->basePath($product->getImage()) ?>" class="image_product">
+            </td>
+            <td><?php echo $product->getName(); ?></td>
+            <td>
+                <a class="btn btn-warning" href="#">Sửa</a>
+                <form method="POST" action="#" accept-charset="UTF-8" id="form-delete" class="inline"><input name="_method" type="hidden" value="DELETE">
+                    <input class="btn btn-danger" type="submit" value="Xóa">
+                </form>
+            </td>
+        </tr>
+    <?php endforeach; ?>    
+    </tbody>
+</table>
+
+
+</div>

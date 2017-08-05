@@ -17,7 +17,9 @@ body {
     background-image: linear-gradient(top, #70d900, #57a900);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#70d900', endColorstr='#57a900', GradientType=0);
 }
-
+.inline{
+    display: inline-block;
+}
 .btn-success:hover,
 .btn-success:active,
 .btn-success.active,
