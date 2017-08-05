@@ -14,6 +14,8 @@ use Application\Entity\Message;
  */
 class User
 {
+    const STATUS_ACTIVE       = 1; // Active user.
+    const STATUS_RETIRED      = 2; // Retired user.
 
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Notification", mappedBy="users")
@@ -266,6 +268,31 @@ class User
     public function getStatus() 
     {
         return $this->status;
+    }
+
+    /**
+     * Returns possible statuses as array.
+     * @return array
+     */
+    public static function getStatusList()
+    {
+        return [
+            self::STATUS_ACTIVE => 'Active',
+            self::STATUS_RETIRED => 'Retired'
+        ];
+    }
+
+    /**
+     * Returns user status as string.
+     * @return string
+     */
+    public function getStatusAsString()
+    {
+        $list = self::getStatusList();
+        if (isset($list[$this->status]))
+            return $list[$this->status];
+
+        return 'Unknown';
     }
 
     public function setStatus($status) 

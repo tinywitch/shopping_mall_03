@@ -13,7 +13,7 @@ class UserManager
 {
     /**
      * Doctrine entity manager.
-     * @var Doctrine\ORM\EntityManager
+     * @var
      */
     private $entityManager;  
     

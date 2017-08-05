@@ -35,11 +35,72 @@ return [
                     ],
                 ],
             ],
+            'login' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route'    => '/login',
+                    'defaults' => [
+                        'controller' => Controller\AuthController::class,
+                        'action'     => 'login',
+                    ],
+                ],
+            ],
+            'logout' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route'    => '/logout',
+                    'defaults' => [
+                        'controller' => Controller\AuthController::class,
+                        'action'     => 'logout',
+                    ],
+                ],
+            ],
+            'reset-password' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route'    => '/reset-password',
+                    'defaults' => [
+                        'controller' => Controller\UserController::class,
+                        'action'     => 'resetPassword',
+                    ],
+                ],
+            ],
+            'set-password' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route'    => '/set-password',
+                    'defaults' => [
+                        'controller' => Controller\UserController::class,
+                        'action'     => 'setPassword',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
+            Controller\AuthController::class => Controller\Factory\AuthControllerFactory::class,
+            Controller\UserController::class => Controller\Factory\UserControllerFactory::class,
+        ],
+    ],
+    'access_filter' => [
+        'controllers' => [
+            Controller\UserController::class => [
+                // Give access to "resetPassword", "message" and "setPassword" actions
+                // to anyone.
+                ['actions' => ['resetPassword', 'message', 'setPassword'], 'allow' => '*'],
+                // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
+                ['actions' => ['index', 'add', 'edit', 'view', 'changePassword'], 'allow' => '@']
+            ],
+        ]
+    ],
+    'service_manager' => [
+        'factories' => [
+            \Zend\Authentication\AuthenticationService::class => Service\Factory\AuthenticationServiceFactory::class,
+            Service\AuthAdapter::class => Service\Factory\AuthAdapterFactory::class,
+            Service\AuthManager::class => Service\Factory\AuthManagerFactory::class,
+            Service\UserManager::class => Service\Factory\UserManagerFactory::class,
         ],
     ],
     'view_manager' => [
