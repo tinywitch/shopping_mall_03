@@ -2,6 +2,7 @@
 
 namespace Application\Controller;
 
+use Zend\Mvc\Application;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Entity\User;
@@ -17,13 +18,13 @@ class UserController extends AbstractActionController
 {
     /**
      * Entity manager.
-     * @var Doctrine\ORM\EntityManager
+     * @var
      */
     private $entityManager;
 
     /**
      * User manager.
-     * @var User\Service\UserManager
+     * @var
      */
     private $userManager;
 
