@@ -20,7 +20,7 @@ return [
                 'options' => [
                     'route' => '/',
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
+                        'controller' => Controller\HomeController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -30,7 +30,7 @@ return [
                 'options' => [
                     'route' => '/application[/:action]',
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
+                        'controller' => Controller\HomeController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -38,40 +38,64 @@ return [
             'login' => [
                 'type' => Literal::class,
                 'options' => [
-                    'route'    => '/login',
+                    'route' => '/login',
                     'defaults' => [
                         'controller' => Controller\AuthController::class,
-                        'action'     => 'login',
+                        'action' => 'login',
+                    ],
+                ],
+            ],
+            'register' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/register',
+                    'defaults' => [
+                        'controller' => Controller\UserController::class,
+                        'action' => 'add',
                     ],
                 ],
             ],
             'logout' => [
                 'type' => Literal::class,
                 'options' => [
-                    'route'    => '/logout',
+                    'route' => '/logout',
                     'defaults' => [
                         'controller' => Controller\AuthController::class,
-                        'action'     => 'logout',
+                        'action' => 'logout',
                     ],
                 ],
             ],
             'reset-password' => [
                 'type' => Literal::class,
                 'options' => [
-                    'route'    => '/reset-password',
+                    'route' => '/reset-password',
                     'defaults' => [
                         'controller' => Controller\UserController::class,
-                        'action'     => 'resetPassword',
+                        'action' => 'resetPassword',
                     ],
                 ],
             ],
             'set-password' => [
                 'type' => Literal::class,
                 'options' => [
-                    'route'    => '/set-password',
+                    'route' => '/set-password',
                     'defaults' => [
                         'controller' => Controller\UserController::class,
-                        'action'     => 'setPassword',
+                        'action' => 'setPassword',
+                    ],
+                ],
+            ],
+            'user' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/user[/:action]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9_-]*',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\UserController::class,
+                        'action' => 'view',
                     ],
                 ],
             ],
@@ -79,7 +103,7 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            Controller\IndexController::class => InvokableFactory::class,
+            Controller\HomeController::class => InvokableFactory::class,
             Controller\AuthController::class => Controller\Factory\AuthControllerFactory::class,
             Controller\UserController::class => Controller\Factory\UserControllerFactory::class,
         ],
@@ -89,9 +113,16 @@ return [
             Controller\UserController::class => [
                 // Give access to "resetPassword", "message" and "setPassword" actions
                 // to anyone.
-                ['actions' => ['resetPassword', 'message', 'setPassword'], 'allow' => '*'],
+                ['actions' => ['resetPassword', 'message', 'setPassword', 'add'], 'allow' => '*'],
                 // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
-                ['actions' => ['index', 'add', 'edit', 'view', 'changePassword'], 'allow' => '@']
+                ['actions' => ['edit', 'view', 'changePassword'], 'allow' => '@']
+            ],
+            Controller\HomeController::class => [
+                // Give access to "resetPassword", "message" and "setPassword" actions
+                // to anyone.
+                ['actions' => ['index'], 'allow' => '*'],
+                // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
+                // ['actions' => ['changePassword'], 'allow' => '@']
             ],
         ]
     ],
@@ -103,12 +134,23 @@ return [
             Service\UserManager::class => Service\Factory\UserManagerFactory::class,
         ],
     ],
+    'session_containers' => [
+        'UserLogin'
+    ],
+//    'view_helpers' => [
+//        'factories' => [
+//            View\Helper\Menu::class => View\Helper\Factory\MenuFactory::class,
+//        ],
+//        'aliases' => [
+//            'mainMenu' => View\Helper\Menu::class,
+//        ],
+//    ],
     'view_manager' => [
-        'display_not_found_reason' => true,
-        'display_exceptions' => true,
-        'doctype' => 'HTML5',
-        'not_found_template' => 'error/404',
-        'exception_template' => 'error/index',
+//        'display_not_found_reason' => true,
+//        'display_exceptions' => true,
+//        'doctype' => 'HTML5',
+//        'not_found_template' => 'error/404',
+//        'exception_template' => 'error/index',
         'template_map' => [
             'application/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',

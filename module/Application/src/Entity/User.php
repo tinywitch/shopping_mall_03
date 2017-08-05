@@ -7,6 +7,7 @@ use Application\Entity\Comment;
 use Application\Entity\Order;
 use Application\Entity\Rate;
 use Application\Entity\Message;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -193,6 +194,11 @@ class User
      */
     protected $token;
 
+    /**
+     * @ORM\Column(name="date_created")
+     */
+    protected $dateCreated;
+
     // Returns ID of this post.
     public function getId() 
     {
@@ -308,5 +314,15 @@ class User
     public function setToken($token) 
     {
         $this->token = $token;
+    }
+
+    public function getDateCreated()
+    {
+        return $this->dateCreated;
+    }
+
+    public function setDateCreated($date)
+    {
+        $this->dateCreated = $date;
     }
 }

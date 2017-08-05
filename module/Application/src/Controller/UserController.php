@@ -2,13 +2,13 @@
 
 namespace Application\Controller;
 
-use Zend\Mvc\Application;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Entity\User;
 use Application\Form\UserForm;
 use Application\Form\PasswordChangeForm;
 use Application\Form\PasswordResetForm;
+use Zend\Session\Container;
 
 /**
  * This controller is responsible for user management (adding, editing,
@@ -28,13 +28,55 @@ class UserController extends AbstractActionController
      */
     private $userManager;
 
+    private $sessionContainer;
+
     /**
      * Constructor.
      */
-    public function __construct($entityManager, $userManager)
+    public function __construct($entityManager, $userManager, $sessionContainer)
     {
         $this->entityManager = $entityManager;
         $this->userManager = $userManager;
+        $this->sessionContainer = $sessionContainer;
+    }
+
+    /**
+     * This action displays a page allowing to add a new user.
+     */
+    public function addAction()
+    {
+        // Create user form
+        $form = new UserForm('create', $this->entityManager);
+
+        // Check if user has submitted the form
+        if ($this->getRequest()->isPost()) {
+
+            // Fill in the form with POST data
+            $data = $this->params()->fromPost();
+
+            $form->setData($data);
+
+            // Validate form
+            if ($form->isValid()) {
+
+                // Get filtered and validated data
+                $data = $form->getData();
+
+                // Add user.
+                $user = $this->userManager->addUser($data);
+
+                // Redirect to "view" page
+                return $this->redirect()->toRoute('user',
+                    ['action' => 'view', 'id' => $user->getId()]);
+            }
+        }
+
+        $view = new ViewModel([
+            'form' => $form
+        ]);
+
+        $this->layout('application/layout');
+        return $view;
     }
 
     /**
@@ -42,11 +84,18 @@ class UserController extends AbstractActionController
      */
     public function viewAction()
     {
-        $id = (int)$this->params()->fromRoute('id', -1);
-        if ($id < 1) {
+        if (isset($this->sessionContainer->id)) {
+            $id = $this->sessionContainer->id;
+        } else {
             $this->getResponse()->setStatusCode(404);
             return;
         }
+
+//        $id = (int)$this->params()->fromRoute('id', -1);
+//        if ($id < 1) {
+//            $this->getResponse()->setStatusCode(404);
+//            return;
+//        }
 
         // Find a user with such ID.
         $user = $this->entityManager->getRepository(User::class)
@@ -69,11 +118,18 @@ class UserController extends AbstractActionController
      */
     public function editAction()
     {
-        $id = (int)$this->params()->fromRoute('id', -1);
-        if ($id < 1) {
+        if (isset($this->sessionContainer->id)) {
+            $id = $this->sessionContainer->id;
+        } else {
             $this->getResponse()->setStatusCode(404);
             return;
         }
+
+//        $id = (int)$this->params()->fromRoute('id', -1);
+//        if ($id < 1) {
+//            $this->getResponse()->setStatusCode(404);
+//            return;
+//        }
 
         $user = $this->entityManager->getRepository(User::class)
             ->find($id);
@@ -103,15 +159,22 @@ class UserController extends AbstractActionController
                 // Update the user.
                 $this->userManager->updateUser($user, $data);
 
+                // Edit session
+                $sessionContainer = new Container('UserLogin');
+                $sessionContainer->name = $data['full_name'];
+
                 // Redirect to "view" page
-                return $this->redirect()->toRoute('users',
+                return $this->redirect()->toRoute('user',
                     ['action' => 'view', 'id' => $user->getId()]);
+            } else {
+                $data = $form->getData();
             }
         } else {
             $form->setData(array(
-                'full_name' => $user->getFullName(),
+                'full_name' => $user->getName(),
                 'email' => $user->getEmail(),
-                'status' => $user->getStatus(),
+                'phone' => $user->getPhone(),
+                'address' => $user->getAddress(),
             ));
         }
 
@@ -128,11 +191,18 @@ class UserController extends AbstractActionController
      */
     public function changePasswordAction()
     {
-        $id = (int)$this->params()->fromRoute('id', -1);
-        if ($id < 1) {
+        if (isset($this->sessionContainer->id)) {
+            $id = $this->sessionContainer->id;
+        } else {
             $this->getResponse()->setStatusCode(404);
             return;
         }
+
+//        $id = (int)$this->params()->fromRoute('id', -1);
+//        if ($id < 1) {
+//            $this->getResponse()->setStatusCode(404);
+//            return;
+//        }
 
         $user = $this->entityManager->getRepository(User::class)
             ->find($id);
@@ -169,7 +239,7 @@ class UserController extends AbstractActionController
                 }
 
                 // Redirect to "view" page
-                return $this->redirect()->toRoute('users',
+                return $this->redirect()->toRoute('user',
                     ['action' => 'view', 'id' => $user->getId()]);
             }
         }
@@ -211,10 +281,10 @@ class UserController extends AbstractActionController
                     $this->userManager->generatePasswordResetToken($user);
 
                     // Redirect to "message" page
-                    return $this->redirect()->toRoute('users',
+                    return $this->redirect()->toRoute('user',
                         ['action' => 'message', 'id' => 'sent']);
                 } else {
-                    return $this->redirect()->toRoute('users',
+                    return $this->redirect()->toRoute('user',
                         ['action' => 'message', 'id' => 'invalid-email']);
                 }
             }
@@ -264,7 +334,7 @@ class UserController extends AbstractActionController
         if ($token === null ||
             !$this->userManager->validatePasswordResetToken($token)
         ) {
-            return $this->redirect()->toRoute('users',
+            return $this->redirect()->toRoute('user',
                 ['action' => 'message', 'id' => 'failed']);
         }
 
@@ -288,11 +358,11 @@ class UserController extends AbstractActionController
                 if ($this->userManager->setNewPasswordByToken($token, $data['new_password'])) {
 
                     // Redirect to "message" page
-                    return $this->redirect()->toRoute('users',
+                    return $this->redirect()->toRoute('user',
                         ['action' => 'message', 'id' => 'set']);
                 } else {
                     // Redirect to "message" page
-                    return $this->redirect()->toRoute('users',
+                    return $this->redirect()->toRoute('user',
                         ['action' => 'message', 'id' => 'failed']);
                 }
             }
