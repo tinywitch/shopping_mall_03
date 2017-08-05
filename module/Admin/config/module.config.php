@@ -41,6 +41,20 @@ return [
                     ],
                 ],
             ],
+            'products' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/admin/products[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]*'
+                    ],
+                    'defaults' => [
+                        'controller'    => Controller\ProductController::class,
+                        'action'        => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -48,6 +62,13 @@ return [
             Controller\IndexController::class => InvokableFactory::class,
             Controller\UserController::class => 
                 Controller\Factory\UserControllerFactory::class,
+            Controller\ProductController::class => 
+                Controller\Factory\ProductControllerFactory::class,
+        ],
+    ],
+    'service_manager' => [
+        'factories' => [
+            Service\ProductManager::class => Service\Factory\ProductManagerFactory::class,
         ],
     ],
     'view_manager' => [
@@ -66,4 +87,10 @@ return [
             __DIR__ . '/../view',
         ],
     ],
+    'view_helpers' => [
+        'invokables' => [
+            'ToSlug' => 'Admin\Helper\ToSlug',
+        ],
+    ],
+
 ];
