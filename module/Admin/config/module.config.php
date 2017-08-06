@@ -87,6 +87,14 @@ return [
             Service\ProductManager::class => Service\Factory\ProductManagerFactory::class,
             Service\CategoryManager::class => Service\Factory\CategoryManagerFactory::class,
         ],
+        'abstract_factories' => array(
+            'Zend\Form\FormAbstractServiceFactory',
+        ),
+    ],
+    'validators' => [
+        'factories' => [
+            Validator\ProductExitsValidator::class => InvokableFactory::class,
+        ],
     ],
     'view_manager' => [
         'display_not_found_reason' => true,

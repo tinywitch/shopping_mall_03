@@ -51,5 +51,33 @@ class ProductManager
         // Apply changes to database.
         $this->entityManager->flush();
     }
+    public function updateProduct($product, $data) 
+    {
+        $product->setName($data['name']);
+        $product->setAlias($data['alias']);
+        $product->setPrice($data['price']);
+        $product->setIntro($data['intro']);
+        $product->setImage($data['image']);
+        $product->setPrice($data['price']);
+        $product->setPopular_level($data['popular_level']);
+        $product->setDescription($data['description']);
+        $product->setStatus($data['status']);
+        $product->setSale($data['sale']);
+        $product->setCategory($data['category']);
+        $product->setStore($data['store']);
+        // Apply changes to database.
+        $this->entityManager->flush();
+    }
+    public function removeProduct($product)
+    {   
+        
+        $productkeys = $product->getKeywords();
+            foreach ($productkeys as $productkey) {
+              $this->entityManager->remove($productkey);
+        }
+        $this->entityManager->remove($product);   
+        $this->entityManager->flush();
+
+    }
     
 }

@@ -47,21 +47,16 @@
                     <a href="<?= $this->url('users', ['action'=>'list']); ?>">
                         <span class="glyphicon glyphicon-user"></span> User 
                     </a>
-
-                    <!-- Dropdown level 1 -->
-                    <!-- <div id="dropdown-lvl1" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <ul class="nav navbar-nav">
-                                <li><a href="#">List</a></li>
-                                <li><a href="#">Add</a></li>
-                            </ul>
-                        </div>
-                    </div> -->
                 </li>
                 <li class="panel panel-default" id="dropdown">
                     <a href="<?= $this->url('categories', ['action'=>'index']); ?>">
                         <span class="glyphicon glyphicon-list"></span> Category <span class="caret"></span>
                     </a>            
+                </li>
+                <li class="panel panel-default" id="dropdown">
+                    <a href="<?= $this->url('products', ['action'=>'list']); ?>">
+                        <span class="glyphicon glyphicon-heart-empty"></span> Product 
+                    </a>
                 </li>
                 <li><a href="#"><span class="glyphicon glyphicon-signal"></span> Link</a></li>
             </ul>
