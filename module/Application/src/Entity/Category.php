@@ -64,6 +64,11 @@ class Category
      */
     protected $parent_id;
 
+    /**
+     * @ORM\Column(name="date_created")
+     */
+    protected $date_created;
+
     // Returns ID of this post.
     public function getId() 
     {
@@ -106,13 +111,23 @@ class Category
         $this->description = $description;
     }
 
-    public function getParent_id() 
+    public function getParentId() 
     {
         return $this->parent_id;
     }
 
-    public function setParent_id($parent_id) 
+    public function setParentId($parent_id) 
     {
         $this->parent_id = $parent_id;
+    }
+
+    public function getDateCreated() 
+    {
+        return $this->date_created;
+    }
+        
+    public function setDateCreated($date_created) 
+    {
+        $this->date_created = $date_created;
     }
 }

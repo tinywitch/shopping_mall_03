@@ -55,6 +55,20 @@ return [
                     ],
                 ],
             ],
+            'categories' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/admin/categories[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]*'
+                    ],
+                    'defaults' => [
+                        'controller'    => Controller\CategoryController::class,
+                        'action'        => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -62,6 +76,8 @@ return [
             Controller\IndexController::class => InvokableFactory::class,
             Controller\UserController::class => 
                 Controller\Factory\UserControllerFactory::class,
+            Controller\CategoryController::class => 
+                Controller\Factory\CategoryControllerFactory::class,
             Controller\ProductController::class => 
                 Controller\Factory\ProductControllerFactory::class,
         ],
@@ -69,6 +85,7 @@ return [
     'service_manager' => [
         'factories' => [
             Service\ProductManager::class => Service\Factory\ProductManagerFactory::class,
+            Service\CategoryManager::class => Service\Factory\CategoryManagerFactory::class,
         ],
     ],
     'view_manager' => [
@@ -92,5 +109,4 @@ return [
             'ToSlug' => 'Admin\Helper\ToSlug',
         ],
     ],
-
 ];

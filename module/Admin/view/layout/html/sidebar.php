@@ -59,8 +59,8 @@
                     </div> -->
                 </li>
                 <li class="panel panel-default" id="dropdown">
-                    <a data-toggle="collapse" href="#category">
-                        <span class="glyphicon glyphicon-user"></span> Category <span class="caret"></span>
+                    <a href="<?= $this->url('categories', ['action'=>'index']); ?>">
+                        <span class="glyphicon glyphicon-list"></span> Category <span class="caret"></span>
                     </a>            
                 </li>
                 <li><a href="#"><span class="glyphicon glyphicon-signal"></span> Link</a></li>

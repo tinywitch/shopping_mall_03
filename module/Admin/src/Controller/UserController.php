@@ -45,7 +45,7 @@ class UserController extends AbstractActionController
 
         return new ViewModel([
             'users' => $users
-            ]);
+        ]);
     }
 }
 
