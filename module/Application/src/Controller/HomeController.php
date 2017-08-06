@@ -19,4 +19,12 @@ class HomeController extends AbstractActionController
         $this->layout('application/layout');
         return $view;
     }
+
+    public function viewAction()
+    {
+    	//var_dump(2);die();
+        $view = new ViewModel();
+        $this->layout('application/home');
+        return $view;
+    }
 }
