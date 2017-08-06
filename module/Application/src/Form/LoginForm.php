@@ -33,7 +33,7 @@ class LoginForm extends Form
     {
         // Add "email" field
         $this->add([
-            'type' => 'text',
+            'type' => 'email',
             'name' => 'email',
             'options' => [
                 'label' => 'Your E-mail',

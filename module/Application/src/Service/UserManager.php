@@ -38,17 +38,19 @@ class UserManager
         // Create new User entity.
         $user = new User();
         $user->setEmail($data['email']);
-        $user->setFullName($data['full_name']);        
+        $user->setName($data['full_name']);
 
         // Encrypt password and store the password in encrypted state.
         $bcrypt = new Bcrypt();
         $passwordHash = $bcrypt->create($data['password']);        
         $user->setPassword($passwordHash);
-        
-        $user->setStatus($data['status']);
-        
-        $currentDate = date('Y-m-d H:i:s');
-        $user->setDateCreated($currentDate);        
+
+        $user->setStatus(User::STATUS_ACTIVE);
+        $user->setDateCreated(date('Y-m-d H:i:s'));
+        $user->setAddress($data['address']);
+        $user->setPhone($data['phone']);
+        $user->setRole(0);
+        $user->setToken('null');
                 
         // Add the entity to the entity manager.
         $this->entityManager->persist($user);
@@ -69,33 +71,39 @@ class UserManager
             throw new \Exception("Another user with email address " . $data['email'] . " already exists");
         }
         
-        $user->setEmail($data['email']);
-        $user->setFullName($data['full_name']);        
-        $user->setStatus($data['status']);        
-        
+        // $user->setEmail($data['email']);
+        $user->setName($data['full_name']);
+        // $user->setStatus($data['status']);
+        $user->setAddress($data['address']);
+        $user->setPhone($data['phone']);
+
         // Apply changes to database.
         $this->entityManager->flush();
 
         return true;
     }
-    
+
     /**
-     * This method checks if at least one user presents, and if not, creates 
-     * 'Admin' user with email 'admin@example.com' and password 'Secur1ty'. 
+     * This method checks if at least one user presents, and if not, creates
+     * 'Admin' user with email 'admin@example.com' and password 'Secur1ty'.
      */
     public function createAdminUserIfNotExists()
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy([]);
         if ($user==null) {
             $user = new User();
-            $user->setEmail('admin@example.com');
-            $user->setFullName('Admin');
+            $user->setEmail('admin@gmail.com');
+            $user->setName('Admin');
             $bcrypt = new Bcrypt();
-            $passwordHash = $bcrypt->create('Secur1ty');        
+            $passwordHash = $bcrypt->create('12345678');
             $user->setPassword($passwordHash);
             $user->setStatus(User::STATUS_ACTIVE);
             $user->setDateCreated(date('Y-m-d H:i:s'));
-            
+            $user->setAddress('Hanoi');
+            $user->setPhone('0968865835');
+            $user->setRole(1);
+            $user->setToken('null');
+
             $this->entityManager->persist($user);
             $this->entityManager->flush();
         }
