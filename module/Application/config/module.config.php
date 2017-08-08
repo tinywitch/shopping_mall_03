@@ -106,6 +106,7 @@ return [
             Controller\HomeController::class => InvokableFactory::class,
             Controller\AuthController::class => Controller\Factory\AuthControllerFactory::class,
             Controller\UserController::class => Controller\Factory\UserControllerFactory::class,
+            Controller\HomeController::class => Controller\Factory\HomeControllerFactory::class,
         ],
     ],
     'access_filter' => [
@@ -132,6 +133,7 @@ return [
             Service\AuthAdapter::class => Service\Factory\AuthAdapterFactory::class,
             Service\AuthManager::class => Service\Factory\AuthManagerFactory::class,
             Service\UserManager::class => Service\Factory\UserManagerFactory::class,
+            Service\CategoryManager::class => Service\Factory\CategoryManagerFactory::class,
         ],
     ],
     'session_containers' => [

@@ -80,5 +80,4 @@ class CategoryManager
         }
         return $categories_for_select;
     }
-
 }
