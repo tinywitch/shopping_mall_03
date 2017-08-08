@@ -62,7 +62,7 @@ class UserForm extends Form
             'type' => 'text',
             'name' => 'full_name',
             'options' => [
-                'label' => 'Full Name',
+                'label' => 'Your name',
             ],
         ]);
 
@@ -72,7 +72,7 @@ class UserForm extends Form
                 'type' => 'text',
                 'name' => 'email',
                 'options' => [
-                    'label' => 'E-mail',
+                    'label' => 'Email',
                 ],
             ]);
 
@@ -90,7 +90,7 @@ class UserForm extends Form
                 'type' => 'password',
                 'name' => 'confirm_password',
                 'options' => [
-                    'label' => 'Confirm password',
+                    'label' => 'Re-enter password',
                 ],
             ]);
         }
@@ -131,7 +131,7 @@ class UserForm extends Form
             'type' => 'submit',
             'name' => 'submit',
             'attributes' => [
-                'value' => 'Create'
+                'value' => 'Create your account'
             ],
         ]);
     }

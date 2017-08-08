@@ -99,14 +99,28 @@ return [
                     ],
                 ],
             ],
+            'product' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/product[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9_-]*',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\ProductController::class,
+                        'action' => 'view',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
         'factories' => [
-            Controller\HomeController::class => InvokableFactory::class,
             Controller\AuthController::class => Controller\Factory\AuthControllerFactory::class,
             Controller\UserController::class => Controller\Factory\UserControllerFactory::class,
             Controller\HomeController::class => Controller\Factory\HomeControllerFactory::class,
+            Controller\ProductController::class => Controller\Factory\ProductControllerFactory::class,
         ],
     ],
     'access_filter' => [
@@ -122,6 +136,13 @@ return [
                 // Give access to "resetPassword", "message" and "setPassword" actions
                 // to anyone.
                 ['actions' => ['index'], 'allow' => '*'],
+                // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
+                // ['actions' => ['changePassword'], 'allow' => '@']
+            ],
+            Controller\ProductController::class => [
+                // Give access to "resetPassword", "message" and "setPassword" actions
+                // to anyone.
+                ['actions' => ['view'], 'allow' => '*'],
                 // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
                 // ['actions' => ['changePassword'], 'allow' => '@']
             ],

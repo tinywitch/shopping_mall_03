@@ -29,7 +29,6 @@ class StoreManager
         $store->setAddress($data['address']);
         $store->setPhone($data['phone']);
         $store->setDateCreated($data['date_created']);
-
         // Add the entity to entity manager.
         $this->entityManager->persist($store);
         // Apply changes to database.

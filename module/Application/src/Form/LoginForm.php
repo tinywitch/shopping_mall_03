@@ -36,7 +36,7 @@ class LoginForm extends Form
             'type' => 'email',
             'name' => 'email',
             'options' => [
-                'label' => 'Your E-mail',
+                'label' => 'Email',
             ],
         ]);
 
