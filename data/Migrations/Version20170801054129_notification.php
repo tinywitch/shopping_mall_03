@@ -18,10 +18,10 @@ class Version20170801054129_notification extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $table = $schema->createTable('notifications');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);        
-        $table->addColumn('user_id', 'integer', ['notnull' => true]);
-        $table->addColumn('target_id', 'integer', ['notnull' => true]);
-        $table->addColumn('type', 'integer', ['notnull' => true]);
-        $table->addColumn('date_created', 'datetime', ['notnull' => true]);
+        $table->addColumn('user_id', 'integer');
+        $table->addColumn('target_id', 'integer');
+        $table->addColumn('type', 'integer');
+        $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);
         $table->addOption('engine', 'InnoDB');
     }

@@ -73,7 +73,6 @@ class CategoryManager
     public function categories_for_select()
     {
         $categories = $this->entityManager->getRepository(Category::class)->findAll();
-        $categories_for_select = ['0' => '--Select--'];
         foreach($categories as $cate)
         {
             $categories_for_select[$cate->getID()] = $cate->getName();

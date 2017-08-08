@@ -35,6 +35,7 @@ class StoreManager
         // Apply changes to database.
         $this->entityManager->flush();
     }
+    
     public function updateStore($store,$data)
     {
         $store->setName($data['name']);
@@ -43,16 +44,17 @@ class StoreManager
         // Apply changes to database.
         $this->entityManager->flush();
     }
+
     public function removeStore($store)
     {      
         $this->entityManager->remove($store);   
         $this->entityManager->flush();
 
     }
+
     public function stores_for_select()
     {
         $stores = $this->entityManager->getRepository(Store::class)->findAll();
-        $stores_for_select = ['0' => '--Select--'];
         foreach($stores as $store)
         {
             $stores_for_select[$store->getID()] = $store->getName();

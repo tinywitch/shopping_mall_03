@@ -2,8 +2,8 @@
 namespace Admin\Service;
 
 use Application\Entity\Product;
-
 use Zend\Filter\StaticFilter;
+use Application\Entity\Keyword;
 
 // The UserManager service is responsible for adding new posts.
 class ProductManager
@@ -25,59 +25,103 @@ class ProductManager
     // This method adds a new product.
     public function addNewProduct($data)
     {
-        // Create new Product entity.
-
         $product = new Product();
+
+        $data['store'] = $this->entityManager->
+            getRepository('Application\Entity\Store')->find($data['store_id']);
+        $data['category'] = $this->entityManager->
+            getRepository('Application\Entity\Category')->find($data['category_id']);
+        $currentDate = date('Y-m-d H:i:s');
+        $data['date_created'] = $currentDate;
         
         $product->setName($data['name']);
         $product->setAlias($data['alias']);
         $product->setPrice($data['price']);
         $product->setIntro($data['intro']);
-        $product->setImage($data['image']);
         $product->setPrice($data['price']);
-        $product->setPopular_level($data['popular_level']);
         $product->setDescription($data['description']);
-        $product->setStatus($data['status']);
-        $product->setRate_avg($data['rate_avg']);
-        $product->setRate_count($data['rate_count']);
-        $product->setSale($data['sale']);
+        $product->setColor($data['color']);
+        $product->setQuantity($data['quantity']);
+        $product->setSize($data['size']);
         $product->setCategory($data['category']);
         $product->setStore($data['store']);
+        if($data['image'] != null)
+            $product->setImage($data['image']);
+        else $product->setImage('/img/products/default.jpg');
         $product->setDate_created($data['date_created']);
+
         // Add the entity to entity manager.
-
         $this->entityManager->persist($product);
-
-        // Apply changes to database.
+        $this->addKeywordsToProduct($data['keywords'], $product);
         $this->entityManager->flush();
     }
+
     public function updateProduct($product, $data) 
     {
+        $data['store'] = $this->entityManager->
+            getRepository('Application\Entity\Store')->find($data['store_id']);
+        $data['category'] = $this->entityManager->
+            getRepository('Application\Entity\Category')->find($data['category_id']);
+        
         $product->setName($data['name']);
         $product->setAlias($data['alias']);
         $product->setPrice($data['price']);
         $product->setIntro($data['intro']);
         $product->setImage($data['image']);
-        $product->setPrice($data['price']);
+        $product->setColor($data['color']);
+        $product->setQuantity($data['quantity']);
+        $product->setSize($data['size']);
         $product->setPopular_level($data['popular_level']);
         $product->setDescription($data['description']);
         $product->setStatus($data['status']);
         $product->setSale($data['sale']);
         $product->setCategory($data['category']);
         $product->setStore($data['store']);
+        
         // Apply changes to database.
         $this->entityManager->flush();
     }
+
     public function removeProduct($product)
     {   
-        
         $productkeys = $product->getKeywords();
             foreach ($productkeys as $productkey) {
               $this->entityManager->remove($productkey);
         }
         $this->entityManager->remove($product);   
         $this->entityManager->flush();
-
     }
-    
+
+    private function addKeywordsToProduct($keywordsStr, $product) 
+    {
+        // Remove tag associations (if any)
+        $keywords = $product->getKeywords();
+        foreach ($keywords as $keyword) {            
+            $product->removeKeyWordAssociation($keyword);
+        }
+            
+        // Add tags to product
+        $keywords = explode(',', $keywordsStr);
+        foreach ($keywords as $kword) {           
+            $kword = StaticFilter::execute($kword, 'StringTrim');
+            if (empty($kword)) {
+                continue; 
+            }
+                
+            $keyword = $this->entityManager->getRepository(Keyword::class)
+                        ->findOneByKeyword($kword);
+            if ($keyword == null)
+                $keyword = new KeyWord();
+            
+            $keyword->setKeyword($kword);
+            $currentDate = date('Y-m-d H:i:s');
+            $keyword->setDateCreated($currentDate);
+            $keyword->addProduct($product);
+                    
+            $this->entityManager->persist($keyword);
+                    
+            $product->addKeyword($keyword);
+        }
+    }    
+
 }

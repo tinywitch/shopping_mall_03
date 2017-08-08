@@ -127,7 +127,7 @@ class CategoryController extends AbstractActionController
             ];
             $form->setData($data);
         }
-        // Render the view template.
+
         return new ViewModel([
             'form' => $form,
             'category' => $category

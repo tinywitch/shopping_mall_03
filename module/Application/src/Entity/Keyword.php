@@ -45,6 +45,11 @@ class Keyword
      */
     protected $keyword;
 
+    /**
+     * @ORM\Column(name="date_created")
+     */
+    protected $date_created;
+
     // Returns ID of this product.
     public function getId() 
     {
@@ -65,5 +70,15 @@ class Keyword
     public function setKeyword($keyword) 
     {
         $this->keyword = $keyword;
+    }
+
+    public function getDateCreated($date_created) 
+    {
+        $this->date_created;
+    }
+
+    public function setDateCreated($date_created) 
+    {
+        $this->date_created = $date_created;
     }
 }

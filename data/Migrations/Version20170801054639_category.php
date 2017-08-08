@@ -18,11 +18,11 @@ class Version20170801054639_category extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $table = $schema->createTable('categories');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);        
-        $table->addColumn('name', 'text', ['notnull' => true]);
-        $table->addColumn('alias', 'text');
-        $table->addColumn('description', 'text');
-        $table->addColumn('parent_id', 'integer');
-        $table->addColumn('date_created', 'datetime', ['notnull' => true]);
+        $table->addColumn('name', 'text');
+        $table->addColumn('alias', 'text', ['notnull' => false]);
+        $table->addColumn('description', 'text', ['notnull' => false]);
+        $table->addColumn('parent_id', 'integer', ['default' => 0]);
+        $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);
         $table->addOption('engine', 'InnoDB');
     }

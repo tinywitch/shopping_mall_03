@@ -18,20 +18,23 @@ class Version20170801055016_product extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $table = $schema->createTable('products');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);        
-        $table->addColumn('name', 'text', ['notnull' => true]);
-        $table->addColumn('alias', 'text');
-        $table->addColumn('price', 'integer', ['notnull' => true]);
+        $table->addColumn('name', 'text');
+        $table->addColumn('alias', 'text', ['notnull' => false]);
+        $table->addColumn('price', 'integer');
         $table->addColumn('intro', 'text');
-        $table->addColumn('image', 'string');
-        $table->addColumn('popular_level', 'integer');
-        $table->addColumn('description', 'text');
-        $table->addColumn('status', 'integer');
-        $table->addColumn('rate_avg', 'float');
-        $table->addColumn('rate_count', 'integer');
-        $table->addColumn('sale', 'integer');
-        $table->addColumn('category_id', 'integer', ['notnull' => true]);
-        $table->addColumn('store_id', 'integer', ['notnull' => true]);
-        $table->addColumn('date_created', 'datetime', ['notnull' => true]);
+        $table->addColumn('image', 'string', ['notnull' => false]);
+        $table->addColumn('popular_level', 'integer', ['default' => 0]);
+        $table->addColumn('color', 'string', ['notnull' => false]);
+        $table->addColumn('quantity', 'integer', ['notnull' => false]);
+        $table->addColumn('size', 'string', ['notnull' => false]);
+        $table->addColumn('description', 'text', ['notnull' => false]);
+        $table->addColumn('status', 'integer', ['default' => 1]);
+        $table->addColumn('rate_avg', 'float', ['default' => 0]);
+        $table->addColumn('rate_count', 'integer', ['default' => 0]);
+        $table->addColumn('sale', 'integer', ['default' => 0]);
+        $table->addColumn('category_id', 'integer');
+        $table->addColumn('store_id', 'integer', ['notnull' => false]);
+        $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);
         $table->addOption('engine', 'InnoDB');
 

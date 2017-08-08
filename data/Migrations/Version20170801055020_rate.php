@@ -18,10 +18,10 @@ class Version20170801055020_rate extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $table = $schema->createTable('rates');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
-        $table->addColumn('user_id', 'integer', ['notnull' => true]);
-        $table->addColumn('product_id', 'integer', ['notnull' => true]);       
-        $table->addColumn('rate', 'integer');
-        $table->addColumn('date_created', 'datetime', ['notnull' => true]);
+        $table->addColumn('user_id', 'integer');
+        $table->addColumn('product_id', 'integer');       
+        $table->addColumn('rate', 'integer', ['notnull' => false]);
+        $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);
         $table->addOption('engine', 'InnoDB');
     }
