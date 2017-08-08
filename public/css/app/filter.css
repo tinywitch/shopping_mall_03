@@ -1,0 +1,41 @@
+
+/* ~/Content/desktop/css/V4/cate.min.css 05:37:54 27/04/2017 */
+.filter {
+    display: block;
+    height: 60px;
+    background: #f5f5f5;
+    margin: 25px 0 0 0;
+    padding: 0;
+    font-weight: 600;
+}
+.filter ul li {
+    display: inline-block;  
+    padding: 19px 20px;
+}
+.filter ul li a {
+    color: black;
+}
+.filter ul li ul {
+    display: none;
+    margin-top: 19px;
+    width: 224px;
+    margin-left: -20px;
+}
+.filter ul li ul li{
+    display:block;
+    background-color: #f5f5f5;
+}
+.filter ul li:hover{
+    background-color: #21b68e;
+}
+.filter .color {
+    background-color: #21b68e;
+    color: #fff;
+    border-radius: 5px 0 0 5px;
+}
+.filter ul li:hover ul{
+    display:block;
+    position: absolute;
+    z-index: 10000;
+
+}

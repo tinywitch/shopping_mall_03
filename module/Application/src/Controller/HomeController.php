@@ -9,12 +9,25 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Application\Entity\Category;
 
 class HomeController extends AbstractActionController
 {
+    /**
+     * Entity manager.
+     * @var
+     */
+    private $entityManager;
+
+    public function __construct($entityManager, $categoryManager)
+    {
+        $this->entityManager = $entityManager;
+        $this->categoryManager = $categoryManager;
+    }
+
+
     public function indexAction()
     {
-    	//var_dump(2);die();
         $view = new ViewModel();
         $this->layout('application/layout');
         return $view;
