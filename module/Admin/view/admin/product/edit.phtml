@@ -2,9 +2,14 @@
 $form->get('submit')->setAttributes([
     'value'=>'Edit',  
     ]);
-
+$form->get('category_id')->setAttributes([
+    'value'=>$product->getCategory()->getId(),  
+    ]);
+$form->get('store_id')->setAttributes([
+    'value'=>$product->getStore()->getId(),  
+    ]);
     ?>
-    <h1>Edit Post</h1>
+    <h1>Edit Product</h1>
 
     <div class="row">
 
@@ -15,6 +20,16 @@ $form->get('submit')->setAttributes([
                     <?= $this->formLabel($form->get('name')); ?>
                     <?= $this->formElement($form->get('name')); ?>
                     <?= $this->formElementErrors($form->get('name')); ?>                  
+                </div>
+                <div class="form-group">
+                    <?= $this->formLabel($form->get('category_id')); ?>
+                    <?= $this->formElement($form->get('category_id')); ?>
+                    <?= $this->formElementErrors($form->get('category_id')); ?>                  
+                </div>
+                <div class="form-group">
+                    <?= $this->formLabel($form->get('store_id')); ?>
+                    <?= $this->formElement($form->get('store_id')); ?>
+                    <?= $this->formElementErrors($form->get('store_id')); ?>                  
                 </div>
                 <div class="form-group">
                     <?= $this->formLabel($form->get('price')); ?>

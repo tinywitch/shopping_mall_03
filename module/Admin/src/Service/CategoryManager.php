@@ -70,7 +70,7 @@ class CategoryManager
             findByName($data) != [] ? true : false; 
     }
 
-    public function categories_for_select($categories)
+    public function categories_for_select()
     {
         $categories = $this->entityManager->getRepository(Category::class)->findAll();
         $categories_for_select = ['0' => '--Select--'];

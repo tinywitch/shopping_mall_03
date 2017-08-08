@@ -1,0 +1,36 @@
+<div class="box-body">
+<a href="<?= $this->url('stores', ['action' => 'add']); ?>" class="btn btn-primary">Tạo Mới</a>
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Option</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach($stores as $store): ?>
+        <tr>
+            <td>
+                <?php echo $store->getId(); ?>              
+            </td>
+            <td>
+                <?php echo $store->getName(); ?>
+            </td>
+            <td>
+                <?php echo $store->getAddress(); ?>
+            </td>
+            <td>
+                <?php echo $store->getPhone(); ?>
+            </td>
+            <td>
+                <a class="btn btn-warning" href="<?= $this->url('stores', ['action' => 'edit','id' => $store->getId() ]); ?>">Edit</a>
+                <a class="btn btn-danger inline" href="<?= $this->url('stores', ['action' => 'delete','id' => $store->getId() ]); ?>">Delete</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>    
+    </tbody>
+</table>
+</div>

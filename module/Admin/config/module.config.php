@@ -69,6 +69,20 @@ return [
                     ],
                 ],
             ],
+            'stores' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/admin/stores[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]*'
+                    ],
+                    'defaults' => [
+                        'controller'    => Controller\StoreController::class,
+                        'action'        => 'list',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -80,12 +94,17 @@ return [
                 Controller\Factory\CategoryControllerFactory::class,
             Controller\ProductController::class => 
                 Controller\Factory\ProductControllerFactory::class,
+            Controller\StoreController::class => 
+                Controller\Factory\StoreControllerFactory::class,
         ],
     ],
     'service_manager' => [
         'factories' => [
             Service\ProductManager::class => Service\Factory\ProductManagerFactory::class,
             Service\CategoryManager::class => Service\Factory\CategoryManagerFactory::class,
+
+            Service\StoreManager::class => Service\Factory\StoreManagerFactory::class,
+
         ],
         'abstract_factories' => array(
             'Zend\Form\FormAbstractServiceFactory',
@@ -94,6 +113,8 @@ return [
     'validators' => [
         'factories' => [
             Validator\ProductExitsValidator::class => InvokableFactory::class,
+            Validator\StoreExitsValidator::class => InvokableFactory::class,
+
         ],
     ],
     'view_manager' => [

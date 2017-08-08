@@ -44,18 +44,23 @@
             <ul class="nav navbar-nav">
                 <!-- Dropdown-->
                 <li class="panel panel-default" id="dropdown">
-                    <a href="<?= $this->url('users', ['action'=>'list']); ?>">
+                    <a href="<?= $this->url('users', ['action' => 'list']); ?>">
                         <span class="glyphicon glyphicon-user"></span> User 
                     </a>
                 </li>
                 <li class="panel panel-default" id="dropdown">
-                    <a href="<?= $this->url('categories', ['action'=>'index']); ?>">
+                    <a href="<?= $this->url('categories', ['action' => 'index']); ?>">
                         <span class="glyphicon glyphicon-list"></span> Category <span class="caret"></span>
                     </a>            
                 </li>
                 <li class="panel panel-default" id="dropdown">
-                    <a href="<?= $this->url('products', ['action'=>'list']); ?>">
+                    <a href="<?= $this->url('products', ['action' => 'list']); ?>">
                         <span class="glyphicon glyphicon-heart-empty"></span> Product 
+                    </a>
+                </li>
+                <li class="panel panel-default" id="dropdown">
+                    <a href="<?= $this->url('stores', ['action' => 'list']); ?>">
+                        <span class="glyphicon glyphicon-heart-empty"></span> Store 
                     </a>
                 </li>
                 <li><a href="#"><span class="glyphicon glyphicon-signal"></span> Link</a></li>
