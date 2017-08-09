@@ -34,5 +34,15 @@ function image_preview() {
      reader.readAsDataURL(file);
   });
 }
+
 $(document).ready(image_preview);
 $(document).on('page:load', image_preview);
+
+
+$(function(){
+    
+    $('#example').DataTable( {
+        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
+    } );
+});
+

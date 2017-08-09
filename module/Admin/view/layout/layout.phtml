@@ -16,13 +16,21 @@
             ->prependStylesheet($this->basePath('css/admin.css'))
             ->prependStylesheet($this->basePath('assets/bootstrap/dist/css/bootstrap-theme.min.css'))
             ->prependStylesheet($this->basePath('assets/bootstrap/dist/css/bootstrap.min.css'))
+            ->prependStylesheet($this->basePath('assets/datatables/media/css/dataTables.semanticui.min.css'))
+            ->prependStylesheet($this->basePath('assets/semantic/dist/semantic.min.css'))
+
         ?>
 
         <!-- Scripts -->
         <?= $this->headScript()
+        
             ->prependFile($this->basePath('js/me.js'))
+            ->prependFile($this->basePath('assets/semantic/dist/semantic.min.js'))   
+            ->prependFile($this->basePath('assets/datatables/media/js/dataTables.semanticui.min.js'))
+            ->prependFile($this->basePath('assets/datatables/media/js/jquery.dataTables.min.js'))
+            ->prependFile($this->basePath('assets/jquery/dist/jquery.min.js'))   
             ->prependFile($this->basePath('assets/bootstrap/dist/js/bootstrap.min.js'))
-            ->prependFile($this->basePath('assets/jquery/dist/jquery.min.js'))
+                    
         ?>
     </head>
     <body>

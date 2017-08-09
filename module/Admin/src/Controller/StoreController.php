@@ -23,6 +23,7 @@ class StoreController extends AbstractActionController
         $this->entityManager = $entityManager;
         $this->storeManager  = $storeManager;
     }
+    
     public function listAction()
     {
         $stores = $this->entityManager->getRepository(Store::class)->findAll();
@@ -30,6 +31,7 @@ class StoreController extends AbstractActionController
             'stores' => $stores
             ]);
     }
+
     public function addAction()
     {
         $form = new StoreForm($this->entityManager);
@@ -53,7 +55,8 @@ class StoreController extends AbstractActionController
         return new ViewModel([
         'form' => $form
         ]);
-  }
+    }
+    
     public function editAction()
     {
         // Get product ID.    
