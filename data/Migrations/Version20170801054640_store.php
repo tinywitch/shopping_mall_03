@@ -18,10 +18,10 @@ class Version20170801054640_store extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $table = $schema->createTable('stores');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);        
-        $table->addColumn('name', 'text', ['notnull' => true]);
-        $table->addColumn('address', 'text');
-        $table->addColumn('phone', 'text');
-        $table->addColumn('date_created', 'datetime', ['notnull' => true]);
+        $table->addColumn('name', 'text');
+        $table->addColumn('address', 'text', ['notnull' => false]);
+        $table->addColumn('phone', 'text', ['notnull' => false]);
+        $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);
         $table->addOption('engine', 'InnoDB');
 

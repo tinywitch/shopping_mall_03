@@ -18,13 +18,14 @@ class Version20170801055022_order extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $table = $schema->createTable('orders');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
-        $table->addColumn('user_id', 'integer', ['notnull' => true]);
-        $table->addColumn('name', 'text', ['notnull' => true]);        
-        $table->addColumn('phone', 'text', ['notnull' => true]);
-        $table->addColumn('address', 'integer', ['notnull' => true]);
+        $table->addColumn('user_id', 'integer');
+        $table->addColumn('name', 'text');        
+        $table->addColumn('phone', 'text');
+        $table->addColumn('address', 'integer');
         $table->addColumn('cost', 'integer');
+        $table->addColumn('status', 'integer', ['default' => 0]);
         $table->addColumn('completed_at', 'datetime');
-        $table->addColumn('date_created', 'datetime', ['notnull' => true]);
+        $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);
         $table->addOption('engine', 'InnoDB');
 

@@ -60,6 +60,11 @@ class Store
      */
     protected $phone;
 
+    /**
+     * @ORM\Column(name="date_created")
+     */
+    protected $date_created;
+
     // Returns ID of this post.
     public function getId() 
     {
@@ -89,7 +94,7 @@ class Store
 
     public function setAddress($address) 
     {
-        $this->addess = $address;
+        $this->address = $address;
     }
 
     public function getPhone() 
@@ -101,4 +106,15 @@ class Store
     {
         $this->phone = $phone;
     }
+
+    public function getDateCreated() 
+    {
+        return $this->date_created;
+    }
+
+    public function setDateCreated($date_created) 
+    {
+        $this->date_created = $date_created;
+    }
+
 }

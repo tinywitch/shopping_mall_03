@@ -213,27 +213,42 @@ class Product
     /**
      * @ORM\Column(name="status")
      */
-    protected $status;
+    protected $status = 0;
 
     /**
      * @ORM\Column(name="rate_avg")
      */
-    protected $rate_avg;
+    protected $rate_avg = 0;
 
     /**
      * @ORM\Column(name="rate_count")
      */
-    protected $rate_count;
+    protected $rate_count = 0;
 
     /**
      * @ORM\Column(name="sale")
      */
-    protected $sale;
+    protected $sale = 0;
 
     /**
      * @ORM\Column(name="popular_level")
      */
-    protected $popular_level;
+    protected $popular_level = 0;
+
+    /**
+     * @ORM\Column(name="color")
+     */
+    protected $color;
+
+    /**
+     * @ORM\Column(name="quantity")
+     */
+    protected $quantity;
+
+    /**
+     * @ORM\Column(name="size")
+     */
+    protected $size;
 
      /**
     * @ORM\Column(name="date_created")
@@ -364,7 +379,36 @@ class Product
         $this->sale = $sale;
     }
 
-    
+    public function getColor() 
+    {
+        return $this->color;
+    }
+
+    public function setColor($color) 
+    {
+        $this->color = $color;
+    }
+
+    public function getQuantity() 
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity($quantity) 
+    {
+        $this->quantity = $quantity;
+    }
+
+    public function getSize() 
+    {
+        return $this->size;
+    }
+
+    public function setSize($size) 
+    {
+        $this->size = $size;
+    }
+
     public function getDate_created() 
     {
         return $this->date_created;

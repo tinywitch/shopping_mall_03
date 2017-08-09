@@ -19,7 +19,7 @@ class Version20170801055232_keyword extends AbstractMigration
         $table = $schema->createTable('keywords');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('keyword', 'text');
-        $table->addColumn('date_created', 'datetime', ['notnull' => true]);
+        $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);
         $table->addOption('engine', 'InnoDB');
 

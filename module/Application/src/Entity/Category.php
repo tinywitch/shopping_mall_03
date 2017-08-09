@@ -62,7 +62,7 @@ class Category
     /**
      * @ORM\Column(name="parent_id")
      */
-    protected $parent_id;
+    protected $parent_id = 0;
 
     /**
      * @ORM\Column(name="date_created")

@@ -18,9 +18,8 @@ class Version20170801055444_product_keyword extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $table = $schema->createTable('product_keywords');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
-        $table->addColumn('keyword_id', 'integer', ['notnull' => true]);
-        $table->addColumn('product_id', 'integer', ['notnull' => true]);
-        $table->addColumn('date_created', 'datetime', ['notnull' => true]);
+        $table->addColumn('keyword_id', 'integer');
+        $table->addColumn('product_id', 'integer');
         $table->setPrimaryKey(['id']);
         $table->addOption('engine', 'InnoDB');
 

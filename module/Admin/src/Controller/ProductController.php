@@ -3,12 +3,8 @@ namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Admin\Form\UserForm;
 use Application\Entity\Product;
-use Application\Entity\Category;
-use Application\Entity\Store;
 use Admin\Form\ProductForm;
-use Admin\Helper\ToSlug;
 use Zend\File\Transfer\Adapter\Http;
 
 class ProductController extends AbstractActionController
@@ -49,125 +45,117 @@ class ProductController extends AbstractActionController
     public function indexAction(){
         return ViewModel();
     }
+
     public function listAction(){
         $products = $this->entityManager->getRepository(Product::class)->findAll();
-        // Render the view template
+
         return new ViewModel([
         'products' => $products
         ]);
     }
+
     public function addAction(){
-        $form = new ProductForm('create', $this->categoryManager, $this->storeManager, $this->entityManager);
-        // Check whether this post is a POST request.
-        if ($this->getRequest()->isPost()) {
-        // Get POST data.
-        $data = $this->params()->fromPost();
-        $files =  $_FILES;
-        $httpadapter = new \Zend\File\Transfer\Adapter\Http();
-        $httpadapter->setDestination('public/img/products/');
-        $httpadapter->receive();
-        $data['image'] = $httpadapter->getFileName();
-        $data['image'] = ltrim($data['image'],"public");
-        $form->setData($data);
-        if ($form->isValid()) {
-            // Get validated form data.
-          //var_dump($data);die();
-            $data['alias'] = $this->slug($data['name']);
-            $data['status'] = 1;
-            $data['rate_avg'] = 0;
-            $data['rate_count'] = 0;
-            $data['sale'] = 0;
-            $data['popular_level'] = 0;
-            $data['category'] = $this->entityManager->getRepository(Category::class)->find($data['category_id']);
-            $data['store'] = $this->entityManager->getRepository(Store::class)->find($data['store_id']);
-            $currentDate = date('Y-m-d H:i:s');
-            $data['date_created'] = $currentDate;
-            // Use post manager service to add new post to database. 
-            $this->productManager->addNewProduct($data);             
-            // Redirect the user to "index" page.
-            return $this->redirect()->toRoute('products', ['action'=>'list']);
-        }
-    }
+        $categories = $this->categoryManager->categories_for_select();
+        $stores = $this->storeManager->stores_for_select();
 
-    // Render the view template.
-    return new ViewModel([
-    'form' => $form
-    ]);
-    }
-    public function editAction()
-    {
-        // Get product ID.    
-        $productId = $this->params()->fromRoute('id', -1);
+        $form = new ProductForm('create', $categories, $stores, $this->entityManager);
 
-        // Find existing post in the database.    
-        $product = $this->entityManager->getRepository(Product::class)->find($productId);
-        // Create the form.
-        $form = new ProductForm('edit', $this->categoryManager, $this->storeManager, $this->entityManager, $product);
-        if ($product == null) {
-            $this->getResponse()->setStatusCode(404);
-            echo "hasn't product with id = ".$productId;                        
-        } 
         if ($this->getRequest()->isPost()) {
-        // Get POST data.
-        $data = $this->params()->fromPost();
-        // Fill form with data.
-        //var_dump($data);die();
-        if($data['category_id'] == 0) $data['category_id'] = $product->getCategory()->getId();
-        if($data['store_id'] == 0) $data['store_id'] = $product->getStore()->getId();
-        if($_FILES['image']['name']=='') $data['image'] = $product->getImage();
-        else{
+            $data = $this->params()->fromPost();
+
+            $files =  $_FILES;
             $httpadapter = new \Zend\File\Transfer\Adapter\Http();
             $httpadapter->setDestination('public/img/products/');
             $httpadapter->receive();
             $data['image'] = $httpadapter->getFileName();
-              $data['image'] = ltrim($data['image'],"public");
+            $data['image'] = ltrim($data['image'], "public");
+
+            $form->setData($data);
+
+            if ($form->isValid()) {
+                $data['alias'] = $this->slug($data['name']);
+                $this->productManager->addNewProduct($data);             
+
+                return $this->redirect()->toRoute('products', ['action'=>'list']);
+            }
         }
-        $form->setData($data); 
-        if ($form->isValid()) {
-               // Get validated form data.
-            $data = $form->getData();
-            $data['alias'] = $this->slug($data['name']);
-            $data['category'] = $this->entityManager->getRepository(Category::class)->find($data['category_id']);
-            $data['store'] = $this->entityManager->getRepository(Store::class)->find($data['store_id']);
-            $this->productManager->updateProduct($product, $data);
-            // Redirect the user to "admin" page.
-            return $this->redirect()->toRoute('products', ['action'=>'list']);
+
+        return new ViewModel([
+            'form' => $form
+            ]);
+    }
+
+    public function editAction()
+    {  
+        $categories = $this->categoryManager->categories_for_select();
+        $stores = $this->storeManager->stores_for_select();
+
+        $productId = $this->params()->fromRoute('id', -1);
+
+        $product = $this->entityManager->getRepository(Product::class)->find($productId);
+        if ($product == null) {
+            $this->getResponse()->setStatusCode(404);                      
         }
+
+        $form = new ProductForm('edit', $categories, $stores, $this->entityManager, $product);
+
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+
+            $httpadapter = new \Zend\File\Transfer\Adapter\Http();
+            $httpadapter->setDestination('public/img/products/');
+            $httpadapter->receive();
+            if(!empty($httpadapter->getFileName())) {
+                $data['image'] = $httpadapter->getFileName();
+                $data['image'] = ltrim($data['image'], "public");
+            }else $data['image'] = $product->getImage();
+            $form->setData($data);
+
+            if ($form->isValid()) {
+                $data = $form->getData();
+                $data['alias'] = $this->slug($data['name']);
+
+                $this->productManager->updateProduct($product, $data);
+                // Redirect the user to "index" page.
+                return $this->redirect()->toRoute('products', ['action'=>'list']);
+            }
         }else 
         {
             $data = [
-            'name'  =>  $product->getName(),
-            'price' =>  $product->getPrice(),
-            'intro' =>  $product->getIntro(),
-            'image' =>  $product->getImage(),
-            'popular_level' => $product->getPopular_level(),  
-            'description'   => $product->getDescription(),   
-            'status'    => $product->getStatus(),
-            'sale'  => $product->getSale(),   
-            ];
+                'name' => $product->getName(),
+                'price' => $product->getPrice(),
+                'intro' => $product->getIntro(),
+                'image' => $product->getImage(),
+                'popular_level' => $product->getPopular_level(),  
+                'description' => $product->getDescription(),   
+                'status' => $product->getStatus(),
+                'sale' => $product->getSale(),
+                'color' => $product->getColor(),
+                'size' => $product->getSize(),
+                'quantity' => $product->getQuantity(),   
+                ];
 
             $form->setData($data);
         }
 
-        // Render the view template.
         return new ViewModel([
-        'form' => $form,
-        'product' => $product
-        ]);
+            'form' => $form,
+            'product' => $product
+            ]);
     }
 
     public function deleteAction()
     {
-
         $productId = $this->params()->fromRoute('id', -1);
         $product = $this->entityManager->getRepository(Product::class)
             ->findOneById($productId);        
         if ($product == null) {
             $this->getResponse()->setStatusCode(404);
             return;                        
-        }        
+        }
+
         $filename = 'public'.$product->getImage();
-        $Message = '';
+
         if (file_exists($filename)) {
             if (!unlink($filename)) {
               $Message = "Error deleting $filename";
@@ -176,10 +164,10 @@ class ProductController extends AbstractActionController
             }
         } else {
             $Message = "The file $filename does not exist";
-        } 
+        }
+
         $this->productManager->removeProduct($product);
 
-        // Redirect the user to "products/list" page.
         return $this->redirect()->toRoute('products', ['action'=>'list']);
     }
 

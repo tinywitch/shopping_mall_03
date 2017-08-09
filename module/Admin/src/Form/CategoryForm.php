@@ -33,8 +33,7 @@ class CategoryForm extends Form
      * This method adds elements to form (input fields and submit button).
      */
     protected function addElements() 
-    {
-        
+    {        
         // Add "Name" field
         $this->add([           
             'type'  => 'text',
@@ -70,7 +69,7 @@ class CategoryForm extends Form
                 'id' => 'parent_id',
             ],
             'options' => [
-                'label' => 'Description',
+                'label' => 'Parent Category',
                 'value_options' => $this->categories,
             ],
         ]);

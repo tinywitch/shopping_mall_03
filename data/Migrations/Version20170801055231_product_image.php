@@ -18,13 +18,10 @@ class Version20170801055231_product_image extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $table = $schema->createTable('product_images');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
-        $table->addColumn('product_id', 'integer', ['notnull' => true]);
+        $table->addColumn('product_id', 'integer');
         $table->addColumn('image', 'text');
-        $table->addColumn('color', 'string');
-        $table->addColumn('quantity', 'integer');
-        $table->addColumn('size', 'string');
-        $table->addColumn('status', 'integer');
-        $table->addColumn('date_created', 'datetime', ['notnull' => true]);
+        $table->addColumn('status', 'integer', ['default' => 1]);
+        $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);
         $table->addOption('engine', 'InnoDB');
     }

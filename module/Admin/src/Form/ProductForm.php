@@ -1,13 +1,12 @@
 <?php
 namespace Admin\Form;
+
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
-use Application\Entity\Product;
-use Application\Entity\Category;
-use Application\Service\CategoryManager;
 use Zend\Validator\Regex;
 use Admin\Validator\ProductExistsValidator;
 use Zend\InputFilter\InputFilterProviderInterface;
+
 class ProductForm extends Form {
 
     private $scenario;
@@ -15,233 +14,261 @@ class ProductForm extends Form {
      * Entity manager.
      * @var Doctrine\ORM\EntityManager 
      */
-    private $entityManager = null;
+    private $entityManager;
    
     /**
      * Current user.
      * @var Application\Entity\Product 
      */
-    private $product = null;
-    private $categoryManager = null;
-    private $storeManager = null;
+    private $product;
+
+    private $categories;
+    private $stores;
+    private $color = [
+        '1' => 'yellow',
+        '2' => 'red',
+        '3' => 'blue',
+        '4' => 'black'
+        ];
+
     public function __construct(
-                                $scenario = 'create', 
-                                $categoryManager = null,
-                                $storeManager = null,
-                                $entityManager = null,
+                                $scenario,
+                                $categories,
+                                $stores, 
+                                $entityManager,
                                 $product = null
                                 )
     {
         parent::__construct();
-        $this->categoryManager = $categoryManager;
-        $this->storeManager = $storeManager;
+
+        $this->categories = $categories;
+        $this->stores = $stores;
         $this->scenario = $scenario;
         $this->entityManager = $entityManager;
         $this->product = $product;
-        // FORM Attribute
+
         $this->setAttributes([
-            'action'    => '#',
             'method'    => 'POST',
             'class'     => 'form-horizontal',
             'role'      => 'form',
             'name'      => 'ProductForm',
             'id'        => 'ProductForm',
-            'style'     => 'padding-top: 20px;',
             'enctype'   => 'multipart/form-data'
             ]);
 
-        // ID
+        $this->addElements();
+        $this->addInputFilter();
+    }
+
+    protected function addElements()
+    {
         $this->add([
-            'name'          => 'id',
-            'attributes'    => [
-                'type'  => 'hidden',
+            'name' => 'name',
+            'type' => 'text',
+            'attributes' => [
+                'class' => 'form-control width-custom',
+                'id' => 'name',
+                'placeholder' => 'Enter product name : ',
                 ],
-            ]);
-        $this->add([
-            'name'          => 'name',
-            'type'          => 'text',
-            'attributes'    => [
-                'class'         => 'form-control width-custom',
-                'id'            => 'name',
-                'placeholder'   => 'Enter product name : ',
-                ],
-            'options'       => [
-                'label'             => 'Product name :',
-                'label_attributes'  => [
-                    'for'       => 'name',
-                    'class'     => 'control-label ',
-                    ]
+            'options' => [
+                'label' => 'Product name :',
                 ],
             ]);
 
         // Description
         $this->add([
-            'name'          => 'description',
-            'type'          => 'Textarea',
-            'attributes'    => [
-                'class'         => 'form-control width-custom',
-                'id'            => 'description',
+            'name' => 'description',
+            'type' => 'Textarea',
+            'attributes'=> [
+                'class' => 'form-control width-custom',
+                'id' => 'description',
                 ],
-            'options'       => [
-                'label'             => 'Description :',
-                'label_attributes'  => [
-                    'for'       => 'description',
-                    'class'     => 'control-label',
-                    ]
+            'options' => [
+                'label' => 'Description :',
                 ],
             ]);
+
         // File picture
         $this->add([
-            'name'          => 'image',
-            'type'          => 'File',
-            'attributes'    => [
-                'class'         => 'form-control width-custom',
-                'id'            => 'image',
+            'name' => 'image',
+            'type' => 'File',
+            'attributes' => [
+                'class' => 'file form-control width-custom',
+                'id' => 'image',
                 ],
-            'options'       => [
-                'label'             => 'Picture',
-                'label_attributes'  => [
-                    'for'       => 'image',
-                    'class'     => 'control-label',
-                    ]
+            'options' => [
+                'label' => 'Picture',
                 ],
             ]);
+
         // Price
         $this->add([
-            'name'          => 'price',
-            'type'          => 'Text',
-            'attributes'    => [
-                'class'         => 'form-control width-custom',
-                'id'            => 'price',
-                'placeholder'   => 'Enter Price',
+            'name' => 'price',
+            'type' => 'Text',
+            'attributes' => [
+                'class' => 'form-control width-custom',
+                'id' => 'price',
+                'placeholder' => 'Enter Price',
                 ],
-            'options'       => [
-                'label'             => 'Price :',
-                'label_attributes'  => [
-                    'for'       => 'price',
-                    'class'     => 'control-label',
-                    ]
+            'options' => [
+                'label' => 'Price :',
                 ],
             ]);
+
         // Intro
         $this->add([
-            'name'          => 'intro',
-            'type'          => 'Text',
-            'attributes'    => [
-                'class'         => 'form-control width-custom',
-                'id'            => 'intro',
-                'placeholder'   => 'Enter Intro :',
+            'name' => 'intro',
+            'type' => 'Textarea',
+            'attributes' => [
+                'class' => 'form-control width-custom',
+                'id' => 'intro',
+                'placeholder' => 'Enter Intro :',
                 ],
-            'options'       => [
-                'label'             => 'Intro :',
-                'label_attributes'  => [
-                    'for'       => 'intro',
-                    'class'     => 'control-label',
-                    ]
+            'options' => [
+                'label' => 'Intro :',
                 ],
             ]);
+
+        //Category
         $this->add([
-            'type'  => 'submit',
+            'name' => 'category_id',
+            'type' => 'Select',
+            'options' => [
+                'value_options' => $this->categories,
+                'label' => 'Category :',
+                ],
+            'attributes' => [
+                'class' => 'form-control width-custom',
+                ],
+            ]);
+
+        // Store
+        $this->add([
+            'name' => 'store_id',
+            'type' => 'Select',
+            'options' => [
+                'value_options' => $this->stores,
+                'label' => 'Store',
+                ],
+            'attributes' => [
+                'class' => 'form-control width-custom',
+                ],
+            ]);
+
+        // Sale value
+        $this->add([
+            'name' => 'sale',
+            'type' => 'Text',
+            'attributes' => [
+                'class' => 'form-control width-custom',
+                'id' => 'sale',
+                'placeholder' => 'Enter sale off value:',
+                ],
+            'options' => [
+                'label' => 'Sale off value:',
+                ],
+            ]);
+
+        //Quantity
+        $this->add([
+            'name' => 'quantity',
+            'type' => 'Text',
+            'attributes' => [
+                'class' => 'form-control width-custom',
+                'id' => 'quantity',
+                'placeholder' => 'Enter quantity :',
+                ],
+            'options' => [
+                'label' => 'Quantity :',
+                ],
+            ]);
+
+        //Color
+        $this->add([
+            'name' => 'color',
+            'type' => 'Select',
+            'attributes' => [
+                'class' => 'form-control width-custom',
+                'id' => 'color',
+                ],
+            'options' => [
+                'value_options' => $this->color,
+                'label' => 'Color :',
+                ],    
+            ]);
+
+        //Size
+        $this->add([
+            'name' => 'size',
+            'type' => 'text',
+            'attributes' => [
+                'class' => 'form-control width-custom',
+                'id' => 'size',
+                ],
+            'options' => [
+                'label' => 'Size :',
+                ],    
+            ]);
+
+        //Keyword
+        $this->add([
+            'type'  => 'text',
+            'name' => 'keywords',
+            'attributes' => [      
+                'class' => 'form-control width-custom',          
+                'id' => 'keywords'
+            ],
+            'options' => [
+                'label' => 'Keywords',
+            ],
+        ]);
+
+        // If form is edit form
+        if ($this->scenario == 'edit') {
+            $this->add([
+                'name' => 'status',
+                'type' => 'Select',
+                'options' => [
+                    'empty_option' => '-- Select status --',
+                    'value_options' => [
+                        '1' => 'Active',
+                        '0' => 'InActive',
+                        ],
+                    'label' => 'Status :',
+                    ],
+                'attributes' => [
+                    'class' => 'form-control width-custom',
+                    ],
+                ]);
+
+            $this->add([
+                'name' => 'popular_level',
+                'type' => 'Select',
+                'attributes' => [
+                    'class' => 'form-control width-custom',
+                    'id' => 'popular_level',
+                    ],
+                'options' => [
+                    'empty_option' => '-- Select type --',
+                    'value_options' => [
+                        '1' => 'Special',
+                        '0' => 'Normal',
+                        ],
+                    'label' => 'Product type :',
+                    ],    
+                ]);
+        }
+
+        //Submit button
+        $this->add([
+            'type' => 'submit',
             'name' => 'submit',
-            'attributes' => [                
+            'attributes' => [
+                'class' => 'btn btn-primary',                
                 'value' => 'Create',
                 'id' => 'submitbutton',
                 ],
             ]);
-        //Category
-        $this->add([
-            'name'          => 'category_id',
-            'type'          => 'Select',
-            'options'       => [
-                // 'empty_option'  => '-- Select category --',
-                'value_options' => $categoryManager->categories_for_select(),
-                'label' => 'Category',
-                'label_attributes'  => [
-                    'for'       => 'category_id',
-                    'class'     => 'control-label',
-                    ],
-                ],
-            'attributes'    => [
-                'class'         => 'form-control width-custom',
-                ],
-            ]);
-        // Store
-        $this->add([
-            'name'          => 'store_id',
-            'type'          => 'Select',
-            'options'       => [
-                'value_options' => $storeManager->stores_for_select(),
-                'label' => 'Store',
-                'label_attributes'  => [
-                    'for'       => 'store_id',
-                    'class'     => 'control-label',
-                    ],
-                ],
-            'attributes'    => [
-                'class'         => 'form-control width-custom',
-                ],
-            ]);
-        // Sale value
-        if ($this->scenario == 'edit') {
-            $this->add([
-                'name'          => 'sale',
-                'type'          => 'Text',
-                'attributes'    => [
-                    'class'         => 'form-control width-200',
-                    'id'            => 'sale',
-                    'placeholder'   => 'Enter sale off value:',
-                    ],
-                'options'       => [
-                    'label'             => 'Sale off value:',
-                    'label_attributes'  => [
-                        'for'       => 'sale',
-                        'class'     => 'control-label',
-                        ]
-                    ],
-                ]);
-        // Status
-            $this->add([
-                'name'          => 'status',
-                'type'          => 'Select',
-                'options'       => [
-                    'empty_option'  => '-- Select status --',
-                    'value_options' => [
-                        '1'    => 'Active',
-                        '0'  => 'InActive',
-                        ],
-                    'label' => 'Status',
-                    'label_attributes'  => [
-                        'for'       => 'status',
-                        'class'     => 'control-label',
-                        ],
-                    ],
-                'attributes'    => [
-                    'class'         => 'form-control width-200',
-                    ],
-                ]);                
-            $this->add([
-                'name'          => 'popular_level',
-                'type'          => 'Select',
-                'attributes'    => [
-                    'class'         => 'form-control width-200',
-                    'id'            => 'popular_level',
-                    ],
-                'options'       => [
-                    'empty_option'  => '-- Select type --',
-                    'value_options' => [
-                        '1'       => 'Special',
-                        '0'        => 'Normal',
-                        ],
-                    'label'             => 'Product type :',
-                    'label_attributes'  => [
-                        'for'       => 'popular_level',
-                        'class'     => 'control-label ',
-                        ]
-                    ],    
-                ]);
-        }
-        $this->addInputFilter();
-
     }
     /**
      * This method creates input filter (used for form filtering/validation).
@@ -251,7 +278,8 @@ class ProductForm extends Form {
        // Create main input filter
         $inputFilter = new InputFilter();
         $this->setInputFilter($inputFilter);
-       // Name
+        
+        // Name
         $inputFilter->add([
             'name'      => 'name',
             'required'  => true,
@@ -269,10 +297,10 @@ class ProductForm extends Form {
                     'entityManager' => $this->entityManager,
                     'product' => $this->product
                     ],
-                
                 ],
                 ],
             ]); 
+
         // Add input for "description" field
         $inputFilter->add([
             'name'     => 'description',
@@ -290,6 +318,7 @@ class ProductForm extends Form {
                 ],
                 ],
             ]);
+        
         // Add input for "intro" field
         $inputFilter->add([
             'name'     => 'intro',
@@ -307,6 +336,7 @@ class ProductForm extends Form {
             ],
             ],
             ]);
+        
         //price
         $inputFilter->add([
             'name'     => 'price',
@@ -314,9 +344,29 @@ class ProductForm extends Form {
             'validators'  => [                    
                 ['name'     => 'Digits',],
                 ],                   
-            ]); 
+            ]);
+
+        //Size
+        $inputFilter->add([
+            'name'     => 'size',
+            'required' => true,
+            'validators'  => [                    
+                ['name'     => 'Digits',],
+                ],                   
+            ]);
+
+        //Quantity
+        $inputFilter->add([
+            'name'     => 'quantity',
+            'required' => true,
+            'validators'  => [                    
+                ['name'     => 'Digits',],
+                ],                   
+            ]);    
+        
+        //if form is edit form
         if($this->scenario == 'edit'){
-        //sale 
+            //sale 
             $inputFilter->add(
                 [
                 'name'      => 'sale',
@@ -326,6 +376,7 @@ class ProductForm extends Form {
                     ], 
                 ]
                 );
+            
             //status 
             $inputFilter->add(
                 [
@@ -333,6 +384,7 @@ class ProductForm extends Form {
                 'required'  => true,
                 ]
                 );
+            
             //popular_level 
             $inputFilter->add(
                 [
