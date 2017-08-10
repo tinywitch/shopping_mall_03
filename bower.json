@@ -18,6 +18,9 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "components-font-awesome": "^4.7.0",
-    "animate.css": "^3.5.2"
+    "animate.css": "^3.5.2",
+    "datatables": "^1.10.15",
+    "semantic": "semantic-ui#^2.2.13",
+    "AdminLTE": "admin-lte#^2.3.11"
   }
 }

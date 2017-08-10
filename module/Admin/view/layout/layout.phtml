@@ -12,44 +12,39 @@
 
         <!-- Le styles -->
         <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
-            ->prependStylesheet($this->basePath('css/style.css'))
+            // ->prependStylesheet($this->basePath('css/style.css'))
             ->prependStylesheet($this->basePath('css/admin.css'))
+            ->prependStylesheet($this->basePath('assets/AdminLTE/dist/css/skins/skin-blue.min.css'))
+            ->prependStylesheet($this->basePath('assets/AdminLTE/dist/css/AdminLTE.min.css'))
             ->prependStylesheet($this->basePath('assets/bootstrap/dist/css/bootstrap-theme.min.css'))
             ->prependStylesheet($this->basePath('assets/bootstrap/dist/css/bootstrap.min.css'))
             ->prependStylesheet($this->basePath('assets/datatables/media/css/dataTables.semanticui.min.css'))
             ->prependStylesheet($this->basePath('assets/semantic/dist/semantic.min.css'))
-
         ?>
 
         <!-- Scripts -->
         <?= $this->headScript()
-        
             ->prependFile($this->basePath('js/me.js'))
-            ->prependFile($this->basePath('assets/semantic/dist/semantic.min.js'))   
+            ->prependFile($this->basePath('assets/semantic/dist/semantic.min.js'))
+            ->prependFile($this->basePath('assets/AdminLTE/dist/js/demo.js'))   
+            ->prependFile($this->basePath('assets/AdminLTE/dist/js/app.min.js'))
             ->prependFile($this->basePath('assets/datatables/media/js/dataTables.semanticui.min.js'))
             ->prependFile($this->basePath('assets/datatables/media/js/jquery.dataTables.min.js'))
+            ->prependFile($this->basePath('assets/bootstrap/dist/js/bootstrap.min.js'))                  
             ->prependFile($this->basePath('assets/jquery/dist/jquery.min.js'))   
-            ->prependFile($this->basePath('assets/bootstrap/dist/js/bootstrap.min.js'))
-                    
         ?>
     </head>
-    <body>
-        <?php include_once 'html/nav.php';?>
-        
-        <div class="row">
-            <!-- uncomment code for absolute positioning tweek see top comment in css -->
-            <!-- <div class="absolute-wrapper"> </div> -->
-            <!-- Menu -->
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <?php include_once 'html/nav.php';?>
             <?php include_once 'html/sidebar.php';?>
-
-            <!-- Main Content -->
-            <div class="container-fluid">
-                <div class="side-body">
+            <div class="content-wrapper">
+                <section class="content">
                     <?= $this->content ?>   
-                </div>
+                </section>
             </div>
-        </div>
 
-        <?= $this->inlineScript() ?>
+            <?= $this->inlineScript() ?>
+        </div>
     </body>
 </html>
