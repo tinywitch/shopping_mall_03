@@ -9,13 +9,37 @@ namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Application\Entity\Product;
+use Application\Entity\User;
+use Application\Entity\Store;
 
 class IndexController extends AbstractActionController
 {
+	/**
+     * Entity manager.
+     * @var Doctrine\ORM\EntityManager
+     */
+	private $entityManager;
+
+	public function __construct($entityManager)
+    {
+        $this->entityManager = $entityManager;        
+    }
+
     public function indexAction()
     {
-        
-    	//var_dump(2);die();
-        return new ViewModel();
+    	$products = $this->entityManager->getRepository(Product::class)->findAll();
+    	$stores = $this->entityManager->getRepository(Store::class)->findAll();
+    	$users = $this->entityManager->getRepository(User::class)->findAll();
+
+    	$number_of_users = count($users);
+    	$number_of_products = count($products);
+    	$number_of_stores = count($stores);
+
+        return new ViewModel([
+            'number_of_users' => $number_of_users,
+            'number_of_products' => $number_of_products,
+            'number_of_stores' => $number_of_stores
+            ]);
     }
 }
