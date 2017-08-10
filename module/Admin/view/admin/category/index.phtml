@@ -1,34 +1,35 @@
 <div class="box-body">
-    <a href="<?= $this->url('categories', ['action'=>'add']); ?>" class="btn btn-primary">
+    <a href="<?= $this->url('products', ['action' => 'add']); ?>" class="btn btn-primary margin-bottom-20">
         Tạo Mới</a>
-<table id="example2" class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>Index</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Option</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php $i = 1 ?>
-        <?php foreach($categories as $category): ?>
+
+    <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
             <tr>
-                <td><?php echo $i++ ?></td>
-                <td><?php echo $category->getName() ?></td>
-                <td><?php echo truncate($category->getDescription(), 30) ?></td>
-                </td>
-                <td><a class="btn btn-primary" href="<?= $this->url('categories',
-                        ['action' => 'view', 'id' => $category->getId()]) ?>">Show</a>
-                    <a class="btn btn-warning" href="<?= $this->url('categories',
-                        ['action' => 'edit', 'id' => $category->getId()]) ?>">Edit</a>
-                    <a class="btn btn-danger" href="<?= $this->url('categories',
-                        ['action' => 'delete', 'id' => $category->getId()]) ?>">Delete</a>
-                </td>
+                <th>Index</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Option</th>
             </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <?php $i = 1 ?>
+            <?php foreach($categories as $category): ?>
+                <tr>
+                    <td><?php echo $i++ ?></td>
+                    <td><?php echo $category->getName() ?></td>
+                    <td><?php echo truncate($category->getDescription(), 30) ?></td>
+                    </td>
+                    <td><a class="btn btn-primary" href="<?= $this->url('categories',
+                            ['action' => 'view', 'id' => $category->getId()]) ?>">Show</a>
+                        <a class="btn btn-warning" href="<?= $this->url('categories',
+                            ['action' => 'edit', 'id' => $category->getId()]) ?>">Edit</a>
+                        <a class="btn btn-danger" href="<?= $this->url('categories',
+                            ['action' => 'delete', 'id' => $category->getId()]) ?>">Delete</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 <!-- /.box-body -->
 </div>
 
