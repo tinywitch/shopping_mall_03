@@ -11,7 +11,7 @@ use Application\Entity\Product;
 class Category
 {
     /**
-     * @ORM\OneToMany(targetEntity="\Application\Entity\Product", mappedBy="categories")
+     * @ORM\OneToMany(targetEntity="\Application\Entity\Product", mappedBy="category")
      * @ORM\JoinColumn(name="id", referencedColumnName="product_id")
      */
     protected $products;

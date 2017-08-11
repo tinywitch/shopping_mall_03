@@ -27,7 +27,8 @@
                     <?php echo $store->getPhone(); ?>
                 </td>
                 <td>
-                    <a href="">
+                
+                    <a href="<?= $this->url('stores', ['action' => 'view', 'id' => $store->getId()]) ?>">
                         <i class="glyphicon glyphicon-log-in"></i>
                     </a>
                     <a href="<?= $this->url('stores', ['action' => 'edit', 'id' => $store->getId()]) ?>">
@@ -36,6 +37,7 @@
                     <a href="<?= $this->url('stores', ['action' => 'delete', 'id' => $store->getId()]) ?>">
                         <i class="glyphicon glyphicon-trash"></i>    
                     </a>
+
                 </td>
             </tr>
         <?php endforeach; ?>    

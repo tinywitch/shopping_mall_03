@@ -116,4 +116,22 @@ class StoreController extends AbstractActionController
     // Redirect the user to "products/list" page.
     return $this->redirect()->toRoute('stores', ['action'=>'list']);
     }
+
+    public function viewAction()
+    {
+        $storeId = $this->params()->fromRoute('id', -1);
+
+        $store = $this->entityManager->getRepository(Store::class)
+            ->findOneById($storeId);
+        if ($store == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;                        
+        }
+       
+        return new ViewModel([
+            
+            'store' => $store
+            ]);
+             
+    }
 }

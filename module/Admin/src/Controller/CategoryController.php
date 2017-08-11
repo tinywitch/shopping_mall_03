@@ -56,7 +56,9 @@ class CategoryController extends AbstractActionController
 
 
     public function addAction(){
+       
         $categories_for_select = $this->categoryManager->categories_for_select();
+        
         $form = new CategoryForm($categories_for_select);
 
         // Check whether this post is a POST request.

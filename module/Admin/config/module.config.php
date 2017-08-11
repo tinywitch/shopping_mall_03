@@ -51,7 +51,7 @@ return [
                     ],
                     'defaults' => [
                         'controller'    => Controller\ProductController::class,
-                        'action'        => 'index',
+                        'action'        => 'list',
                     ],
                 ],
             ],

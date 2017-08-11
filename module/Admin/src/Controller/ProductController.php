@@ -54,6 +54,23 @@ class ProductController extends AbstractActionController
         ]);
     }
 
+    public function viewAction()
+    {
+        
+        $productId = $this->params()->fromRoute('id', -1);
+
+        $product = $this->entityManager->getRepository(Product::class)
+            ->findOneById($productId);
+
+        if ($product == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;                        
+        }
+        return new ViewModel([
+            'product' => $product
+            ]);     
+    }
+
     public function addAction(){
         $categories = $this->categoryManager->categories_for_select();
         $stores = $this->storeManager->stores_for_select();
