@@ -67,6 +67,11 @@ class Order
      */
     protected $id;
 
+    // Post status constants.
+    const STATUS_PENDING = 1; //Pending for admin accept ship
+    const STATUS_SHIPPING = 2; // start shipping
+    const STATUS_COMPLETED = 3; // order successfully
+
     /**
      * @ORM\Column(name="status")
      */
@@ -93,9 +98,24 @@ class Order
     protected $cost;
 
     /**
+     * @ORM\Column(name="number_of_items")
+     */
+    protected $number_of_items;
+
+    /**
      * @ORM\Column(name="completed_at")
      */
     protected $completed_at;
+
+    /**
+     * @ORM\Column(name="ship_at")
+     */
+    protected $ship_at;
+
+    /**
+     * @ORM\Column(name="date_created")
+     */
+    protected $date_created;
 
     // Returns ID of this post.
     public function getId() 
@@ -159,13 +179,43 @@ class Order
         $this->cost = $cost;
     }
 
-    public function getCompleted_at() 
+    public function getNumberOfItems() 
+    {
+        return $this->number_of_items;
+    }
+
+    public function setNumberOfItems($number_of_items) 
+    {
+        $this->number_of_items = $number_of_items;
+    }
+
+    public function getCompletedAt() 
     {
         return $this->completed_at;
     }
 
-    public function setCompleted_at($completed_at) 
+    public function setCompletedAt($completed_at) 
     {
         $this->completed_at = $completed_at;
+    }
+
+    public function getShipAt() 
+    {
+        return $this->ship_at;
+    }
+
+    public function setShipAt($ship_at) 
+    {
+        $this->ship_at = $ship_at;
+    }
+
+    public function getDateCreated() 
+    {
+        return $this->date_created;
+    }
+
+    public function setDateCreated($date_created) 
+    {
+        $this->date_created = $date_created;
     }
 }

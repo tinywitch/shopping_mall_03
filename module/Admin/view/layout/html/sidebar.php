@@ -85,6 +85,27 @@
 		            </li>
 		        </ul>
 	      	</li>
+
+	      	<li class="treeview">
+                <a href="">
+                    <i class="fa fa-truck"></i>
+                    <span>Orders</span>
+                </a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a href="<?= $this->url('orders', ['action' => 'index']); ?>">
+                            <i class="glyphicon glyphicon-list"></i>
+                            <span>List Orders</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-calendar"></i>
+                            <span>Order Plans</span>
+                        </a>
+                    </li>
+                </ul>
+	      	</li>
   		</ul>
   	</section>
 </aside>
