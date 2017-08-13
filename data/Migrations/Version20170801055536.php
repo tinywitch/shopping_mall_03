@@ -101,11 +101,11 @@ class Version20170801055536 extends AbstractMigration
             'orderitem_order_id_fk'
             );
         $table->addForeignKeyConstraint(
-            'product_images',
-            ['product_image_id'],
+            'products',
+            ['product_id'],
             ['id'], 
             [], 
-            'orderitem_product_image_id_fk'
+            'orderitem_product_id_fk'
             );
 
         $table = $schema->getTable('rates');
@@ -149,7 +149,7 @@ class Version20170801055536 extends AbstractMigration
 
         $table = $schema->getTable('order_items');
         $table->removeForeignKey('orderitem_order_id_fk');
-        $table->removeForeignKey('orderitem_product_image_id_fk');
+        $table->removeForeignKey('orderitem_product_id_fk');
 
         $table = $schema->getTable('orders');
         $table->removeForeignKey('order_user_id_fk');

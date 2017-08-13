@@ -19,7 +19,7 @@ class Version20170801055230_order_item extends AbstractMigration
         $table = $schema->createTable('order_items');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('order_id', 'integer');
-        $table->addColumn('product_image_id', 'integer');
+        $table->addColumn('product_id', 'integer');
         $table->addColumn('quantity', 'integer');
         $table->addColumn('status', 'integer');
         $table->addColumn('cost', 'integer');

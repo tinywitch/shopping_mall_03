@@ -83,6 +83,20 @@ return [
                     ],
                 ],
             ],
+            'orders' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/admin/orders[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]*'
+                    ],
+                    'defaults' => [
+                        'controller'    => Controller\OrderController::class,
+                        'action'        => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -97,13 +111,15 @@ return [
                 Controller\Factory\ProductControllerFactory::class,
             Controller\StoreController::class => 
                 Controller\Factory\StoreControllerFactory::class,
+            Controller\OrderController::class => 
+                Controller\Factory\OrderControllerFactory::class,
         ],
     ],
     'service_manager' => [
         'factories' => [
             Service\ProductManager::class => Service\Factory\ProductManagerFactory::class,
             Service\CategoryManager::class => Service\Factory\CategoryManagerFactory::class,
-
+            Service\OrderManager::class => Service\Factory\OrderManagerFactory::class,
             Service\StoreManager::class => Service\Factory\StoreManagerFactory::class,
 
         ],

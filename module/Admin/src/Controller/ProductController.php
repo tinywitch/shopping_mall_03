@@ -17,12 +17,12 @@ class ProductController extends AbstractActionController
 
     /**
      * User manager.
-     * @var Application\Service\ProductManager
+     * @var Admin\Service\ProductManager
      */
     private $productManager;
     /**
      * User manager.
-     * @var Application\Service\CategoryManager
+     * @var Admin\Service\CategoryManager
      */
     private $categoryManager;
     private $storeManager;
