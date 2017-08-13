@@ -4,6 +4,7 @@ namespace Application\Service;
 use Application\Entity\User;
 use Zend\Crypt\Password\Bcrypt;
 use Zend\Math\Rand;
+use Zend\Session\Container;
 
 /**
  * This service is responsible for adding/editing users
@@ -15,7 +16,9 @@ class UserManager
      * Doctrine entity manager.
      * @var
      */
-    private $entityManager;  
+    private $entityManager;
+
+    private $sessionContainer;
     
     /**
      * Constructs the service.
@@ -23,6 +26,16 @@ class UserManager
     public function __construct($entityManager) 
     {
         $this->entityManager = $entityManager;
+        $this->sessionContainer = new Container('UserLogin');
+    }
+
+
+    public function isLogin()
+    {
+        if (isset($this->sessionContainer->id)) {
+            return true;
+        }
+        return false;
     }
     
     /**

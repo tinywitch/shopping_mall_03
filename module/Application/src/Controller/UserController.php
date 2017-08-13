@@ -45,6 +45,28 @@ class UserController extends AbstractActionController
      */
     public function addAction()
     {
+
+        if ($this->userManager->isLogin()) {
+            // Get redirect URL.
+            $redirectUrl = $this->params()->fromPost('redirect_url', '');
+
+            if (!empty($redirectUrl)) {
+                // The below check is to prevent possible redirect attack
+                // (if someone tries to redirect user to another domain).
+                $uri = new Uri($redirectUrl);
+                if (!$uri->isValid() || $uri->getHost()!=null)
+                    throw new \Exception('Incorrect redirect URL: ' . $redirectUrl);
+            }
+
+            // If redirect URL is provided, redirect the user to that URL;
+            // otherwise redirect to Home page.
+            if(empty($redirectUrl)) {
+                return $this->redirect()->toRoute('home');
+            } else {
+                $this->redirect()->toUrl($redirectUrl);
+            }
+        }
+
         // Create user form
         $form = new UserForm('create', $this->entityManager);
 

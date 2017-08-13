@@ -65,7 +65,7 @@ class PasswordChangeForm extends Form
             'type' => 'password',
             'name' => 'confirm_new_password',
             'options' => [
-                'label' => 'Confirm new password',
+                'label' => 'Re-enter new password',
             ],
         ]);
 
