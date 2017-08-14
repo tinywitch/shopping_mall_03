@@ -63,14 +63,14 @@ class Version20170801055536 extends AbstractMigration
             'categories',
             ['category_id'],
             ['id'],
-            [],
+            ['onDelete' => 'SET NULL'],
             'product_category_id_fk'
             );
         $table->addForeignKeyConstraint(
             'stores',
             ['store_id'],
             ['id'],
-            [],
+            ['onDelete' => 'SET NULL'],
             'product_store_id_fk'
             );
 

@@ -54,6 +54,7 @@ class StoreManager
     public function stores_for_select()
     {
         $stores = $this->entityManager->getRepository(Store::class)->findAll();
+        $stores_for_select[0] = '--Select--';
         foreach($stores as $store)
         {
             $stores_for_select[$store->getID()] = $store->getName();

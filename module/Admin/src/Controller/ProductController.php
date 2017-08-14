@@ -149,7 +149,8 @@ class ProductController extends AbstractActionController
                 'sale' => $product->getSale(),
                 'color' => $product->getColor(),
                 'size' => $product->getSize(),
-                'quantity' => $product->getQuantity(),   
+                'quantity' => $product->getQuantity(),
+                'keywords' => $this->productManager->convertKeywordsToString($product)   
                 ];
 
             $form->setData($data);

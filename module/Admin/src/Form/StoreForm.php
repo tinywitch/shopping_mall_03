@@ -32,11 +32,9 @@ class StoreForm extends Form
         $this->setAttributes([
             'action'    => '#',
             'method'    => 'POST',
-            'class'     => 'form-horizontal',
             'role'      => 'form',
             'name'      => 'StoreForm',
             'id'        => 'StoreForm',
-            'style'     => 'padding-top: 20px;',
             'enctype'   => 'multipart/form-data'
             ]);
 
@@ -51,7 +49,7 @@ class StoreForm extends Form
             'name'          => 'name',
             'type'          => 'text',
             'attributes'    => [
-                'class'         => 'form-control width-custom',
+                'class'         => 'form-control',
                 'id'            => 'name',
                 'placeholder'   => 'Enter store name : ',
                 ],
@@ -67,7 +65,7 @@ class StoreForm extends Form
             'name'          => 'address',
             'type'          => 'text',
             'attributes'    => [
-                'class'         => 'form-control width-custom',
+                'class'         => 'form-control',
                 'id'            => 'address',
                 'placeholder'   => 'Enter store address : ',
                 ],
@@ -83,7 +81,7 @@ class StoreForm extends Form
             'name'          => 'phone',
             'type'          => 'text',
             'attributes'    => [
-                'class'         => 'form-control width-custom',
+                'class'         => 'form-control',
                 'id'            => 'phone',
                 'placeholder'   => 'Enter phone of store  : ',
                 ],
@@ -101,6 +99,7 @@ class StoreForm extends Form
             'attributes' => [                
                 'value' => 'Create',
                 'id' => 'submitbutton',
+                'class' => 'btn btn-primary'
                 ],
             ]);           
         $this->addInputFilter();

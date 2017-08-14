@@ -36,6 +36,22 @@ class OrderController extends AbstractActionController
             ]);
     }
 
+    public function viewAction()
+    {
+        $orderId = $this->params()->fromRoute('id', -1);
+
+        $order = $this->entityManager->getRepository(Order::class)->find($orderId);
+        if ($order == null) {
+            $this->getResponse()->setStatusCode(404);                      
+        }
+        $order_items = $order->getOrderItems();
+
+        return new ViewModel([
+            'order_items' => $order_items,
+            'order' => $order
+            ]);
+    }
+
     public function editAction()
     {
         $orderId = $this->params()->fromRoute('id', -1);

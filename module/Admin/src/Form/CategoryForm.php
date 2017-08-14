@@ -39,7 +39,7 @@ class CategoryForm extends Form
             'type'  => 'text',
             'name' => 'name',
             'attributes' => [
-                'class' => 'form-control width-custom',
+                'class' => 'form-control',
                 'id' => 'name',
                 'placeholder'   => 'Enter Category name : ',
             ],
@@ -53,7 +53,7 @@ class CategoryForm extends Form
             'type'  => 'textarea',
             'name' => 'description',
             'attributes' => [
-                'class' => 'form-control width-custom',                
+                'class' => 'form-control',                
                 'id' => 'description',
             ],
             'options' => [
@@ -65,7 +65,7 @@ class CategoryForm extends Form
             'type'  => 'select',
             'name' => 'parent_id',
             'attributes' => [
-                'class' => 'form-control width-custom',                
+                'class' => 'form-control',                
                 'id' => 'parent_id',
             ],
             'options' => [
