@@ -409,13 +409,13 @@ class Product
         $this->size = $size;
     }
 
-    public function getDate_created() 
+    public function getDateCreated() 
     {
         return $this->date_created;
     }
 
     // Sets ID of this product.
-    public function setDate_created($date_created) 
+    public function setDateCreated($date_created) 
     {
         $this->date_created = $date_created;
     }

@@ -11,11 +11,13 @@ class CategoryManager
      * @var Doctrine\ORM\EntityManager
      */
     private $entityManager;
-    
+    private $categories_for_select = NULL;
+    private $categories;
     // Constructor is used to inject dependencies into the service.
     public function __construct($entityManager)
     {
         $this->entityManager = $entityManager;
+        $this->categories_for_select = ['0' => '--Select--']; 
     }
       
     public function addNewCategory($data) 
@@ -72,11 +74,20 @@ class CategoryManager
 
     public function categories_for_select()
     {
-        $categories = $this->entityManager->getRepository(Category::class)->findAll();
-        foreach($categories as $cate)
-        {
-            $categories_for_select[$cate->getID()] = $cate->getName();
-        }
-        return $categories_for_select;
+        $this->categories = $this->entityManager->getRepository(Category::class)->findAll();
+        $this->categories_for_select = $this->category_parent();
+        return $this->categories_for_select;
+    }
+
+    public function category_parent($parent_id = 0, $str = "--")
+    {        
+         
+        foreach($this->categories as $cate){
+            if($cate->getParentId() == $parent_id){
+                $this->categories_for_select[$cate->getID()] = $str.$cate->getName();
+                $this->category_parent($cate->getID(), $str."--");
+            }
+        } 
+        return $this->categories_for_select;    
     }
 }

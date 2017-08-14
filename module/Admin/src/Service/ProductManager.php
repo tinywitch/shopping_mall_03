@@ -48,7 +48,7 @@ class ProductManager
         if($data['image'] != null)
             $product->setImage($data['image']);
         else $product->setImage('/img/products/default.jpg');
-        $product->setDate_created($data['date_created']);
+        $product->setDateCreated($data['date_created']);
 
         // Add the entity to entity manager.
         $this->entityManager->persist($product);

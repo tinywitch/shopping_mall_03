@@ -11,7 +11,7 @@ use Application\Entity\Product;
 class Store
 {
     /**
-     * @ORM\OneToMany(targetEntity="\Application\Entity\Product", mappedBy="stores")
+     * @ORM\OneToMany(targetEntity="\Application\Entity\Product", mappedBy="store")
      * @ORM\JoinColumn(name="id", referencedColumnName="store_id")
      */
     protected $products;
