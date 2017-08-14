@@ -6,24 +6,17 @@
                     Home
                 </button>
                 <ul class="menu-category-bar">
+                <?php foreach ( $mainCategories as $mainCategory ) : ?>
                     <li class="menu-item">
                         <button class="btn btn-cancel bt-infinitive" onclick="location.href = '#';">
-                            Man
+                            <?php echo $mainCategory->getName(); ?>  
                         </button>
                     </li>
+                    
+                <?php endforeach ?>
                     <li class="menu-item">
                         <button class="btn btn-cancel bt-infinitive" onclick="location.href = '#';">
-                            Women
-                        </button>
-                    </li>
-                    <li class="menu-item">
-                        <button class="btn btn-cancel bt-infinitive" onclick="location.href = '#';">
-                            Kid
-                        </button>
-                    </li>
-                    <li class="menu-item">
-                        <button class="btn btn-cancel bt-infinitive" onclick="location.href = '#';">
-                            Sale
+                            Sale 
                         </button>
                     </li>
                 </ul>

@@ -113,6 +113,7 @@ return [
                     ],
                 ],
             ],
+
             'search' => [
                 'type' => Literal::class,
                 'options' => [
@@ -130,6 +131,21 @@ return [
                     'defaults' => [
                         'controller' => Controller\HomeController::class,
                         'action' => 'getDataSearch',
+                        ],
+                    ],
+            ],
+            'category' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/category[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9_-]*',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\CategoryController::class,
+                        'action' => 'view',
+
                     ],
                 ],
             ],
@@ -141,6 +157,7 @@ return [
             Controller\UserController::class => Controller\Factory\UserControllerFactory::class,
             Controller\HomeController::class => Controller\Factory\HomeControllerFactory::class,
             Controller\ProductController::class => Controller\Factory\ProductControllerFactory::class,
+            Controller\CategoryController::class => Controller\Factory\CategoryControllerFactory::class,
         ],
     ],
     'access_filter' => [
@@ -160,6 +177,13 @@ return [
                 // ['actions' => ['changePassword'], 'allow' => '@']
             ],
             Controller\ProductController::class => [
+                // Give access to "resetPassword", "message" and "setPassword" actions
+                // to anyone.
+                ['actions' => ['view'], 'allow' => '*'],
+                // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
+                // ['actions' => ['changePassword'], 'allow' => '@']
+            ],
+            Controller\CategoryController::class => [
                 // Give access to "resetPassword", "message" and "setPassword" actions
                 // to anyone.
                 ['actions' => ['view'], 'allow' => '*'],
@@ -197,6 +221,7 @@ return [
 //        'exception_template' => 'error/index',
         'template_map' => [
             'application/layout' => __DIR__ . '/../view/layout/layout.phtml',
+            'application/layout_category' => __DIR__ . '/../view/layout/layout_category.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
         ],
         'template_path_stack' => [

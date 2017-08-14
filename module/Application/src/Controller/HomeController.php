@@ -32,7 +32,9 @@ class HomeController extends AbstractActionController
 
     public function indexAction()
     {
-        $view = new ViewModel();
+        $newProducts = $this->entityManager->getRepository(Product::class)->findBy(
+           ['popular_level' => 1],['date_created'=>'DESC'], 3);    
+        $view = new ViewModel(['newProducts' => $newProducts ]);
         $this->layout('application/layout');
         return $view;
     }
