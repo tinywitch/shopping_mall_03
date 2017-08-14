@@ -14,6 +14,7 @@ use Application\Service\AuthManager;
 use Zend\Session\SessionManager;
 use Zend\Session\Container;
 use Application\Form\LoginForm;
+use Application\Form\SearchForm;
 
 class Module
 {
@@ -55,6 +56,8 @@ class Module
             $viewModel->user = null;
         }
         $form = new LoginForm();
+        $search_form = new SearchForm();
+        $viewModel->search_form = $search_form;
         $viewModel->form = $form;
 
         // The following line instantiates the SessionManager and automatically

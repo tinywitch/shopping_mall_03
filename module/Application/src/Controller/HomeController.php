@@ -10,6 +10,7 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Entity\Category;
+use Application\Entity\Product;
 
 class HomeController extends AbstractActionController
 {
@@ -18,11 +19,14 @@ class HomeController extends AbstractActionController
      * @var
      */
     private $entityManager;
+    private $productManager;
+    private $categoryManager;
 
-    public function __construct($entityManager, $categoryManager)
+    public function __construct($entityManager, $categoryManager, $productManager)
     {
         $this->entityManager = $entityManager;
         $this->categoryManager = $categoryManager;
+        $this->productManager = $productManager;
     }
 
 
@@ -39,5 +43,27 @@ class HomeController extends AbstractActionController
         $view = new ViewModel();
         $this->layout('application/home');
         return $view;
+    }
+
+    public function searchAction()
+    {  
+        $this->layout('application/layout');
+        return new ViewModel();
+    }
+
+    public function getDataSearchAction()
+    {
+        $products = $this->entityManager->getRepository(Product::class)->findAll();
+        $productArray = [];
+        foreach ($products as $product) {
+            $product_a['id'] = $product->getID();
+            $product_a['name'] = $product->getName();
+            $product_a['image'] = $product->getImage();
+        array_push($productArray, $product_a);
+        }
+        $product_json = json_encode($productArray);
+        $this->response->setContent($product_json);
+
+        return $this->response;
     }
 }

@@ -67,7 +67,7 @@ label {
     border-radius: 0;
 }
 
-.search-bar input[type="text"] {
+.search-bar input[type="search"] {
     background-color: var(--main-color);
     border: 0;
     left: -1px;
@@ -264,4 +264,98 @@ label {
     padding: 7px 20px 10px 20px;
     font-size: 16px;
     font-weight: bold;
+}
+
+#search-box {
+    height: 40px !important;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 500px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white !important;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 30px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+.search-icon {
+    position: absolute;
+    line-height: 30px;
+    z-index: 20;
+    font-size: 100%;
+    padding-left: 10px;
+    top:10px;
+    font-weight:bold;
+    color: grey;
+}
+.tt-query, /* UPDATE: newer versions use tt-input instead of tt-query */
+.tt-hint {
+    visibility:hidden
+}
+
+.tt-query { /* UPDATE: newer versions use tt-input instead of tt-query */
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.tt-hint {
+    color: #999;
+}
+
+.tt-menu { /* UPDATE: newer versions use tt-menu instead of tt-dropdown-menu */
+    width: 500px;
+    margin-top: 12px;
+    padding: 8px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggestion {
+    padding: 3px 20px;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.tt-suggestion.tt-is-under-cursor { /* UPDATE: newer versions use .tt-suggestion.tt-cursor */
+    color: #fff;
+    background-color: #0097cf;
+
+}
+
+.tt-suggestion p {
+    margin: 0;
+}
+
+.tt-suggestion a {
+    color: black;
+}
+
+.empty-message {
+    padding-left: 20px;
+}
+
+.search-by {
+    padding-left: 20px;
+}
+
+.tt-dataset-book-author {
+    margin-top: 40px
+}
+
+.image-product-icon {
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    transition: 0.3s;
+    width:50px;
+    height: 50px;
+    margin-right: 15px;
 }
