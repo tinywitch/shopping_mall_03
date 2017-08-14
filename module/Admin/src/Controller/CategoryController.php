@@ -48,9 +48,10 @@ class CategoryController extends AbstractActionController
           return;                        
         }
         // Render the view template
-
+        $products = $category->getProducts();
         return new ViewModel([
-            'category' => $category
+            'category' => $category,
+            'products' => $products
         ]);
     }
 

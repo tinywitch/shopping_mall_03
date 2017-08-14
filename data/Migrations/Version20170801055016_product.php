@@ -32,7 +32,7 @@ class Version20170801055016_product extends AbstractMigration
         $table->addColumn('rate_avg', 'float', ['default' => 0]);
         $table->addColumn('rate_count', 'integer', ['default' => 0]);
         $table->addColumn('sale', 'integer', ['default' => 0]);
-        $table->addColumn('category_id', 'integer');
+        $table->addColumn('category_id', 'integer', ['notnull' => false]);
         $table->addColumn('store_id', 'integer', ['notnull' => false]);
         $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);

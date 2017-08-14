@@ -43,8 +43,10 @@ class ProductManager
         $product->setColor($data['color']);
         $product->setQuantity($data['quantity']);
         $product->setSize($data['size']);
-        $product->setCategory($data['category']);
-        $product->setStore($data['store']);
+        if ($data['category'] != null)
+            $product->setCategory($data['category']);
+        if ($data['store'] != null)
+            $product->setStore($data['store']);
         if($data['image'] != null)
             $product->setImage($data['image']);
         else $product->setImage('/img/products/default.jpg');
@@ -75,8 +77,10 @@ class ProductManager
         $product->setDescription($data['description']);
         $product->setStatus($data['status']);
         $product->setSale($data['sale']);
-        $product->setCategory($data['category']);
-        $product->setStore($data['store']);
+        if ($data['category'] != null)
+            $product->setCategory($data['category']);
+        if ($data['store'] != null)
+            $product->setStore($data['store']);
         
         // Apply changes to database.
         $this->entityManager->flush();
@@ -90,6 +94,22 @@ class ProductManager
         }
         $this->entityManager->remove($product);   
         $this->entityManager->flush();
+    }
+
+    public function convertKeywordsToString($product)
+    {
+        $keywords = $product->getKeywords();
+        $keywordsCount = count($keywords);
+        $keywordsStr = '';
+        $i = 0;
+        foreach ($keywords as $kw) {
+            $i ++;
+            $keywordsStr .= $kw->getKeyword();
+            if ($i < $keywordsCount) 
+                $keywordsStr .= ', ';
+        }
+        
+        return $keywordsStr;
     }
 
     private function addKeywordsToProduct($keywordsStr, $product) 
