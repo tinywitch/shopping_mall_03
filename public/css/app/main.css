@@ -105,13 +105,12 @@ label {
 }
 
 .category-bar-left {
-    position: absolute;
-    left: 80px;
+
+    padding-left: 90px;
 }
 
 .category-bar-right {
-    position: absolute;
-    right: 80px;
+    padding-right: 90px;
 }
 
 .category-bar-menu {
@@ -157,17 +156,24 @@ label {
 }
 
 .cart-info {
-    position: relative;
-    top: -10px;
+    padding-top: 5px;
 }
 
 .cart-info a {
     text-decoration: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cart-info a ul {
+    margin: 0;
+    padding: 0;
 }
 
 .cart-icon {
     color: var(--main-color);
     font-size: 20px;
+    margin: 0;
 }
 
 #number_cart_item {
@@ -185,9 +191,7 @@ label {
 }
 
 .category-bar-right .signin-register {
-    position: relative;
-    right: 140px;
-    top: 10px;
+    padding-top: 10px;
 }
 
 #register-link {
@@ -227,13 +231,12 @@ label {
 
 .divider {
     height: 1px;
-    width:100%;
-    display:block; /* for use on default inline elements like span */
+    width: 100%;
+    display: block; /* for use on default inline elements like span */
     margin: 9px 0;
     overflow: hidden;
     background-color: #e5e5e5;
 }
-
 
 #fh5co-product .product-carousel figure {
     margin-bottom: 10px;
@@ -256,8 +259,9 @@ label {
 
 #fh5co-product .price {
     letter-spacing: 2px;
-    border: 2px solid #d1c286;
     display: inline-block;
     margin-bottom: 20px;
     padding: 7px 20px 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
 }

@@ -89,7 +89,7 @@ class UserController extends AbstractActionController
 
                 // Redirect to "view" page
                 return $this->redirect()->toRoute('user',
-                    ['action' => 'view', 'id' => $user->getId()]);
+                    ['action' => 'edit']);
             }
         }
 
