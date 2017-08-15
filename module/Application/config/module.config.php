@@ -218,10 +218,10 @@ return [
                 ['actions' => ['view'], 'allow' => '*'],
                 // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
                 // ['actions' => ['changePassword'], 'allow' => '@']
-                Controller\CartController::class => [
-                    // Give access to "view" actions to anyone.
-                    ['actions' => ['view'], 'allow' => '*'],
-                ],
+            ],
+            Controller\CartController::class => [
+                // Give access to "view" actions to anyone.
+                ['actions' => ['view'], 'allow' => '*'],
             ],
         ],
     ],
@@ -237,7 +237,6 @@ return [
     ],
     'session_containers' => [
         'UserLogin',
-        'Cart'
     ],
 //    'view_helpers' => [
 //        'factories' => [

@@ -1741,14 +1741,19 @@ fieldset legend {
     outline: none !important;
 }
 
-.btn-primary {
+.btn-primary, .btn-primary:active {
     background: var(--third-color);
     color: var(--main-color);
     border: 2px solid var(--third-color);
 }
 
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+.btn-primary:hover {
     background: var(--second-color) !important;
+    border-color: var(--second-color) !important;
+}
+
+.btn-primary:active {
+    background: var(--third-color) !important;
     border-color: var(--second-color) !important;
 }
 
@@ -1758,8 +1763,7 @@ fieldset legend {
     border: 2px solid var(--third-color);
 }
 
-.btn-primary.btn-outline:hover, .btn-primary.btn-outline:focus, .btn-primary.btn-outline:active {
-    background: var(--third-color);
+.btn-primary.btn-outline:hover {
     color: var(--main-color);
 }
 

@@ -18,20 +18,16 @@ class CartController extends AbstractActionController
      */
     private $entityManager;
 
-
-    private $sessionContainer;
-
     /**
      * Constructor.
      */
-    public function __construct($entityManager, $sessionContainer)
+    public function __construct($entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->sessionContainer = $sessionContainer;
     }
 
     /**
-     * The "view" action displays a page allowing to view user's details.
+     * The "view" action displays a page allowing to view cart's details.
      */
     public function viewAction()
     {
@@ -46,5 +42,10 @@ class CartController extends AbstractActionController
         ]);
         $this->layout('application/layout');
         return $view;
+    }
+
+    public function addAction()
+    {
+
     }
 }

@@ -15,9 +15,8 @@ class CartControllerFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
-        $sessionContainer = $container->get('Cart');
 
         // Instantiate the controller and inject dependencies
-        return new CartController($entityManager, $sessionContainer);
+        return new CartController($entityManager);
     }
 }
