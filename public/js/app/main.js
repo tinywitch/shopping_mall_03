@@ -316,8 +316,9 @@
     var cartController = function () {
         var cart = readCookie('Cart');
         cart = JSON.parse(cart);
-        if (!cart) {
+        if (!cart || !cart.token || cart.token !== 'shopping123') {
             cart = {
+                token: 'shopping123',
                 totalItem: 0,
                 items: [],
                 totalPrice: 0
@@ -403,8 +404,8 @@
                 + '</div>'
                 + '</div>'
                 + '<div class="col-md-6 text-right" style="padding-top: 10px">'
-                + '<form>'
-                + '<input type="submit" value="Checkout" class="btn btn-warning">'
+                + '<form action="/cart/add" method="get">'
+                + '<input type="submit" value="Checkout" id="checkout" class="btn btn-warning">'
                 + '</form>'
                 + '</div>'
                 + '</div>'
@@ -425,6 +426,12 @@
         $('.like-btn').on('click', function () {
             $(this).toggleClass('is-active');
         });
+
+        $('.like-btn2').on('click', function () {
+            $(this).toggleClass('is-active');
+        });
+
+        setTimeout(function() {$('.like-btn2').click();}, 800);
 
         $('.minus-btn').on('click', function (e) {
             e.preventDefault();
@@ -483,10 +490,29 @@
 
                     $('.shopping-cart-content').html(ml);
                 }
-
-
             }
         });
+
+        // $('#checkout').click(function (e) {
+        //     e.preventDefault();
+        //     var stuff = {};
+        //     cart.items.forEach(function (item) {
+        //         var content = {
+        //             id: item.id,
+        //             quantity: item.quantity
+        //         };
+        //         stuff[item.id] = content;
+        //     });
+        //     console.log(stuff);
+        //     $.ajax({
+        //         type    : 'POST',
+        //         url     : '/cart/add',
+        //         data    : stuff,
+        //         success : function(response) {
+        //             console.log(response);
+        //         }
+        //     });
+        // });
 
         $('.plus-btn').on('click', function (e) {
             e.preventDefault();
