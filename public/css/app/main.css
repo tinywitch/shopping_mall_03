@@ -50,7 +50,7 @@ label {
     background-color: #FF5722;
     color: #fff;
     border-radius: 0;
-    height: 40px;
+    height: 41px;
     width: 48px;
 }
 
@@ -70,7 +70,8 @@ label {
 .search-bar input[type="search"] {
     background-color: var(--main-color);
     border: 0;
-    left: -1px;
+    /*top: -2px;*/
+    left: -2px;
     height: 40px;
     font-size: 16px;
 }
@@ -83,7 +84,6 @@ label {
 .search-bar .glyphicon {
     color: var(--main-color);
     font-size: 18px;
-    margin-left: -5px;
 }
 
 /*Category bar*/
@@ -246,6 +246,10 @@ label {
     *display: inline;
 }
 
+#fh5co-product .item {
+    max-height: 420px;
+}
+
 #fh5co-product .product-carousel figure img {
     max-height: 600px;
     max-width: 400px;
@@ -258,44 +262,40 @@ label {
 }
 
 #fh5co-product .price {
-    letter-spacing: 2px;
     display: inline-block;
     margin-bottom: 20px;
-    padding: 7px 20px 10px 20px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
 }
 
+#fh5co-product .price-before-sale {
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/*Search*/
 #search-box {
     height: 40px !important;
     margin-top: 5px;
     margin-bottom: 5px;
     width: 500px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
     box-sizing: border-box;
     border: 2px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: white !important;
+    font-size: 15px;
+    background-color: var(--main-color) !important;
     background-position: 10px 10px;
     background-repeat: no-repeat;
-    padding: 12px 20px 12px 30px;
+    padding: 12px 20px 12px 20px;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
 }
 
-.search-icon {
-    position: absolute;
-    line-height: 30px;
-    z-index: 20;
-    font-size: 100%;
-    padding-left: 10px;
-    top:10px;
-    font-weight:bold;
-    color: grey;
-}
 .tt-query, /* UPDATE: newer versions use tt-input instead of tt-query */
 .tt-hint {
-    visibility:hidden
+    visibility: hidden
 }
 
 .tt-query { /* UPDATE: newer versions use tt-input instead of tt-query */
@@ -313,8 +313,7 @@ label {
     background-color: #fff;
     border: 1px solid #ccc;
     border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 }
 
 .tt-suggestion {
@@ -352,10 +351,189 @@ label {
 .image-product-icon {
     display: inline-block;
     border: 1px solid #ddd;
-    border-radius: 4px;
     padding: 5px;
     transition: 0.3s;
-    width:50px;
+    width: 50px;
     height: 50px;
     margin-right: 15px;
+}
+
+/*Cart view*/
+.shopping-cart {
+    background: var(--main-color);
+    padding: 0 60px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+.shopping-cart-content {
+    margin: 20px auto;
+    width: 750px;
+}
+
+.shopping-cart-content .item {
+    padding: 20px 30px;
+    height: 140px;
+    display: flex;
+}
+
+.shopping-cart-content .item:nth-child(3) {
+    border-top: 1px solid #E1E8EE;
+    border-bottom: 1px solid #E1E8EE;
+}
+
+.buttons {
+    position: relative;
+    padding-top: 30px;
+    margin-right: 60px;
+}
+
+.delete-btn,
+.like-btn {
+    display: inline-block;
+    Cursor: pointer;
+}
+
+.delete-btn {
+    width: 18px;
+    height: 17px;
+    background: url("/img/delete-icn.svg") no-repeat center;
+}
+
+.like-btn {
+    position: absolute;
+    top: 9px;
+    left: 15px;
+    background: url('/img/twitter-heart.png');
+    width: 60px;
+    height: 60px;
+    background-size: 2900%;
+    background-repeat: no-repeat;
+}
+
+.is-active {
+    animation-name: animate;
+    animation-duration: .8s;
+    animation-iteration-count: 1;
+    animation-timing-function: steps(28);
+    animation-fill-mode: forwards;
+}
+
+@keyframes animate {
+    0% {
+        background-position: left;
+    }
+    50% {
+        background-position: right;
+    }
+    100% {
+        background-position: right;
+    }
+}
+
+.image {
+    margin-right: 50px;
+    max-width: 80px;
+    max-height: 120px;
+}
+
+/*Let’s add some basic style to  product name and description.*/
+.description {
+    padding-top: 10px;
+    margin-right: 60px;
+    width: 115px;
+}
+
+.description span {
+    display: block;
+    font-size: 14px;
+    color: #43484D;
+    font-weight: 400;
+}
+
+.description span:first-child {
+    margin-bottom: 5px;
+}
+
+.description span:last-child {
+    font-weight: 300;
+    margin-top: 8px;
+    color: #86939E;
+}
+
+.quantity {
+    padding-top: 20px;
+    margin-right: 60px;
+}
+
+.quantity input {
+    -webkit-appearance: none;
+    border: none;
+    text-align: center;
+    width: 32px;
+    font-size: 16px;
+    color: #43484D;
+    font-weight: 300;
+}
+
+/*button[class*=btn] {*/
+/*width: 30px;*/
+/*height: 30px;*/
+/*background-color: #E1E8EE;*/
+/*border-radius: 6px;*/
+/*border: none;*/
+/*cursor: pointer;*/
+/*}*/
+.minus-btn img {
+    margin-bottom: 3px;
+}
+
+.plus-btn img {
+    margin-top: 2px;
+}
+
+button:focus,
+input:focus {
+    outline: 0;
+}
+
+.total-price {
+    width: 83px;
+    padding-top: 27px;
+    text-align: center;
+    font-size: 16px;
+    color: #43484D;
+    font-weight: 300;
+}
+
+@media (max-width: 800px) {
+    .shopping-cart {
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+    }
+
+    .shopping-cart .item {
+        height: auto;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .image img {
+        width: 50%;
+    }
+
+    .image,
+    .quantity,
+    .description {
+        width: 100%;
+        text-align: center;
+        margin: 6px 0;
+    }
+
+    .buttons {
+        margin-right: 20px;
+    }
 }

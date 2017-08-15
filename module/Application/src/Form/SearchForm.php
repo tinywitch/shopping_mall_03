@@ -19,7 +19,7 @@ class SearchForm extends Form
             'attributes' => [
                 'class' => 'form-control input-search',
                 'id' => 'search-box',
-                'placeholder' => 'Search for everything: ',
+                'placeholder' => 'Search for everything...',
             ],
         ]);
 

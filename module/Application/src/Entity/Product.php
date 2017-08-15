@@ -40,6 +40,21 @@ class Product
     /**
      * Constructor.
      */
+
+    private $mapColor = [
+        '1' => 'White',
+        '2' => 'Black',
+        '3' => 'Blue',
+        '4' => 'Yellow',
+        '5' => 'Red',
+        '6' => 'Green',
+        '7' => 'Purple',
+        '8' => 'Orange',
+        '9' => 'Light blue',
+        '10' => 'Sky blue',
+        '11' => 'Gray',
+    ];
+
     public function __construct() 
     {
         $this->comments = new ArrayCollection();
@@ -385,6 +400,11 @@ class Product
         return $this->color;
     }
 
+    public function getColorText()
+    {
+        return $this->mapColor[$this->color];
+    }
+
     public function setColor($color) 
     {
         $this->color = $color;
@@ -419,5 +439,10 @@ class Product
     public function setDateCreated($date_created) 
     {
         $this->date_created = $date_created;
+    }
+
+    public function getSalePrice() {
+        $price = $this->getPrice() * (1 - $this->getSale()/100.0);
+        return round($price, 2);
     }
 }

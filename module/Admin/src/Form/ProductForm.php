@@ -25,10 +25,17 @@ class ProductForm extends Form {
     private $categories;
     private $stores;
     private $color = [
-        '1' => 'yellow',
-        '2' => 'red',
-        '3' => 'blue',
-        '4' => 'black'
+        '1' => 'White',
+        '2' => 'Black',
+        '3' => 'Blue',
+        '4' => 'Yellow',
+        '5' => 'Red',
+        '6' => 'Green',
+        '7' => 'Purple',
+        '8' => 'Orange',
+        '9' => 'Light blue',
+        '10' => 'Sky blue',
+        '11' => 'Gray',
         ];
 
     public function __construct(

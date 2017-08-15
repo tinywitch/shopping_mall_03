@@ -44,7 +44,13 @@
             <div class="col-sm-6 text-center fh5co-heading animate-box">
                 <h2><?php echo $product->getName(); ?></h2>
                 <div class="col-md-10 col-md-offset-1">
-                    <span class="price">VNĐ: <?php echo $product->getPrice(); ?>000</span>
+                    <?php if ($product->getSale() > 0) { ?>
+                        <span class="price" style="color: red;"><?php echo $product->getSalePrice(); ?> USD</span>
+                        <div class="price-before-sale">- <strike><?php echo $product->getPrice(); ?></strike> USD</div>
+                    <?php } else { ?>
+                        <span class="price"><?php echo $product->getPrice(); ?> USD</span>
+                    <?php }; ?>
+                    <span><b>COLOR: <?php echo $product->getColorText(); ?></b></span>
                     <p><?php echo $product->getIntro(); ?></p>
                 </div>
                 <!--                                <p>Paragraph placeat quis fugiat provident veritatis quia iure a debitis adipisci dignissimos consectetur magni quas eius nobis reprehenderit soluta eligendi quo reiciendis fugit? Veritatis tenetur odio delectus quibusdam officiis est.</p>-->
