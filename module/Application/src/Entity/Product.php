@@ -9,6 +9,7 @@ use Application\Entity\Product_image;
 use Application\Entity\Rate;
 /**
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\Application\Repository\ProductRepository")
  * @ORM\Table(name="products")
  */
 class Product

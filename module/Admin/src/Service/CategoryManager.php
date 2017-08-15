@@ -19,7 +19,7 @@ class CategoryManager
         $this->entityManager = $entityManager;
         $this->categories_for_select = ['0' => '--Select--']; 
     }
-      
+    
     public function addNewCategory($data) 
     {
         if($this->checkCategoryExists($data['name'])) {
@@ -59,11 +59,21 @@ class CategoryManager
     }
 
     public function removeCategory($category) 
-        {
-            $this->entityManager->remove($category);
-                
-            $this->entityManager->flush();
-        }
+    {
+        $categories = $this->entityManager->getRepository(Category::class)->findAll();
+       
+        
+        $this->entityManager->remove($category);
+        // foreach ($categories as $cate) {
+        //     if($cate->getParentId() == $category->getId()) {
+   
+        //         $this->entityManager->remove($category);
+
+        //         $this->removeCategory($cate);
+        //         }
+        //     }        
+        $this->entityManager->flush();
+    }
 
 
     public function checkCategoryExists($data)

@@ -3,7 +3,7 @@ namespace Application\Service;
 
 use Application\Entity\Category;
 use Zend\Filter\StaticFilter;
-
+use Appliaction\Entity\Product;
 class CategoryManager 
 {
     /**
@@ -34,5 +34,10 @@ class CategoryManager
             $categories_for_nav_bar[$main_cate->getName()] = $child_categories_for_select;
         }
         return $categories_for_nav_bar;
+    }
+    public function mainCategories()
+    {
+        return $this->entityManager->getRepository(Category::class)->findBy(['parent_id' => '0']);
+
     }
 }

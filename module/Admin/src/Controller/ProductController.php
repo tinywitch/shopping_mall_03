@@ -125,6 +125,19 @@ class ProductController extends AbstractActionController
             if(!empty($httpadapter->getFileName())) {
                 $data['image'] = $httpadapter->getFileName();
                 $data['image'] = ltrim($data['image'], "public");
+                //delete old image
+                $filename = 'public'.$product->getImage();
+
+                if (file_exists($filename)) {
+                    if (!unlink($filename)) {
+                      $Message = "Error deleting $filename";
+                    } else {
+                      $Message = "Deleted $filename";
+                    }
+                } else {
+                    $Message = "The file $filename does not exist";
+                }
+
             }else $data['image'] = $product->getImage();
             $form->setData($data);
 

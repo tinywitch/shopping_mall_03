@@ -312,13 +312,13 @@ class ProductForm extends Form {
                 [
                 'name'    => 'StringLength',
                 'options' => [
-                    'min' => 1,
+                    'min' => 10,
                     'max' => 8096
                     ],
                 ],
                 ],
             ]);
-        
+
         // Add input for "intro" field
         $inputFilter->add([
             'name'     => 'intro',

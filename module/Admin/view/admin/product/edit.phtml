@@ -2,6 +2,12 @@
     $form->get('submit')->setAttributes([
         'value'=>'Edit',  
         ]);
+    $form->get('category_id')->setAttributes([
+        'value'=>$product->getCategory()->getId(),  
+        ]);
+    $form->get('store_id')->setAttributes([
+        'value'=>$product->getStore()->getId(),  
+        ]);
 ?>
 <div class="row">
     <div class="col-md-12">
