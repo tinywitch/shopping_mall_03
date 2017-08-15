@@ -42,10 +42,13 @@ class CategoryController extends AbstractActionController
     public function viewAction()
     {   
         $categoryId = $this->params()->fromRoute('id', -1);
+        $arr = [];
+        $arr = $this->categoryManager->arrCate($arr,$categoryId);
         $page = $this->params()->fromQuery('page', 1);
         $category = $this->entityManager->getRepository(category::class)->find($categoryId);
         $products = $this->entityManager->getRepository(Product::class)
-            ->findProductsByCategory($categoryId);
+            ->findProductsByCategory($arr);
+
         $adapter = new DoctrineAdapter(new ORMPaginator($products, false));
         $paginator = new Paginator($adapter);
         $paginator->setDefaultItemCountPerPage(6);                

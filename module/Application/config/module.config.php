@@ -131,8 +131,8 @@ return [
                     'defaults' => [
                         'controller' => Controller\HomeController::class,
                         'action' => 'getDataSearch',
-                        ],
                     ],
+                ],
             ],
             'category' => [
                 'type' => Segment::class,
@@ -149,6 +149,34 @@ return [
                     ],
                 ],
             ],
+            'category' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/category[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9_-]*',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\CategoryController::class,
+                        'action' => 'view',
+
+                    ],
+                ],
+            ],
+            'cart' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/cart[/:action]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\CartController::class,
+                        'action' => 'view',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -158,6 +186,7 @@ return [
             Controller\HomeController::class => Controller\Factory\HomeControllerFactory::class,
             Controller\ProductController::class => Controller\Factory\ProductControllerFactory::class,
             Controller\CategoryController::class => Controller\Factory\CategoryControllerFactory::class,
+            Controller\CartController::class => Controller\Factory\CartControllerFactory::class,
         ],
     ],
     'access_filter' => [
@@ -189,8 +218,12 @@ return [
                 ['actions' => ['view'], 'allow' => '*'],
                 // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
                 // ['actions' => ['changePassword'], 'allow' => '@']
+                Controller\CartController::class => [
+                    // Give access to "view" actions to anyone.
+                    ['actions' => ['view'], 'allow' => '*'],
+                ],
             ],
-        ]
+        ],
     ],
     'service_manager' => [
         'factories' => [
@@ -203,7 +236,8 @@ return [
         ],
     ],
     'session_containers' => [
-        'UserLogin'
+        'UserLogin',
+        'Cart'
     ],
 //    'view_helpers' => [
 //        'factories' => [
