@@ -1,6 +1,6 @@
 <div class="category-bar js-category-bar">
-    <div class="category-bar-content">
-        <div class="category-bar-left">
+    <div class="category-bar-content row">
+        <div class="category-bar-left col-sm-7 text-left">
             <div class="category-bar-menu">
                 <button class="btn btn-cancel bt-infinitive" id="label-home" onclick="location.href = '/';">
                     Home
@@ -29,27 +29,28 @@
                 </ul>
             </div>
         </div>
-        <div class="category-bar-right">
-            <ul>
+        <div class="category-bar-right col-sm-5 text-right">
+            <ul class="row">
                 <?php if ($this->user == null) { ?>
-                    <li class="menu-item signin-register">
+                    <li class="menu-item col-md-8 text-right signin-register">
                         <a href="/register">
                             <div class="menu-item label-category-bar">
                                 Hello, Guest!
+                                <i class="fa fa-angle-right"></i>
                             </div>
                         </a>
                     </li>
                 <?php } else { ?>
-                    <li class="has-dropdown menu-item signin-register">
+                    <li class="menu-item col-sm-8 text-right signin-register">
                         <a href="/user/view">
                             <div class="menu-item label-category-bar">
                                 Hello, <?php echo $this->user['name'] ?>
+                                <i class="fa fa-angle-right"></i>
                             </div>
                         </a>
                     </li>
                 <?php } ?>
-
-                <li class="menu-item cart-info">
+                <li class="menu-item col-sm-4 text-right cart-info">
                     <a href="#">
                         <ul>
                             <li class="menu-item cart-icon">

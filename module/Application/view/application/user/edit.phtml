@@ -11,17 +11,14 @@ $this->headTitle('Edit User');
 
 $form->get('full_name')->setAttributes([
     'class' => 'form-control',
-    'placeholder' => 'John Doe'
 ]);
 
 $form->get('address')->setAttributes([
     'class' => 'form-control',
-    'placeholder' => 'So 3, Dai Co Viet, Hai Ba Trung, Ha Noi'
 ]);
 
 $form->get('phone')->setAttributes([
     'class' => 'form-control',
-    'placeholder' => ''
 ]);
 
 $form->get('submit')
@@ -30,8 +27,6 @@ $form->get('submit')
 
 $form->prepare();
 ?>
-
-<h1>Edit User <?= $this->escapeHtml($user->getEmail()) ?></h1>
 
 <div class="row">
     <div class="col-md-4 col-md-offset-4 register">

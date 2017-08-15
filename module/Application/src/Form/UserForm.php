@@ -177,6 +177,42 @@ class UserForm extends Form
                     ],
                 ],
             ]);
+        } else {
+            // Add input for "address" field
+            $inputFilter->add([
+                'name' => 'address',
+                'required' => true,
+                'filters' => [
+                    ['name' => 'StringTrim'],
+                ],
+                'validators' => [
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'min' => 1,
+                            'max' => 512
+                        ],
+                    ],
+                ],
+            ]);
+
+            // Add input for "phone" field
+            $inputFilter->add([
+                'name' => 'phone',
+                'required' => true,
+                'filters' => [
+                    ['name' => 'StringTrim'],
+                ],
+                'validators' => [
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'min' => 8,
+                            'max' => 15
+                        ],
+                    ],
+                ],
+            ]);
         }
         // Add input for "full_name" field
         $inputFilter->add([
@@ -191,42 +227,6 @@ class UserForm extends Form
                     'options' => [
                         'min' => 1,
                         'max' => 512
-                    ],
-                ],
-            ],
-        ]);
-
-        // Add input for "address" field
-        $inputFilter->add([
-            'name' => 'address',
-            'required' => true,
-            'filters' => [
-                ['name' => 'StringTrim'],
-            ],
-            'validators' => [
-                [
-                    'name' => 'StringLength',
-                    'options' => [
-                        'min' => 1,
-                        'max' => 512
-                    ],
-                ],
-            ],
-        ]);
-
-        // Add input for "phone" field
-        $inputFilter->add([
-            'name' => 'phone',
-            'required' => true,
-            'filters' => [
-                ['name' => 'StringTrim'],
-            ],
-            'validators' => [
-                [
-                    'name' => 'StringLength',
-                    'options' => [
-                        'min' => 8,
-                        'max' => 15
                     ],
                 ],
             ],
