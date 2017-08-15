@@ -113,6 +113,26 @@ return [
                     ],
                 ],
             ],
+            'search' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/search',
+                    'defaults' => [
+                        'controller' => Controller\HomeController::class,
+                        'action' => 'search',
+                    ],
+                ],
+            ],
+            'getDataSearch' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/getDataSearch',
+                    'defaults' => [
+                        'controller' => Controller\HomeController::class,
+                        'action' => 'getDataSearch',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -155,6 +175,7 @@ return [
             Service\AuthManager::class => Service\Factory\AuthManagerFactory::class,
             Service\UserManager::class => Service\Factory\UserManagerFactory::class,
             Service\CategoryManager::class => Service\Factory\CategoryManagerFactory::class,
+            Service\ProductManager::class => Service\Factory\ProductManagerFactory::class,
         ],
     ],
     'session_containers' => [
