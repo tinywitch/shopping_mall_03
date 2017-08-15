@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Comment
 {
     /**
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\User", inversedBy="notifications")
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
@@ -70,9 +70,19 @@ class Comment
     protected $content;
 
     /**
+     * @ORM\Column(name="rate")
+     */
+    protected $rate;
+
+    /**
      * @ORM\Column(name="status")
      */
-    protected $status;
+    protected $status = 1;
+
+    /**
+     * @ORM\Column(name="date_created")
+     */
+    protected $date_created;
 
     // Returns ID of this product.
     public function getId() 
@@ -96,6 +106,16 @@ class Comment
         $this->content = $content;
     }
 
+    public function getRate() 
+    {
+        return $this->rate;
+    }
+
+    public function setRate($rate) 
+    {
+        $this->rate = $rate;
+    }
+
     public function getStatus() 
     {
         return $this->status;
@@ -104,5 +124,15 @@ class Comment
     public function setStatus($status) 
     {
         $this->status = $status;
+    }
+
+    public function getDateCreated() 
+    {
+        return $this->date_created;
+    }
+
+    public function setDateCreated($date_created) 
+    {
+        $this->date_created = $date_created;
     }
 }

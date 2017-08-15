@@ -4,8 +4,8 @@ function autoComplete (){
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         prefetch: '/getDataSearch'
     });
-
-    searchs.initialize();
+    searchs.clearPrefetchCache();
+    searchs.initialize(true);
 
     $('#search-form #search-box').typeahead({},
     {

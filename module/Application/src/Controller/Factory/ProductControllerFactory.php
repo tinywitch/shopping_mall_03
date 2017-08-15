@@ -5,6 +5,7 @@ namespace Application\Controller\Factory;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Application\Controller\ProductController;
+use Application\Service\ProductManager;
 
 /**
  * This is the factory for UserController. Its purpose is to instantiate the
@@ -16,8 +17,9 @@ class ProductControllerFactory implements FactoryInterface
     {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $sessionContainer = $container->get('UserLogin');
+        $productManager = $container->get(ProductManager::class);
 
         // Instantiate the controller and inject dependencies
-        return new ProductController($entityManager, $sessionContainer);
+        return new ProductController($entityManager, $sessionContainer, $productManager);
     }
 }

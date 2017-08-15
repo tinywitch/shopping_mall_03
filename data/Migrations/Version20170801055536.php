@@ -108,15 +108,6 @@ class Version20170801055536 extends AbstractMigration
             'orderitem_product_id_fk'
             );
 
-        $table = $schema->getTable('rates');
-        $table->addForeignKeyConstraint(
-            'users', 
-            ['user_id'], 
-            ['id'], 
-            [], 
-            'rate_user_id_fk'
-            );
-
         $table = $schema->getTable('product_keywords');
         $table->addForeignKeyConstraint(
             'products', 
@@ -144,8 +135,6 @@ class Version20170801055536 extends AbstractMigration
         $table->removeForeignKey('product_keyword_product_id_fk');
         $table->removeForeignKey('product_keyword_keyword_id_fk');
 
-        $table = $schema->getTable('rates');
-        $table->removeForeignKey('rate_user_id_fk');
 
         $table = $schema->getTable('order_items');
         $table->removeForeignKey('orderitem_order_id_fk');
