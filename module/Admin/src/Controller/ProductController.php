@@ -118,7 +118,7 @@ class ProductController extends AbstractActionController
 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-
+            
             $httpadapter = new \Zend\File\Transfer\Adapter\Http();
             $httpadapter->setDestination('public/img/products/');
             $httpadapter->receive();
@@ -163,9 +163,10 @@ class ProductController extends AbstractActionController
                 'color' => $product->getColor(),
                 'size' => $product->getSize(),
                 'quantity' => $product->getQuantity(),
+                'category_id' => $product->getCategory(),
+                'store_id' => $product->getStore(),
                 'keywords' => $this->productManager->convertKeywordsToString($product)   
                 ];
-
             $form->setData($data);
         }
 

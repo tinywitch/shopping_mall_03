@@ -35,11 +35,6 @@ class User
      */
     protected $orders;
     /**
-     * @ORM\OneToMany(targetEntity="\Application\Entity\Rate", mappedBy="user")
-     * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
-     */
-    protected $rates;
-    /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Message", mappedBy="user")
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
      */
@@ -53,7 +48,6 @@ class User
         $this->notifications = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->orders = new ArrayCollection();  
-        $this->rates = new ArrayCollection();
         $this->messages = new ArrayCollection();                  
     }
 
@@ -109,24 +103,6 @@ class User
     public function addOrder($order) 
     {
         $this->orders[] = $order;
-    }
-
-    /**
-     * Returns rates for this user.
-     * @return array
-     */
-    public function getRates() 
-    {
-        return $this->rates;
-    }
-      
-    /**
-     * Adds a new rate to this user.
-     * @param $rate
-     */
-    public function addRate($rate) 
-    {
-        $this->rates[] = $rate;
     }
 
     /**

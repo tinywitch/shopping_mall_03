@@ -1,0 +1,25 @@
+<div class="fh5co-tab-content tab-content" data-tab-content="2">
+    <div class="col-md-10 col-md-offset-1">
+        <h3>Happy Buyers</h3>
+        <div class="feed">
+            <?php foreach ($comments as $comment) { ?>
+                <div>
+                    <blockquote>
+                        <p><?php echo $comment->getContent() ?></p>
+                    </blockquote>
+                    <h3>&mdash; <?php echo $comment->getUser()->getName() ?></h3>
+                </div>
+            <?php } ?>
+        </div>
+        <div class="comment-form">
+            <?= $this->form()->openTag($comment_form); ?>
+            <div class="form-group">
+                <?= $this->formElement($comment_form->get('comment')); ?>
+            </div>
+            <div class="form-group">
+                <?= $this->formElement($comment_form->get('submit')); ?>
+            </div>
+            <?= $this->form()->closeTag($comment_form); ?>
+        </div>
+    </div>
+</div>

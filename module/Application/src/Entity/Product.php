@@ -15,7 +15,7 @@ use Application\Entity\Rate;
 class Product
 {
      /**
-     * @ORM\OneToMany(targetEntity="\Application\Entity\Comment", mappedBy="products")
+     * @ORM\OneToMany(targetEntity="\Application\Entity\Comment", mappedBy="product")
      * @ORM\JoinColumn(name="id", referencedColumnName="product_id")
      */
     protected $comments;
@@ -28,14 +28,6 @@ class Product
      *      )
      */
     protected $keywords;
-
-   
-
-    /**
-     * @ORM\OneToMany(targetEntity="\Application\Entity\Rate", mappedBy="products")
-     * @ORM\JoinColumn(name="id", referencedColumnName="product_id")
-     */
-    protected $rates;
       
     /**
      * Constructor.
@@ -59,8 +51,7 @@ class Product
     {
         $this->comments = new ArrayCollection();
         $this->keywords = new ArrayCollection();
-        $this->product_images = new ArrayCollection(); 
-        $this->rates = new ArrayCollection();                    
+        $this->product_images = new ArrayCollection();                  
     }
       
     /**
@@ -79,24 +70,6 @@ class Product
     public function addComment($comment) 
     {
         $this->comments[] = $comment;
-    }
-
-    /**
-     * Returns rates for this product.
-     * @return array
-     */
-    public function getRates() 
-    {
-        return $this->rates;
-    }
-      
-    /**
-     * Adds a new rate to this product.
-     * @param $rate
-     */
-    public function addRate($rate) 
-    {
-        $this->rates[] = $rate;
     }
 
     protected $product_images;
@@ -365,12 +338,12 @@ class Product
         $this->status = $status;
     }
 
-    public function getRate_avg() 
+    public function getRateAvg() 
     {
         return $this->rate_avg;
     }
 
-    public function setRate_avg($rate_avg) 
+    public function setRateAvg($rate_avg) 
     {
         $this->rate_avg = $rate_avg;
     }

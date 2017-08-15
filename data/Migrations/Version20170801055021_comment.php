@@ -21,6 +21,7 @@ class Version20170801055021_comment extends AbstractMigration
         $table->addColumn('user_id', 'integer');
         $table->addColumn('product_id', 'integer');       
         $table->addColumn('content', 'text', ['notnull' => false]);
+        $table->addColumn('rate', 'integer', ['notnull' => false]);
         $table->addColumn('status', 'integer', ['default' => 1]);
         $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);

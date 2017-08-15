@@ -142,6 +142,5 @@ class ProductManager
                     
             $product->addKeyword($keyword);
         }
-    }    
-
+    }
 }
