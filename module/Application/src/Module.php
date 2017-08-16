@@ -10,6 +10,12 @@ namespace Application;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Controller\AbstractActionController;
 use Application\Controller\AuthController;
+use Admin\Controller\CategoryController;
+use Admin\Controller\IndexController;
+use Admin\Controller\OrderController;
+use Admin\Controller\ProductController;
+use Admin\Controller\StoreController;
+use Admin\Controller\UserController;
 use Application\Service\AuthManager;
 use Zend\Session\SessionManager;
 use Zend\Session\Container;
@@ -109,19 +115,19 @@ class Module
                 ['query' => ['redirectUrl' => $redirectUrl]]);
         }
 
-//        $viewModel = $event->getViewModel();
-//
-//        $sessionContainer = new Container('UserLogin');
-//
-//        if (isset($sessionContainer->id) && $sessionContainer->id != null) {
-//            $user = [
-//                'id' => $sessionContainer->id,
-//                'name' => $sessionContainer->name,
-//            ];
-//            $form = new LoginForm();
-//
-//            $viewModel->user = $user;
-//            $viewModel->form = $form;
-//        }
+        $sessionContainer = new Container('UserLogin');
+
+        if (isset($sessionContainer->id)) {
+            if ($sessionContainer->id != 1
+                && ($controllerName == CategoryController::class
+                    || $controllerName == IndexController::class
+                    || $controllerName == OrderController::class
+                    || $controllerName == ProductController::class
+                    || $controllerName == StoreController::class
+                    || $controllerName == UserController::class)
+            ) {
+                return $controller->redirect()->toRoute('home');
+            }
+        }
     }
 }
