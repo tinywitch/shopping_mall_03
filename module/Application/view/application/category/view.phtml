@@ -16,8 +16,16 @@
                                 <?php }; ?>
                                 <div class="inner">
                                     <p>
-                                        <a href="/product/view/<?php echo $product->getId() ?>" class="icon"><i class="icon-shopping-cart"></i></a>
-                                        <a href="/product/view/<?php echo $product->getId() ?>" class="icon"><i class="icon-eye"></i></a>
+                                        <a class="icon addToCart"
+                                           data-cart-add="<?php echo $product->getId(); ?>"
+                                           data-cart-quantity="1"
+                                           data-cart-name="<?php echo $product->getName(); ?>"
+                                           data-cart-img="<?php echo $this->basePath($product->getImage()) ?>"
+                                           data-cart-price="<?php echo $product->getSalePrice(); ?>">
+                                            <i class="icon-shopping-cart"></i>
+                                        </a>
+                                        <a href="/product/view/<?php echo $product->getId() ?>" class="icon"><i
+                                                    class="icon-eye"></i></a>
                                     </p>
                                 </div>
                             </div>

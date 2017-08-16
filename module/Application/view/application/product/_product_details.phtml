@@ -6,20 +6,30 @@
         <div class="average-review-rating" data-score="<?php echo $product->getRateAvg() ?>"></div>
 
     </div>
-    <div class="col-sm-7 text-center fh5co-heading animate-box">
-        <h2><?php echo $product->getName(); ?></h2>
-        <div class="col-md-10 col-md-offset-1">
-            <?php if ($product->getSale() > 0) { ?>
-                <span class="price" style="color: red;"><?php echo $product->getSalePrice(); ?> USD</span>
-                <div class="price-before-sale">- <strike><?php echo $product->getPrice(); ?></strike> USD</div>
-            <?php } else { ?>
-                <span class="price"><?php echo $product->getPrice(); ?> USD</span>
-            <?php }; ?>
-            <span><b>COLOR: <?php echo $product->getColorText(); ?></b></span>
-            <p><?php echo $product->getIntro(); ?></p>
+    <div class="row">
+        <div class="col-sm-6 text-center fh5co-heading animate-box">
+            <h2><?php echo $product->getName(); ?></h2>
+            <div class="col-md-10 col-md-offset-1">
+                <?php if ($product->getSale() > 0) { ?>
+                    <span class="price" style="color: red;"><?php echo $product->getSalePrice(); ?> USD</span>
+                    <div class="price-before-sale">- <strike><?php echo $product->getPrice(); ?></strike> USD</div>
+                <?php } else { ?>
+                    <span class="price"><?php echo $product->getPrice(); ?> USD</span>
+                <?php }; ?>
+                <span><b>COLOR: <?php echo $product->getColorText(); ?></b></span>
+                <p><?php echo $product->getIntro(); ?></p>
+            </div>
+
+            <p>
+                <button data-cart-add="<?php echo $product->getId(); ?>"
+                        data-cart-quantity="1"
+                        data-cart-name="<?php echo $product->getName(); ?>"
+                        data-cart-img="<?php echo $this->basePath($product->getImage()) ?>"
+                        data-cart-price="<?php echo $product->getSalePrice(); ?>"
+                        class="btn btn-primary btn-outline btn-lg addToCart">
+                    Add to Cart
+                </button>
+            </p>
         </div>
-        <p>
-            <a href="#" class="btn btn-primary btn-outline btn-lg">Add to Cart</a>
-        </p>
     </div>
 </div>

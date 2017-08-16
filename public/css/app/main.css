@@ -4,6 +4,10 @@ label {
     font-weight: bold;
 }
 
+#addToCard:focus {
+
+}
+
 .top-bar {
     background-color: var(--main-color);
     height: 24px;
@@ -50,8 +54,9 @@ label {
     background-color: #FF5722;
     color: #fff;
     border-radius: 0;
-    height: 41px;
-    width: 48px;
+    top: 1px;
+    height: 42px;
+    width: 46px;
 }
 
 .btn-search:active {
