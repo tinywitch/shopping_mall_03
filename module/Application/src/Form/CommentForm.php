@@ -32,6 +32,7 @@ class CommentForm extends Form
                 'attributes' => [
                     'class' => 'form-control',
                     'id' => 'comment',
+                    'required' => true,
                 ],
                 'options' => [
                     'label' => 'Comment',
@@ -46,7 +47,7 @@ class CommentForm extends Form
                     'class' => 'btn btn-primary',               
                     'value' => 'Save',
                     'id' => 'submitbutton',
-                    'style' => 'width: 100%'
+                    'style' => 'width: 100%',
                 ],
             ]);
     }

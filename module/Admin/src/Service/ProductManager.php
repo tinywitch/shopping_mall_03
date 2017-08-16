@@ -88,9 +88,16 @@ class ProductManager
 
     public function removeProduct($product)
     {   
+        //remove comment
+        $comments = $product->getComments();
+        foreach ($comments as $comment) {
+            $this->entityManager->remove($comment);
+        }
+
+        //remove keyword
         $productkeys = $product->getKeywords();
             foreach ($productkeys as $productkey) {
-              $this->entityManager->remove($productkey);
+                $this->entityManager->remove($productkey);
         }
         $this->entityManager->remove($product);   
         $this->entityManager->flush();

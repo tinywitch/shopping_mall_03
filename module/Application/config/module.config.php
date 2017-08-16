@@ -177,6 +177,19 @@ return [
                     ],
                 ],
             ],
+            'comment' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/comment[/:action]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\CommentController::class,
+                        'action' => 'add',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -187,6 +200,7 @@ return [
             Controller\ProductController::class => Controller\Factory\ProductControllerFactory::class,
             Controller\CategoryController::class => Controller\Factory\CategoryControllerFactory::class,
             Controller\CartController::class => Controller\Factory\CartControllerFactory::class,
+            Controller\CommentController::class => Controller\Factory\CommentControllerFactory::class,
         ],
     ],
     'access_filter' => [
