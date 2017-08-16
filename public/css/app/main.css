@@ -1,5 +1,9 @@
 @import "config.css";
 
+#page {
+    background-color: var(--background-color);
+}
+
 label {
     font-weight: bold;
 }
@@ -212,10 +216,6 @@ label {
     font-weight: 600;
 }
 
-#body-contents {
-    background-color: #ECECEC;
-}
-
 .register {
     background-color: var(--main-color);
     margin-top: 40px;
@@ -251,6 +251,13 @@ label {
     background-color: #e5e5e5;
 }
 
+/*Product*/
+#fh5co-product {
+    padding: 40px 0;
+    background-color: var(--main-color);
+    margin-bottom: 40px;
+}
+
 #fh5co-product .product-carousel figure {
     margin-bottom: 10px;
     display: -moz-inline-stack;
@@ -266,12 +273,6 @@ label {
 #fh5co-product .product-carousel figure img {
     max-height: 600px;
     max-width: 400px;
-}
-
-#fh5co-product .container .row {
-    background-color: var(--main-color);
-    padding-top: 60px;
-    margin: 0 10px;
 }
 
 #fh5co-product .price {
@@ -374,11 +375,9 @@ label {
 /*Cart view*/
 .shopping-cart {
     background: var(--main-color);
-    padding: 0 60px;
+    padding: 60px 60px;
     display: flex;
     flex-direction: column;
-    margin-top: 60px;
-    margin-bottom: 60px;
 }
 
 .shopping-cart-content {
@@ -576,6 +575,7 @@ input:focus {
 }
 
 .checkout-notify {
+    padding: 60px 0;
     background-color: var(--main-color);
 }
 
@@ -609,4 +609,12 @@ input:focus {
 
 #submitbutton {
     width: 100%
+}
+
+/*Category*/
+.grid-list-product {
+    background-color: var(--main-color);
+    padding: 40px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
