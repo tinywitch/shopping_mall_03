@@ -58,3 +58,21 @@ $(document).ready(function(){
         comment();
     });
 });
+
+$(document).ready(function(){
+    $('.remove-comment').click(function() {
+
+        var comment_id = $(this).data('id');
+        $.ajax({
+            type: 'POST',
+            url: '/comment/delete',
+            data: {
+                'comment_id' : comment_id,
+            },
+            success: function(data) {
+                var comment_field = '#comment-' + comment_id;          
+                $(comment_field).remove();
+            }
+        })
+    })
+});

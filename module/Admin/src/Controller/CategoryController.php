@@ -90,7 +90,6 @@ class CategoryController extends AbstractActionController
     }
 
     public function editAction(){
-        $categories_for_select = $this->categoryManager->categories_for_select();
         $categoryId = $this->params()->fromRoute('id', -1);
 
         $category = $this->entityManager->getRepository(Category::class)
@@ -99,6 +98,8 @@ class CategoryController extends AbstractActionController
           $this->getResponse()->setStatusCode(404);
           return;                        
         }
+        $categories_for_select = $this->categoryManager->categories_for_select();
+        unset($categories_for_select[$categoryId]);
 
         $form = new CategoryForm($categories_for_select);
 

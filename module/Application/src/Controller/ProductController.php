@@ -74,6 +74,7 @@ class ProductController extends AbstractActionController
             }
         }
         $view = new ViewModel([
+            'user_id' => $this->sessionContainer->id,
             'commentCount' => $commentCount,
             'comment_form' => $comment_form,
             'comments' => $comments,

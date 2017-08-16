@@ -3,8 +3,15 @@
         <h3>Happy Buyers</h3>
         <div class="feed" id="comment-field">
             <?php foreach ($comments as $comment) { ?>
-                <div>
+                <div id = "comment-<?php echo $comment->getID() ?>" >
                     <blockquote>
+                        <?php if($comment->getUser()->getId() == $user_id ) { ?>
+                        <span class="right-conner">
+                            <button class="glyphicon glyphicon-remove remove-comment"
+                                data-id="<?php echo $comment->getID() ?>">
+                            </button>
+                        </span>
+                        <?php } ?>
                         <p><?php echo $comment->getContent() ?></p>
                     </blockquote>
                     <h3>&mdash; <?php echo $comment->getUser()->getName() ?></h3>
