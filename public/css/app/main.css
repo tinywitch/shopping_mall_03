@@ -126,14 +126,6 @@ label {
 
 }
 
-#label-home {
-    font-size: 12px;
-    background-color: var(--main-color);
-    border-bottom: 2px solid var(--highlight-color);
-    color: var(--second-color);
-    font-weight: bold;
-}
-
 .menu-category-bar {
     display: inline;
 }
@@ -153,8 +145,12 @@ label {
     min-width: 80px;
 }
 
-.bt-infinitive:hover, .bt-infinitive:focus {
-    background-color: var(--main-color);
+.bt-infinitive:focus {
+    color: var(--main-color);
+}
+
+.bt-infinitive:hover {
+    background-color: var(--fiveth-color);
     color: var(--second-color);
     font-weight: bold;
     border-bottom: 2px solid var(--highlight-color);
@@ -162,6 +158,14 @@ label {
 
 .bt-infinitive:active {
     background-color: var(--highlight-color);
+}
+
+.menu-category-active {
+    font-size: 12px;
+    background-color: var(--main-color);
+    border-bottom: 2px solid var(--highlight-color);
+    color: var(--second-color);
+    font-weight: bold;
 }
 
 .cart-info {

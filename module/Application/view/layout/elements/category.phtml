@@ -2,17 +2,23 @@
     <div class="category-bar-content row">
         <div class="category-bar-left col-sm-7 text-left">
             <div class="category-bar-menu">
-                <button class="btn btn-cancel bt-infinitive" id="label-home" onclick="location.href = '/';">
+                <button class="btn btn-cancel bt-infinitive menu-category" id="menu-home" onclick="location.href = '/';">
                     Home
                 </button>
                 <ul class="menu-category-bar">
                     <?php foreach ($mainCategories as $mainCategory) : ?>
-                        <li class="menu-item">
-                            <button class="btn btn-cancel bt-infinitive"
+                        <li class="menu-item has-dropdown">
+                            <button class="btn btn-cancel bt-infinitive menu-category"
                                     onclick="location.href = '/category/view/' +
                                     <?php echo $mainCategory->getId(); ?>;">
                                 <?php echo $mainCategory->getName(); ?>
                             </button>
+                            <ul class="dropdown">
+                                <li><a href="#">Web Design</a></li>
+                                <li><a href="#">eCommerce</a></li>
+                                <li><a href="#">Branding</a></li>
+                                <li><a href="#">API</a></li>
+                            </ul>
                         </li>
 
                     <?php endforeach ?>
