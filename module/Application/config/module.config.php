@@ -235,7 +235,7 @@ return [
             ],
             Controller\CartController::class => [
                 // Give access to "view" actions to anyone.
-                ['actions' => ['view'], 'allow' => '*'],
+                ['actions' => ['view', 'add', 'notify'], 'allow' => '*'],
             ],
         ],
     ],
@@ -247,6 +247,7 @@ return [
             Service\UserManager::class => Service\Factory\UserManagerFactory::class,
             Service\CategoryManager::class => Service\Factory\CategoryManagerFactory::class,
             Service\ProductManager::class => Service\Factory\ProductManagerFactory::class,
+            Service\CartManager::class => Service\Factory\ProductManagerFactory::class,
         ],
     ],
     'session_containers' => [
