@@ -592,3 +592,21 @@ input:focus {
     background-size: 2900%;
     background-repeat: no-repeat;
 }
+
+.remove-comment {
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.right-conner {
+    float: right
+}
+
+#flash-message {
+    margin-top: 15px;
+}
+
+#submitbutton {
+    width: 100%
+}

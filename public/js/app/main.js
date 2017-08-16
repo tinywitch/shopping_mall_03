@@ -352,6 +352,8 @@
             }
 
             writeCookie('Cart', JSON.stringify(cart), 7);
+            $('#flash-message').append('<div class="alert alert-success"><strong>Success!</strong> Add product to cart successfully.</div>');
+            $('.alert').delay(3000).slideUp();
         });
 
         if (cart.totalPrice > 0) {

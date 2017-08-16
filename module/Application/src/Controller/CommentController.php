@@ -52,4 +52,26 @@ class CommentController extends AbstractActionController
         $this->response->setContent($data_json);
         return $this->response;
     }
+
+    public function deleteAction()
+    {
+        $data = $this->params()->fromPost();
+        $commentId = $data['comment_id'];
+            
+        $comment = $this->entityManager->getRepository(Comment::class)
+                    ->findOneById($commentId);       
+        if ($comment == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;                        
+        }
+
+        if ($this->sessionContainer->id != $comment->getUser()->getId()) {
+            $this->getResponse()->setStatusCode(404);
+            return; 
+        }        
+            
+        $this->entityManager->remove($comment);   
+        $this->entityManager->flush();
+        return $this->response;
+    }
 }

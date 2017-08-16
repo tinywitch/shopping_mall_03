@@ -111,10 +111,10 @@ class StoreController extends AbstractActionController
             $this->getResponse()->setStatusCode(404);
             return;                        
         }        
-    $this->storeManager->removeStore($store);
+        $this->storeManager->removeStore($store);
 
-    // Redirect the user to "products/list" page.
-    return $this->redirect()->toRoute('stores', ['action'=>'list']);
+        // Redirect the user to "products/list" page.
+        return $this->redirect()->toRoute('stores', ['action'=>'list']);
     }
 
     public function viewAction()

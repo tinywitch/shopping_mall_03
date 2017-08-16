@@ -21,7 +21,8 @@
             </div>
 
             <p>
-                <button data-cart-add="<?php echo $product->getId(); ?>"
+                <button 
+                        data-cart-add="<?php echo $product->getId(); ?>"
                         data-cart-quantity="1"
                         data-cart-name="<?php echo $product->getName(); ?>"
                         data-cart-img="<?php echo $this->basePath($product->getImage()) ?>"
