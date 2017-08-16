@@ -41,7 +41,7 @@ class OrderItem
      * Returns associated order.
      * @return \Application\Entity\Order
      */
-    public function getOder() 
+    public function getOrder() 
     {
         return $this->order;
     }
@@ -50,7 +50,7 @@ class OrderItem
      * Sets associated order.
      * @param \Application\Entity\Order $order
      */
-    public function setOder($order) 
+    public function setOrder($order) 
     {
         $this->order = $order;
         $order->addOrderItem($this);
@@ -76,7 +76,21 @@ class OrderItem
      * @ORM\Column(name="cost")
      */
     protected $cost;
+    /**
+     * @ORM\Column(name="date_created")
+     */
+    protected $date_created;
 
+    public function getDateCreated() 
+    {
+        return $this->date_created;
+    }
+
+    // Sets ID of this post.
+    public function setDateCreated($date_created)
+    {
+        $this->date_created = $date_created;
+    }
     // Returns ID of this post.
     public function getId() 
     {
