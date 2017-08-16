@@ -51,6 +51,7 @@ class Module
 
         $categoryManager = $serviceManager->get('Application\Service\CategoryManager');
         $viewModel->mainCategories = $categoryManager->mainCategories();
+        $viewModel->arrCateTree = $categoryManager->arrCateTree();
 
         $sessionContainer = new Container('UserLogin');
 

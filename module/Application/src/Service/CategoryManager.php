@@ -38,7 +38,7 @@ class CategoryManager
     public function mainCategories()
     {
         return $this->entityManager->getRepository(Category::class)->findBy(['parent_id' => '0']);
-
+      
     }
 
     public function arrCate(&$arr , $categoryId)
@@ -48,6 +48,17 @@ class CategoryManager
         foreach ( $cates as $cate) {
             if($cate->getParentId() == $categoryId) $this->arrCate($arr,$cate->getId());
         }
+        return $arr;
+    }
+    public function arrCateTree()
+    {   
+        $arr = [];
+        $mainCates = $this->entityManager->getRepository(Category::class)->findBy(['parent_id' => '0']);  
+        foreach ( $mainCates as $cate ){
+            $arr[$cate->getId()] = $this->entityManager->getRepository(Category::class)
+                                        ->findBy(['parent_id' => $cate->getId()]);
+        }
+       
         return $arr;
     }
 }
