@@ -339,10 +339,6 @@
             var exist = false;
             cart.items.every(function (item1) {
                 if (item1.id === item.id) {
-                    cart.totalPrice -= item1.quantity * item1.price;
-                    item1.quantity += item.quantity;
-                    item1.price = item.price;
-                    cart.totalPrice += item1.quantity * item1.price;
                     exist = true;
                     return false;
                 }
@@ -625,6 +621,15 @@
         return null;
     };
 
+    var menuCategory = function () {
+      $('#menu-home').addClass('menu-category-active');
+
+      // $('.menu-category').click(function (e) {
+      //     e.preventDefault();
+      //     $('.menu-category-bar').removeClass('menu-category-active');
+      //     $(this).addClass('menu-category-active');
+      // });
+    };
 
     $(function () {
         mobileMenuOutsideClick();
@@ -640,6 +645,7 @@
         sliderMain();
         testimonialCarousel();
         cartController();
+        menuCategory();
     });
 
 
