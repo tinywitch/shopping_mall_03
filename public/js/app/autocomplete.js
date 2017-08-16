@@ -27,3 +27,34 @@ function autoComplete (){
 
 $(document).ready(autoComplete);
 $(document).on('page:load', autoComplete);
+
+$(document).ready(function(){
+    function comment()
+    {
+        var comment = $('#comment').val();
+        var productId = $('#product-id').val();
+        $.ajax({
+            type: 'POST',
+            url: '/comment/add',
+            data: {
+                'comment' : comment,
+                'product_id' : productId
+            },
+            success: function(data) {
+                var data = JSON.parse(data);               
+                $('#comment-field').append('<div>');
+                $('#comment-field').append('<blockquote>');
+                $('#comment-field').append('<p>' + data.comment + '</p>');
+                $('#comment-field').append('</blockquote>');
+                $('#comment-field').append('<h3>&mdash; ' + data.username + '</h3>');
+                $('#comment-field').append('</div>');
+                $('#comment').val('');
+            }
+        })
+    }
+
+
+    $(document).on("click", '#submitbutton', function(){
+        comment();
+    });
+});
