@@ -31,6 +31,7 @@
             <th>Items</th>
             <th>Cost</th>
             <th>Status</th>
+            <th>Time Created</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -53,6 +54,7 @@
                     <?php echo status_content($order->getStatus()); ?>
                 </small>
             </td>
+            <td><?php echo $order->getDateCreated(); ?></td>
             <td>
                 <a href="<?php echo $this->url('orders',
                     ['action' => 'view', 'id' => $order->getId()])?>", title="Show details">

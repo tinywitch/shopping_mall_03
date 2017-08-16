@@ -21,14 +21,16 @@ class CartController extends AbstractActionController
     private $entityManager;
 
     private $sessionContainer;
-
+    private $cartManager;
+    private $orderManager;
     /**
      * Constructor.
      */
-    public function __construct($entityManager)
+    public function __construct($entityManager, $cartManager, $orderManager)
     {
         $this->entityManager = $entityManager;
-
+        $this->cartManager = $cartManager;
+        $this->orderManager = $orderManager;
         $this->sessionContainer = new Container('UserLogin');
 
     }
@@ -84,6 +86,12 @@ class CartController extends AbstractActionController
 
                 // Get filtered and validated data
                 $data = $form->getData();
+                $currentDate = date('Y-m-d H:i:s');
+                $data['date_created'] = $currentDate;
+                $data['status'] = 1;
+                $arrItems = $cart_info->items;
+                
+                $this->orderManager->addNewOrder($data, $cart_info, $arrItems);
 
                 $cookie = new \Zend\Http\Header\SetCookie(
                     'Cart',
