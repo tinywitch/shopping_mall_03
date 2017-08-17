@@ -416,6 +416,6 @@ class Product
 
     public function getSalePrice() {
         $price = $this->getPrice() * (1 - $this->getSale()/100.0);
-        return round($price, 2);
+        return round($price);
     }
 }
