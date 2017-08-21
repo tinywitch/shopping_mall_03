@@ -125,13 +125,6 @@ class Version20170823143430 extends AbstractMigration
             [], 
             'product_master_product_id_fk'
             );
-        $table->addForeignKeyConstraint(
-            'stores', 
-            ['store_id'], 
-            ['id'], 
-            [], 
-            'product_master_store_id_fk'
-            );
 
         $table = $schema->getTable('product_color_images');
         $table->addForeignKeyConstraint(

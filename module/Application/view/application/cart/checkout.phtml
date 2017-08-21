@@ -1,0 +1,56 @@
+<div class="checkout-outer">
+    <div class="container">
+        <div class="checkout-inner">
+            <div class="row">
+                <div class="col-lg-8 col-sm-8">
+                    <div class="center_section">
+                        <!--panel-shipping-address-->
+                        <?php include_once 'checkout/_shipping_form.phtml' ?>
+                        <!--panel-bill-info-->
+                        <?php include_once 'checkout/_bill_info.phtml' ?>
+                        <!--panel-payment-method-->
+                        <?php include_once 'checkout/_payment_method.phtml' ?>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-4">
+                    <div class="right_section">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <b>Order Summary</b>
+                            </div>
+                            <div class="panel-body">
+                                <div class="order-summary-inner">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <span class=" pull-right">$65</span>
+                                            Subtotal
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span class="pull-right">$34</span>
+                                            Shipping
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span class=" pull-right">$12</span>
+                                            Tax
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span class=" pull-right">$111</span>
+                                            <b>Total</b>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <form method="post" target="/cart/checkout">
+                                                <button type="submit" class="btn btn-default btn-block"><b>Place Your
+                                                        Order</b></button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <span>By placing your order, you agree to InfiniShop's <a href="#">Privacy policy and terms and conditions</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

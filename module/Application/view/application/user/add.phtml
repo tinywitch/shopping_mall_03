@@ -47,7 +47,7 @@ $form->prepare();
     <div class="col-md-4 col-md-offset-4 register">
 
         <div class="register-form">
-            <h2>Create account</h2>
+            <h3>Create account</h3>
 
             <?= $this->form()->openTag($form); ?>
 
@@ -75,18 +75,13 @@ $form->prepare();
                 <?= $this->formElementErrors($form->get('confirm_password')); ?>
             </div>
 
-<!--            <div class="form-group">-->
-                <?php $this->formLabel($form->get('address')); ?>
-                <?php $this->formElement($form->get('address')); ?>
-                <?php $this->formElementErrors($form->get('address')); ?>
-<!--            </div>-->
+            <?php $this->formLabel($form->get('address')); ?>
+            <?php $this->formElement($form->get('address')); ?>
+            <?php $this->formElementErrors($form->get('address')); ?>
 
-<!--            <div class="form-group">-->
-                <?php $this->formLabel($form->get('phone')); ?>
-                <?php $this->formElement($form->get('phone')); ?>
-                <?php $this->formElementErrors($form->get('phone')); ?>
-<!--            </div>-->
-
+            <?php $this->formLabel($form->get('phone')); ?>
+            <?php $this->formElement($form->get('phone')); ?>
+            <?php $this->formElementErrors($form->get('phone')); ?>
 
             <?= $this->formElement($form->get('submit')); ?>
 
