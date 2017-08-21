@@ -44,7 +44,7 @@ class Product
         '8' => 'Orange',
         '9' => 'Light blue',
         '10' => 'Sky blue',
-        '11' => 'Gray',
+        '11' => 'Grey',
     ];
 
     public function __construct() 

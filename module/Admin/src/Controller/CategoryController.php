@@ -6,6 +6,7 @@ use Zend\View\Model\ViewModel;
 use Application\Entity\Category;
 use Admin\Form\CategoryForm;
 use Admin\Helper\ToSlug;
+use Admin\Helper\TrunCate;
 
 class CategoryController extends AbstractActionController
 {
@@ -49,6 +50,13 @@ class CategoryController extends AbstractActionController
         }
         // Render the view template
         $products = $category->getProducts();
+
+        foreach ($products as $product) {
+            $truncate = new TrunCate();
+            $description = $truncate($product->getDescription(), 30);
+            $product->setDescription($description);
+        }
+
         return new ViewModel([
             'category' => $category,
             'products' => $products

@@ -36,8 +36,6 @@ extras/documentation
 public/assets
 
 autorun.rb
-#composer.lock
-composer.lock
 #image
 public/img/products
 public/img/captcha/*.png
