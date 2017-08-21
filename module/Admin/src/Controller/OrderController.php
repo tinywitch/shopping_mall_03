@@ -29,7 +29,10 @@ class OrderController extends AbstractActionController
 
     public function indexAction()
     {
-        $orders = $this->entityManager->getRepository(Order::class)->findAll();
+        $orders = $this->entityManager->getRepository(Order::class)->findBy(
+            [], 
+            ['status'=>'ASC']
+            );
 
         return new ViewModel([
             'orders' => $orders

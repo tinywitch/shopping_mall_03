@@ -43,7 +43,7 @@ class UserController extends AbstractActionController
         //var_dump(2);die();
     	$users = $this->entityManager->getRepository(User::class)->findAll();
         // Render the view template
-
+        
         return new ViewModel([
             'users' => $users
         ]);
@@ -59,27 +59,30 @@ class UserController extends AbstractActionController
         }
 
         $orders = $user->getOrders();
-
+        
         //setup new order variable
-        $pending_order_exist = false;
-        $new_orders = 0;
-        $total_pays = 0;
-        $total_purchased = 0;
+        // countOfOrderByStatus[$i] : count of pending,skip,success order;
+        for($i = 1; $i < 4; $i++){
+            $countOfOrderByStatus[$i] = 0;
+        }
         foreach ($orders as $o) {
-            $total_pays+=$o->getCost();
-            $total_purchased+=$o->getNumberOfItems();
+            if($o->getStatus() == 3){
+                $countOfOrderByStatus[3]++;
+                $total_pays += $o->getCost();
+                $total_purchased += $o->getNumberOfItems();
+            }
+            if ($o->getStatus() == 2){
+                $countOfOrderByStatus[2]++;
+            }
             if ($o->getStatus() == 1){
-                $pending_order_exist = true;
-                $new_orders++;
-                break;
+                $countOfOrderByStatus[1]++;
             }
         }
-
+        
         return new ViewModel([
             'total_pays' => $total_pays,
             'total_purchased' => $total_purchased,
-            'pending_order_exist' => $pending_order_exist,
-            'new_orders' => $new_orders,
+            'countOfOrderByStatus' => $countOfOrderByStatus,
             'orders' => $orders,
             'user' => $user
         ]);

@@ -54,7 +54,16 @@ class ShippingForm extends Form
      * This method adds elements to form (input fields and submit button).
      */
     protected function addElements()
-    {
+    {   
+        
+        // user_id
+        $this->add(array(
+            'name' => 'user_id',
+            'attributes' => array(
+                'type'  => 'hidden',
+            ),
+        ));
+
         // Add "full_name" field
         $this->add([
             'type' => 'text',

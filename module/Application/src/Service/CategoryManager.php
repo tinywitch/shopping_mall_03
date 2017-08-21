@@ -4,6 +4,7 @@ namespace Application\Service;
 use Application\Entity\Category;
 use Zend\Filter\StaticFilter;
 use Appliaction\Entity\Product;
+
 class CategoryManager 
 {
     /**
