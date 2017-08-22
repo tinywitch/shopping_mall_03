@@ -32,9 +32,9 @@ class OrderManager
         $order->setCost($cart->totalPrice);
         $order->setStatus(Order::STATUS_PENDING);
         $order->setDateCreated($data['date_created']);
-        
+        $order->setUser($this->entityManager
+            ->getRepository('Application\Entity\User')->find($data['user_id']));
         $this->entityManager->persist($order);
-        
         foreach ($arrItems as $item) {
             $orderItem = new OrderItem();
             $product = $this->entityManager->
