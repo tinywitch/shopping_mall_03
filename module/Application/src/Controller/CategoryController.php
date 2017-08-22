@@ -6,11 +6,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Entity\Product;
 use Application\Entity\category;
-use Application\Entity\Product_image;
-use Zend\Session\Container;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use Zend\Paginator\Paginator;
+use Admin\Helper\TrunCate;
 /**
  * 
  */
@@ -53,6 +52,12 @@ class CategoryController extends AbstractActionController
         $paginator = new Paginator($adapter);
         $paginator->setDefaultItemCountPerPage(6);                
         $paginator->setCurrentPageNumber($page);
+
+        foreach ($paginator as $product) {
+            $truncate = new TrunCate();
+            $truncate_name = $truncate($product->getName(), 30);
+            $product->setName($truncate_name);
+        }
 
         $view = new ViewModel([
             'products' => $paginator,

@@ -11,6 +11,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Entity\Category;
 use Application\Entity\Product;
+use Admin\Helper\TrunCate;
 
 class HomeController extends AbstractActionController
 {
@@ -29,30 +30,36 @@ class HomeController extends AbstractActionController
         $this->productManager = $productManager;
     }
 
-
     public function indexAction()
     {
         $newProducts = $this->entityManager->getRepository(Product::class)->findBy(
-           ['popular_level' => 1],['date_created'=>'DESC'], 15);
+            ['popular_level' => 1], ['date_created' => 'DESC'], 15);
         $saleProducts = $this->entityManager->getRepository(Product::class)->findBy(
-           [],['sale'=>'DESC'], 5);   
-        $view = new ViewModel(['newProducts' => $newProducts, 
-                                'saleProducts' => $saleProducts
-                                ]);
+            [], ['sale' => 'DESC'], 5);
+
+        foreach ($newProducts as $product) {
+            $truncate = new TrunCate();
+            $truncate_name = $truncate($product->getName(), 30);
+            $product->setName($truncate_name);
+        }
+
+        $view = new ViewModel(['newProducts' => $newProducts,
+            'saleProducts' => $saleProducts
+        ]);
         $this->layout('application/layout');
         return $view;
     }
 
     public function viewAction()
     {
-    	//var_dump(2);die();
+        //var_dump(2);die();
         $view = new ViewModel();
         $this->layout('application/home');
         return $view;
     }
 
     public function searchAction()
-    {  
+    {
         $this->layout('application/layout');
         return new ViewModel();
     }
@@ -65,7 +72,7 @@ class HomeController extends AbstractActionController
             $product_a['id'] = $product->getID();
             $product_a['name'] = $product->getName();
             $product_a['image'] = $product->getImage();
-        array_push($productArray, $product_a);
+            array_push($productArray, $product_a);
         }
         $product_json = json_encode($productArray);
         $this->response->setContent($product_json);
