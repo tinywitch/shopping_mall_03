@@ -19,7 +19,7 @@ class Version20170801054640_store extends AbstractMigration
         $table = $schema->createTable('stores');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);        
         $table->addColumn('name', 'text');
-        $table->addColumn('address', 'text', ['notnull' => false]);
+        $table->addColumn('address_id', 'integer', ['notnull' => false]);
         $table->addColumn('phone', 'text', ['notnull' => false]);
         $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);
