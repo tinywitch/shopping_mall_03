@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20170801055021_comment extends AbstractMigration
+class Version20170822145010_sale_program extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -16,17 +16,14 @@ class Version20170801055021_comment extends AbstractMigration
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $table = $schema->createTable('comments');
+        $table = $schema->createTable('sale_programs');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
-        $table->addColumn('user_id', 'integer');
-        $table->addColumn('product_id', 'integer');       
-        $table->addColumn('parent_id', 'integer', ['notnull' => false]); 
-        $table->addColumn('content', 'text', ['notnull' => false]);
-        $table->addColumn('rate', 'integer', ['notnull' => false]);
-        $table->addColumn('status', 'integer', ['default' => 1]);
+        $table->addColumn('date_start', 'datetime');
+        $table->addColumn('date_end', 'datetime');
         $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);
         $table->addOption('engine', 'InnoDB');
+
     }
 
     /**
@@ -35,6 +32,6 @@ class Version20170801055021_comment extends AbstractMigration
     public function down(Schema $schema)
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $schema->dropTable('comments');
+        $schema->dropTable('sale_programs');
     }
 }

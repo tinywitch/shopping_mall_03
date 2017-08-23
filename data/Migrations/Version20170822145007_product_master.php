@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20170801055021_comment extends AbstractMigration
+class Version20170822145007_product_master extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -16,15 +16,13 @@ class Version20170801055021_comment extends AbstractMigration
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $table = $schema->createTable('comments');
+        $table = $schema->createTable('product_masters');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
-        $table->addColumn('user_id', 'integer');
-        $table->addColumn('product_id', 'integer');       
-        $table->addColumn('parent_id', 'integer', ['notnull' => false]); 
-        $table->addColumn('content', 'text', ['notnull' => false]);
-        $table->addColumn('rate', 'integer', ['notnull' => false]);
-        $table->addColumn('status', 'integer', ['default' => 1]);
-        $table->addColumn('date_created', 'datetime');
+        $table->addColumn('product_id', 'integer');
+        $table->addColumn('store_id', 'integer');
+        $table->addColumn('color_id', 'integer');
+        $table->addColumn('size_id', 'integer');
+        $table->addColumn('status', 'integer');
         $table->setPrimaryKey(['id']);
         $table->addOption('engine', 'InnoDB');
     }
@@ -35,6 +33,6 @@ class Version20170801055021_comment extends AbstractMigration
     public function down(Schema $schema)
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $schema->dropTable('comments');
+        $schema->dropTable('product_masters');
     }
 }

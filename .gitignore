@@ -40,3 +40,4 @@ autorun.rb
 public/img/products
 public/img/captcha/*.png
 
+composer.lock
