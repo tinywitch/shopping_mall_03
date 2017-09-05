@@ -20,7 +20,7 @@ class Version20170822024134_activity extends AbstractMigration
         $table->addColumn('id', 'integer', ['autoincrement' => true]);        
         $table->addColumn('sender_id', 'integer');
         $table->addColumn('target_id', 'integer');
-        $table->addColumn('receive_id', 'integer');
+        $table->addColumn('receiver_id', 'integer');
         $table->addColumn('type', 'integer');
         $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);
