@@ -2,8 +2,9 @@
 namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Application\Entity\Notification;
+use Application\Entity\Activity;
 use Application\Entity\Comment;
+use Application\Entity\Review;
 use Application\Entity\Order;
 use Application\Entity\Rate;
 use Application\Entity\Message;
@@ -19,15 +20,20 @@ class User
     const STATUS_RETIRED      = 2; // Retired user.
 
     /**
-     * @ORM\OneToMany(targetEntity="\Application\Entity\Notification", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="\Application\Entity\Activity", mappedBy="user")
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
      */
-    protected $notifications;
+    protected $activities;
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Comment", mappedBy="user")
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
      */
     protected $comments;
+    /**
+     * @ORM\OneToMany(targetEntity="\Application\Entity\Review", mappedBy="user")
+     * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
+     */
+    protected $reviews;
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Order", mappedBy="user")
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
@@ -45,7 +51,8 @@ class User
      */
     public function __construct() 
     {
-        $this->notifications = new ArrayCollection();
+        $this->activities = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->orders = new ArrayCollection();  
         $this->messages = new ArrayCollection();                  
@@ -70,21 +77,21 @@ class User
     }
 
     /**
-     * Returns notifications for this user.
+     * Returns activities for this user.
      * @return array
      */
-    public function getNotifications() 
+    public function getActivities() 
     {
-        return $this->notifications;
+        return $this->activities;
     }
       
     /**
-     * Adds a new notification to this user.
-     * @param $notification
+     * Adds a new activity to this user.
+     * @param $activity
      */
-    public function addNotification($notification) 
+    public function addActivity($activity) 
     {
-        $this->notifications[] = $notification;
+        $this->activities[] = $activity;
     }
 
     /**
@@ -103,6 +110,24 @@ class User
     public function addOrder($order) 
     {
         $this->orders[] = $order;
+    }
+
+    /**
+     * Returns reviews for this user.
+     * @return array
+     */
+    public function getReviews() 
+    {
+        return $this->reviews;
+    }
+      
+    /**
+     * Adds a new review to this user.
+     * @param $review
+     */
+    public function addReview($review) 
+    {
+        $this->reviews[] = $review;
     }
 
     /**
@@ -155,11 +180,6 @@ class User
      * @ORM\Column(name="name")
      */
     protected $name;
-
-    /**
-     * @ORM\Column(name="address")
-     */
-    protected $address;
 
     /**
      * @ORM\Column(name="status")
@@ -236,16 +256,6 @@ class User
     public function setName($name) 
     {
         $this->name = $name;
-    }
-
-    public function getAddress() 
-    {
-        return $this->address;
-    }
-
-    public function setAddress($address) 
-    {
-        $this->address = $address;
     }
 
     public function getStatus() 

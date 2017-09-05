@@ -23,7 +23,7 @@ class Version20170801053710_user extends AbstractMigration
         $table->addColumn('name', 'text');
         $table->addColumn('phone', 'text', ['notnull' => false]);
         $table->addColumn('role', 'integer', ['default' => 1]);
-        $table->addColumn('address', 'text', ['notnull' => false]);
+        $table->addColumn('address_id', 'integer', ['notnull' => false]);
         $table->addColumn('status', 'integer', ['notnull' => false]);
         $table->addColumn('token', 'text', ['notnull' => false]);
         $table->addColumn('date_created', 'datetime');
