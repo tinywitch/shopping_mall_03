@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20170801055231_product_image extends AbstractMigration
+class Version20170801055231_image extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -16,7 +16,7 @@ class Version20170801055231_product_image extends AbstractMigration
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $table = $schema->createTable('product_images');
+        $table = $schema->createTable('images');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('image', 'text');
         $table->addColumn('status', 'integer', ['default' => 1]);

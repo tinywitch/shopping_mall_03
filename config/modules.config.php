@@ -30,4 +30,5 @@ return [
     'DoctrineORMModule',
     'Application',
     'Admin',
+    'Base'
 ];

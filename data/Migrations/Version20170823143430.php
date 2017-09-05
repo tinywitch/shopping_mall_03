@@ -141,13 +141,6 @@ class Version20170823143430 extends AbstractMigration
             [], 
             'product_color_image_product_id_fk'
             );
-        $table->addForeignKeyConstraint(
-            'product_images', 
-            ['product_image_id'], 
-            ['id'], 
-            [], 
-            'product_color_image_product_image_id_fk'
-            );
 
         $table = $schema->getTable('sales');
         $table->addForeignKeyConstraint(
@@ -169,7 +162,6 @@ class Version20170823143430 extends AbstractMigration
         $table->removeForeignKey('sale_sale_program_id_fk');
 
         $table = $schema->getTable('product_color_images');
-        $table->removeForeignKey('product_color_image_product_image_id_fk');
         $table->removeForeignKey('product_color_image_product_id_fk');
 
         $table = $schema->getTable('product_masters');

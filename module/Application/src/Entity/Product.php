@@ -5,8 +5,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Application\Entity\Comment;
 use Application\Entity\Keyword;
-use Application\Entity\Product_image;
-use Application\Entity\Rate;
+use Application\Entity\ProductColorImage;
+use Application\Entity\Review;
+use Application\Entity\ProductMaster;
+use Application\Entity\Sale;
 /**
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\Application\Repository\ProductRepository")
@@ -21,6 +23,12 @@ class Product
     protected $comments;
 
     /**
+     * @ORM\OneToMany(targetEntity="\Application\Entity\Review", mappedBy="product")
+     * @ORM\JoinColumn(name="id", referencedColumnName="product_id")
+     */
+    protected $reviews;
+
+    /**
      * @ORM\ManyToMany(targetEntity="\Application\Entity\Keyword", inversedBy="products")
      * @ORM\JoinTable(name="product_keywords",
      *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
@@ -28,36 +36,43 @@ class Product
      *      )
      */
     protected $keywords;
-      
+    
+    /**
+     * @ORM\OneToMany(targetEntity="\Application\Entity\ProductColorImage", mappedBy="product")
+     * @ORM\JoinColumn(name="id", referencedColumnName="product_id")
+     */
+    protected $product_color_images;
+
+    /**
+     * @ORM\OneToMany(targetEntity="\Application\Entity\ProductMaster", mappedBy="product")
+     * @ORM\JoinColumn(name="id", referencedColumnName="product_id")
+     */
+    protected $product_masters;
+
+    /**
+     * @ORM\OneToMany(targetEntity="\Application\Entity\Sale", mappedBy="product")
+     * @ORM\JoinColumn(name="id", referencedColumnName="product_id")
+     */
+    protected $sales;
     /**
      * Constructor.
      */
-
-    private $mapColor = [
-        '1' => 'White',
-        '2' => 'Black',
-        '3' => 'Blue',
-        '4' => 'Yellow',
-        '5' => 'Red',
-        '6' => 'Green',
-        '7' => 'Purple',
-        '8' => 'Orange',
-        '9' => 'Light blue',
-        '10' => 'Sky blue',
-        '11' => 'Grey',
-    ];
 
     public function __construct() 
     {
         $this->comments = new ArrayCollection();
         $this->keywords = new ArrayCollection();
-        $this->product_images = new ArrayCollection();                  
+        $this->product_color_images = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
+        $this->product_masters = new ArrayCollection();
+        $this->sales = new ArrayCollection();                  
     }
       
     /**
      * Returns comments for this product.
      * @return array
      */
+
     public function getComments() 
     {
         return $this->comments;
@@ -72,26 +87,70 @@ class Product
         $this->comments[] = $comment;
     }
 
-    protected $product_images;
+    public function getSales() 
+    {
+        return $this->sales;
+    }
+      
+    public function addSale($sale) 
+    {
+        $this->sales[] = $sale;
+    }
+    
+    /**
+     * Returns comments for this product.
+     * @return array
+     */
+    public function getReviews() 
+    {
+        return $this->reviews;
+    }
+      
+    /**
+     * Adds a new comment to this product.
+     * @param $comment
+     */
+    public function addReview($review) 
+    {
+        $this->reviews[] = $review;
+    }
+
       
     /**
      * Returns product_images for this product.
      * @return array
      */
-    public function getProductImages() 
+    public function getProductColorImages() 
     {
-        return $this->product_images;
+        return $this->product_color_images;
     }
       
     /**
      * Adds a new product_image to this product.
-     * @param $product_image
+     * @param $product_color_image
      */
-    public function addProductImage($product_image) 
+    public function addProductColorImage($product_color_image) 
     {
-        $this->product_images[] = $product_image;
+        $this->product_color_images[] = $product_color_image;
     }
 
+    /**
+     * Returns product_images for this product.
+     * @return array
+     */
+    public function getProductMasters() 
+    {
+        return $this->product_masters;
+    }
+      
+    /**
+     * Adds a new product_image to this product.
+     * @param $product_master
+     */
+    public function addProductMaster($product_master) 
+    {
+        $this->product_masters[] = $product_master;
+    }
 
     // Returns keywords for this product.
     public function getKeywords() 
@@ -109,33 +168,6 @@ class Product
     public function removeKeywordAssociation($keyword) 
     {
         $this->keywords->removeElement($keyword);
-    }
-
-    /**
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\Store", inversedBy="products")
-     * @ORM\JoinColumn(name="store_id", referencedColumnName="id")
-     */
-    protected $store;
-       
-    /*
-     * Returns associated store.
-     * @return \Application\Entity\Store
-     */
-    public function getStore() 
-    {
-        return $this->store;
-    }
-      
-    /**
-     * Sets associated store.
-     * @param \Application\Entity\Store $store
-     */
-    public function setStore($store) 
-    {
-        
-        $this->store = $store;
-
-        $store->addProduct($this);
     }
 
     /**
@@ -162,6 +194,8 @@ class Product
         $this->category = $category;
         $category->addProduct($this);
     }
+
+    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -205,9 +239,9 @@ class Product
     protected $status = 0;
 
     /**
-     * @ORM\Column(name="rate_avg")
+     * @ORM\Column(name="rate_sum")
      */
-    protected $rate_avg = 0;
+    protected $rate_sum = 0;
 
     /**
      * @ORM\Column(name="rate_count")
@@ -215,29 +249,10 @@ class Product
     protected $rate_count = 0;
 
     /**
-     * @ORM\Column(name="sale")
-     */
-    protected $sale = 0;
-
-    /**
      * @ORM\Column(name="popular_level")
      */
     protected $popular_level = 0;
 
-    /**
-     * @ORM\Column(name="color")
-     */
-    protected $color;
-
-    /**
-     * @ORM\Column(name="quantity")
-     */
-    protected $quantity;
-
-    /**
-     * @ORM\Column(name="size")
-     */
-    protected $size;
 
      /**
     * @ORM\Column(name="date_created")
@@ -245,13 +260,13 @@ class Product
     protected $date_created;
 
 
-    public function getPopular_level() 
+    public function getPopularLevel() 
     {
         return $this->popular_level;
     }
 
     // Sets ID of this product.
-    public function setPopular_level($popular_level) 
+    public function setPopularLevel($popular_level) 
     {
         $this->popular_level = $popular_level;
     }
@@ -338,69 +353,24 @@ class Product
         $this->status = $status;
     }
 
-    public function getRateAvg() 
+    public function getRateSum() 
     {
-        return $this->rate_avg;
+        return $this->rate_sum;
     }
 
-    public function setRateAvg($rate_avg) 
+    public function setRateSum($rate_sum) 
     {
-        $this->rate_avg = $rate_avg;
+        $this->rate_sum = $rate_sum;
     }
 
-    public function getRate_count() 
+    public function getRateCount() 
     {
         return $this->rate_count;
     }
 
-    public function setRate_count($rate_count) 
+    public function setRateCount($rate_count) 
     {
         $this->rate_count = $rate_count;
-    }
-
-    public function getSale() 
-    {
-        return $this->sale;
-    }
-
-    public function setSale($sale) 
-    {
-        $this->sale = $sale;
-    }
-
-    public function getColor() 
-    {
-        return $this->color;
-    }
-
-    public function getColorText()
-    {
-        return $this->mapColor[$this->color];
-    }
-
-    public function setColor($color) 
-    {
-        $this->color = $color;
-    }
-
-    public function getQuantity() 
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity($quantity) 
-    {
-        $this->quantity = $quantity;
-    }
-
-    public function getSize() 
-    {
-        return $this->size;
-    }
-
-    public function setSize($size) 
-    {
-        $this->size = $size;
     }
 
     public function getDateCreated() 
@@ -408,14 +378,9 @@ class Product
         return $this->date_created;
     }
 
-    // Sets ID of this product.
     public function setDateCreated($date_created) 
     {
         $this->date_created = $date_created;
     }
 
-    public function getSalePrice() {
-        $price = $this->getPrice() * (1 - $this->getSale()/100.0);
-        return round($price);
-    }
 }

@@ -28,6 +28,7 @@ class Version20170801055016_product extends AbstractMigration
         $table->addColumn('views', 'integer', ['default' => 0]);
         $table->addColumn('rate_sum', 'integer');
         $table->addColumn('rate_count', 'integer', ['default' => 0]);
+        $table->addColumn('popular_level', 'integer', ['default' => 0]);
         $table->addColumn('category_id', 'integer', ['notnull' => false]);
         $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);

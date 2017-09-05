@@ -20,7 +20,6 @@ class Version20170801055234_product_color_image extends AbstractMigration
         $table->addColumn('id', 'integer', ['autoincrement' => true]);        
         $table->addColumn('product_id', 'integer');
         $table->addColumn('color_id', 'integer');
-        $table->addColumn('product_image_id', 'integer', ['notnull' => false]);
         $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);
         $table->addOption('engine', 'InnoDB');

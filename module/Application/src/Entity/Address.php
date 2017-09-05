@@ -2,8 +2,7 @@
 namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Application\Entity\Product;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="addresses")
@@ -36,7 +35,7 @@ class Address
      * @ORM\Column(name="date_created")
      */
     protected $date_created;
-
+    
     // Returns ID of this post.
     public function getId() 
     {
@@ -83,7 +82,7 @@ class Address
     {
         return $this->date_created;
     }
-        
+
     public function setDateCreated($date_created) 
     {
         $this->date_created = $date_created;

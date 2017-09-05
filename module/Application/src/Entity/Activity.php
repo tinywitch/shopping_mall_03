@@ -2,35 +2,59 @@
 namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Application\Entity\User;
 /**
  * @ORM\Entity
- * @ORM\Table(name="notifications")
+ * @ORM\Table(name="activities")
  */
-class Notification
+class Activity
 {
     /**
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\User", inversedBy="notifications")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\User", inversedBy="activities")
+     * @ORM\JoinColumn(name="sender_id", referencedColumnName="id")
      */
-    protected $user;
+    protected $sender;
     /*
      * Returns associated user.
      * @return \Application\Entity\User
      */
-    public function getUser() 
+    public function getSender() 
     {
-        return $this->user;
+        return $this->sender;
     }
       
     /**
      * Sets associated user.
      * @param \Application\Entity\User $user
      */
-    public function setUser($user) 
+    public function setSender($sender) 
     {
-        $this->user = $user;
-        $user->addNotification($this);
+        $this->sender = $sender;
+        $sender->addActivity($this);
+    }
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\User", inversedBy="activities")
+     * @ORM\JoinColumn(name="receiver_id", referencedColumnName="id")
+     */
+    protected $receiver;
+    /*
+     * Returns associated user.
+     * @return \Application\Entity\User
+     */
+    public function getReceiver() 
+    {
+        return $this->receiver;
+    }
+      
+    /**
+     * Sets associated user.
+     * @param \Application\Entity\User $user
+     */
+    public function setReceiver($receiver) 
+    {
+        $this->receiver = $receiver;
+        $receiver->addNotification($this);
     }
 
     /**

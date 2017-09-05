@@ -19,10 +19,8 @@ class Version20170822145007_product_master extends AbstractMigration
         $table = $schema->createTable('product_masters');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('product_id', 'integer');
-        $table->addColumn('store_id', 'integer');
         $table->addColumn('color_id', 'integer');
         $table->addColumn('size_id', 'integer');
-        $table->addColumn('status', 'integer');
         $table->setPrimaryKey(['id']);
         $table->addOption('engine', 'InnoDB');
     }

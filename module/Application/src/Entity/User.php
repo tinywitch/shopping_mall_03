@@ -4,10 +4,10 @@ namespace Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Application\Entity\Activity;
 use Application\Entity\Comment;
-use Application\Entity\Review;
 use Application\Entity\Order;
-use Application\Entity\Rate;
+use Application\Entity\Review;
 use Application\Entity\Message;
+use Application\Entity\Address;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -21,19 +21,28 @@ class User
 
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Activity", mappedBy="user")
-     * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
+     * @ORM\JoinColumn(name="id", referencedColumnName="sender_id")
      */
     protected $activities;
+
+    /**
+     * @ORM\OneToMany(targetEntity="\Application\Entity\Activity", mappedBy="user")
+     * @ORM\JoinColumn(name="id", referencedColumnName="receiver_id")
+     */
+    protected $notifications;
+
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Comment", mappedBy="user")
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
      */
     protected $comments;
+
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Review", mappedBy="user")
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
      */
     protected $reviews;
+
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Order", mappedBy="user")
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
@@ -47,13 +56,20 @@ class User
     protected $messages;
 
     /**
+     * One Product has One Address.
+     * @OneToOne(targetEntity="\Application\Entity\Address")
+     * @JoinColumn(name="address_id", referencedColumnName="id")
+     */
+    protected $address;
+    /**
      * Constructor.
      */
     public function __construct() 
     {
+        $this->notifications = new ArrayCollection();
         $this->activities = new ArrayCollection();
-        $this->reviews = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
         $this->orders = new ArrayCollection();  
         $this->messages = new ArrayCollection();                  
     }
@@ -76,24 +92,47 @@ class User
         $this->comments[] = $comment;
     }
 
+    public function getReviews() 
+    {
+        return $this->reviews;
+    }
+      
     /**
-     * Returns activities for this user.
+     * Adds a new comment to this user.
+     * @param $comment
+     */
+    public function addReview($review) 
+    {
+        $this->reviews[] = $review;
+    }
+
+    /**
+     * Returns notifications for this user.
      * @return array
      */
+    public function getNotifications() 
+    {
+        return $this->notifications;
+    }
+      
+    /**
+     * Adds a new notification to this user.
+     * @param $notification
+     */
+    public function addNotification($notification) 
+    {
+        $this->notifications[] = $notification;
+    }
+
     public function getActivities() 
     {
         return $this->activities;
     }
-      
-    /**
-     * Adds a new activity to this user.
-     * @param $activity
-     */
+
     public function addActivity($activity) 
     {
-        $this->activities[] = $activity;
+        return $this->activities[] = $activity;
     }
-
     /**
      * Returns orders for this user.
      * @return array
@@ -110,24 +149,6 @@ class User
     public function addOrder($order) 
     {
         $this->orders[] = $order;
-    }
-
-    /**
-     * Returns reviews for this user.
-     * @return array
-     */
-    public function getReviews() 
-    {
-        return $this->reviews;
-    }
-      
-    /**
-     * Adds a new review to this user.
-     * @param $review
-     */
-    public function addReview($review) 
-    {
-        $this->reviews[] = $review;
     }
 
     /**
@@ -238,6 +259,16 @@ class User
         $this->role = $role;
     }
 
+    public function getAddress() 
+    {
+        return $this->address;
+    }
+
+    public function setAddress($address) 
+    {
+        $this->address = $address;
+    }
+
     public function getPhone() 
     {
         return $this->phone;
@@ -256,6 +287,16 @@ class User
     public function setName($name) 
     {
         $this->name = $name;
+    }
+
+    public function getAddress() 
+    {
+        return $this->address;
+    }
+
+    public function setAddress($address) 
+    {
+        $this->address = $address;
     }
 
     public function getStatus() 

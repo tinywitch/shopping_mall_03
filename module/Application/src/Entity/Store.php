@@ -3,7 +3,9 @@ namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Application\Entity\Product;
+use Application\Entity\ProductMaster;
+use Application\Entity\Address;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="stores")
@@ -11,33 +13,39 @@ use Application\Entity\Product;
 class Store
 {
     /**
-     * @ORM\OneToMany(targetEntity="\Application\Entity\Product", mappedBy="store")
-     * @ORM\JoinColumn(name="id", referencedColumnName="store_id")
+     * @ORM\ManyToMany(targetEntity="\Application\Entity\ProductMaster", mappedBy="store")
      */
-    protected $products;
+    protected $product_masters;
     public function __construct() 
     {
-        $this->products = new ArrayCollection();
+        $this->product_masters = new ArrayCollection();
     }
 
     /**
      * Returns products for this store.
      * @return array
      */
-    public function getProducts() 
+    public function getProductMaster() 
     {
-        return $this->products;
+        return $this->product_masters;
     }
       
     /**
      * Adds a new product to this store.
      * @param $product
      */
-    public function addProduct($product) 
+    public function addProductMaster($product_master) 
     {
-        $this->products[] = $product;
+        $this->products_masters[] = $product_master;
     }
 
+    /**
+     * One Product has One Address.
+     * @OneToOne(targetEntity="\Application\Entity\Address")
+     * @JoinColumn(name="address_id", referencedColumnName="id")
+     */
+    protected $address;
+    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -49,6 +57,7 @@ class Store
      * @ORM\Column(name="name")
      */
     protected $name;
+
 
     /**
      * @ORM\Column(name="phone")
@@ -80,6 +89,16 @@ class Store
     public function setName($name) 
     {
         $this->name = $name;
+    }
+
+    public function getAddress() 
+    {
+        return $this->address;
+    }
+
+    public function setAddress($address) 
+    {
+        $this->address = $address;
     }
 
     public function getPhone() 
