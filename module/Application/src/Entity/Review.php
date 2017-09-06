@@ -2,16 +2,17 @@
 namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Application\Entity\Product;
 use Application\Entity\User;
+use Application\Entity\Product;
+
 /**
  * @ORM\Entity
- * @ORM\Table(name="comments")
+ * @ORM\Table(name="reviews")
  */
-class Comment
+class Review
 {
     /**
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\User", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\User", inversedBy="reviews")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
@@ -34,7 +35,7 @@ class Comment
         $user->addComment($this);
     }
     /**
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\Product", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\Product", inversedBy="reviews")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     protected $product;
@@ -55,7 +56,7 @@ class Comment
     public function setProduct($product) 
     {
         $this->product = $product;
-        $product->addComment($this);
+        $product->addReview($this);
     }
 
     /**
@@ -71,19 +72,15 @@ class Comment
     protected $content;
 
     /**
-     * @ORM\Column(name="status")
+     * @ORM\Column(name="rate")
      */
-    protected $status = 1;
+    protected $rate;
 
     /**
      * @ORM\Column(name="date_created")
      */
     protected $date_created;
 
-    /**
-     * @ORM\Column(name="parent_id")
-     */
-    protected $parent_id = 0;
     // Returns ID of this product.
     public function getId() 
     {
@@ -106,15 +103,14 @@ class Comment
         $this->content = $content;
     }
 
-
-    public function getStatus() 
+    public function getRate() 
     {
-        return $this->status;
+        return $this->rate;
     }
 
-    public function setStatus($status) 
+    public function setRate($rate) 
     {
-        $this->status = $status;
+        $this->rate = $rate;
     }
 
     public function getDateCreated() 
@@ -126,12 +122,5 @@ class Comment
     {
         $this->date_created = $date_created;
     }
-    public function getParentId()
-    {
-        return $this->parent_id;
-    }
-    public function setParentId($parent_id)
-    {
-        $this->parent_id = $parent_id;
-    }
+    
 }

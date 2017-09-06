@@ -21,6 +21,7 @@ class Version20170822145010_sale_program extends AbstractMigration
         $table->addColumn('date_start', 'datetime');
         $table->addColumn('date_end', 'datetime');
         $table->addColumn('date_created', 'datetime');
+        $table->addColumn('status', 'integer', ['notnull' => false]);
         $table->setPrimaryKey(['id']);
         $table->addOption('engine', 'InnoDB');
 

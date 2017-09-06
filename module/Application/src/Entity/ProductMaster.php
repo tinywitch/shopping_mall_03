@@ -1,0 +1,136 @@
+<?php
+namespace Application\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Application\Entity\Product;
+use Application\Entity\Store;
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="product_masters")
+ */
+class ProductMaster
+{
+    /**
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\Product", inversedBy="product_masters")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     */
+    protected $product;
+       
+    /*
+     * Returns associated product.
+     * @return \Application\Entity\Product
+     */
+    public function getProduct() 
+    { 
+        return $this->product;
+    }
+      
+    /**
+     * Sets associated product.
+     * @param \Application\Entity\Product $product
+     */
+    public function setProduct($product) 
+    {
+        $this->product = $product;
+        $product->addProductMaster($this);
+    } 
+
+    /**
+     * @ORM\ManyToMany(targetEntity="\Application\Entity\Store", inversedBy="product_masters")
+     * @ORM\JoinTable(name="store_products",
+     *      joinColumns={@ORM\JoinColumn(name="product_master_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="store_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $stores; 
+
+    public function getStore() 
+    { 
+        return $this->stores;
+    }
+      
+    public function setStore($store) 
+    {
+        $this->stores[] = $store;
+    }   
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(name="id")
+     */
+    protected $id;
+
+    
+    /**
+     * @ORM\Column(name="size_id")
+     */
+    protected $size_id;
+
+    /**
+     * @ORM\Column(name="color_id")
+     */
+    protected $color_id;
+
+     /**
+    * @ORM\Column(name="date_created")
+    */
+    protected $date_created;
+
+
+    // Returns ID of this product.
+    public function getId() 
+    {
+        return $this->id;
+    }
+
+    // Sets ID of this product.
+    public function setId($id) 
+    {
+        $this->id = $id;
+    }
+
+
+   
+    public function getStatus() 
+    {
+        return $this->status;
+    }
+
+    public function setStatus($status) 
+    {
+        $this->status = $status;
+    }
+
+    public function setColorId($color_id) 
+    {
+        $this->color_id = $color_id;
+    }
+
+    public function getColorId() 
+    {
+        return $this->color_id;
+    }
+
+
+    public function getSize() 
+    {
+        return $this->size;
+    }
+
+    public function setSize($size) 
+    {
+        $this->size = $size;
+    }
+
+    public function getDateCreated() 
+    {
+        return $this->date_created;
+    }
+
+    public function setDateCreated($date_created) 
+    {
+        $this->date_created = $date_created;
+    }
+
+}

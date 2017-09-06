@@ -4,6 +4,7 @@ namespace Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Application\Entity\OrderItem;
+use Application\Entity\User;
 /**
  * @ORM\Entity
  * @ORM\Table(name="orders")

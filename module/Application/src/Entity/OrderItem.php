@@ -2,7 +2,8 @@
 namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Application\Entity\ProductMaster;
+use Application\Entity\Order;
 /**
  * @ORM\Entity
  * @ORM\Table(name="order_items")
@@ -10,13 +11,13 @@ use Doctrine\ORM\Mapping as ORM;
 class OrderItem
 {
     /**
-     * @ORM\OneToOne(targetEntity="\Application\Entity\Product")
+     * @ORM\OneToOne(targetEntity="\Application\Entity\ProductMaster")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     protected $product;
     /*
      * Returns associated product.
-     * @return \Application\Entity\Product
+     * @return \Application\Entity\ProductMaster
      */
     public function getProduct() 
     {

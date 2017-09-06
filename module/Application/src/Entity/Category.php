@@ -12,7 +12,7 @@ class Category
 {
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Product", mappedBy="category")
-     * @ORM\JoinColumn(name="id", referencedColumnName="product_id")
+     * @ORM\JoinColumn(name="id", referencedColumnName="category_id")
      */
     protected $products;
     public function __construct() 
