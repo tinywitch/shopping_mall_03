@@ -149,27 +149,13 @@ return [
                     ],
                 ],
             ],
-            'category' => [
-                'type' => Segment::class,
-                'options' => [
-                    'route' => '/category[/:action[/:id]]',
-                    'constraints' => [
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-zA-Z0-9_-]*',
-                    ],
-                    'defaults' => [
-                        'controller' => Controller\CategoryController::class,
-                        'action' => 'view',
-
-                    ],
-                ],
-            ],
             'cart' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route' => '/cart[/:action]',
+                    'route' => '/cart[/:action[/:id]]',
                     'constraints' => [
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9_-]*',
                     ],
                     'defaults' => [
                         'controller' => Controller\CartController::class,
@@ -235,7 +221,7 @@ return [
             ],
             Controller\CartController::class => [
                 // Give access to "view" actions to anyone.
-                ['actions' => ['view', 'add', 'notify'], 'allow' => '*'],
+                ['actions' => ['view', 'checkout', 'success'], 'allow' => '*'],
             ],
         ],
     ],

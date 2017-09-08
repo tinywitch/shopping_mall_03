@@ -1,0 +1,73 @@
+<ul id="hlink" class="nav navbar-nav navbar-right hidden-xs hidden-sm">
+    <li>
+        <a href="/">
+            Home
+        </a>
+    </li>
+
+    <li>
+        <a href="#">
+            Track my order
+        </a>
+    </li>
+    <li class="cart_li text-center">
+        <a href="#"><i class="fa fa-globe fa-2x empty-notice"></i>
+            <!--                                <span class="cart-logo">Notice</span>-->
+        </a>
+    </li>
+    <li class="cart_li text-center profile_user">
+        <!--                            <img src="http://premium-templates.org/ecommerce/html5/curie/demo/images/00prof1f.jpg"-->
+        <!--                                 alt="img" />-->
+        <button class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" style="display:block;">
+            <?php echo $user["name"] ?>
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" style="display:none" />
+    </li>
+</ul>
+
+<button style="display:none;" type="button" class="btn btn-default dropdown-toggle"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    You <span class="caret"></span>
+</button>
+
+<!--Dropdown user menu-->
+<ul class="dropdown-menu profile_dd" style="min-width:250px !important;">
+
+    <li><a href="/user/view" style="padding:5px;border-left:none;">View profile</a></li>
+    <li role="separator" class="divider"></li>
+    <!--                        <li><a href="#" style="padding:5px;border-left:none;"><span-->
+    <!--                                        class="glyphicon glyphicon-envelope"></span>&nbsp; Conversations</a></li>-->
+    <li><a href="#" style="padding:5px;border-left:none;">My orders</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="/logout" style="padding:5px;border-left:none;">Sign out</a></li>
+</ul>
+</li>
+
+<li class="cart_li text-center">
+    <a href="/cart"><i class="fa fa-shopping-cart fa-2x"></i>
+        <span class="cart-logo"></span>
+    </a>
+</li>
+</ul>
+
+<!--Menu for mobile-->
+<ul id="hlink" class="nav navbar-nav navbar-right hidden-lg hidden-md">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Track my order</a></li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+           aria-haspopup="true" aria-expanded="false">
+            <?php echo $user["name"] ?>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="/user/view">View Profile</a></li>
+            <li><a href="#">My orders</a></li>
+            <li><a href="/logout">Sign out</a></li>
+
+        </ul>
+    </li>
+    <li><a href="/cart">Cart</a></li>
+
+</ul>

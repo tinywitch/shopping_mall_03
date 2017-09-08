@@ -1,49 +1,85 @@
-<div class="fh5co-tab-content tab-content active" data-tab-content="1">
-    <div class="col-md-10 col-md-offset-1">
-        <h3>Product Description</h3>
-        <p><?php echo $product->getDescription(); ?></p>
-        <hr>
-        <h3 class="text-center">Product Infomation</h3>
-        <table class="table table-striped table-bordered">
-            <tr>
-                <th>Name:</th>
-                <td>
-                <?= $this->escapeHtml($product->getName()) ?></td>
-            </tr>
-            <tr>
-                <th>Category:</th>
-                <td>
-                    <?php if($product->getCategory() != null)
-                        $this->escapeHtml($product->getCategory()->getName()) ?>
-                </td>
-            </tr>
-            <tr>
-                <th>Store:</th>
-                <td>
-                    <?php if($product->getStore() != null) 
-                        $this->escapeHtml($product->getStore()->getName()) ?>
-                    </td>
-            </tr>
-            <tr>
-                <th>Price:</th>
-                <td>
-                <?= $this->escapeHtml($product->getPrice()) ?></td>
-            </tr>
-            <tr>
-                <th>Quantity:</th>
-                <td>
-                <?= $this->escapeHtml($product->getQuantity()) ?></td>
-            </tr>
-            <tr>
-                <th>Size:</th>
-                <td>
-                <?= $this->escapeHtml($product->getSize()) ?></td>
-            </tr>
-            <tr>
-                <th>Color:</th>
-                <td>
-                <?= $this->escapeHtml($product->getColorText()) ?></td>
-            </tr>
-        </table>
+<div id="listing-page-cart">
+    <div class="inner">
+        <h1><?= $this->escapeHtml($product->getName()) ?></td></h1>
+        <div class="clearfix row">
+            <div class="product_details">
+                <button type="button" class="btn-secondary pull-right">
+                    Ask a Question
+                </button>
+                <div id="listing-price">$ <?php echo $product->getSalePrice(); ?></div>
+
+                <div id="item-stock">
+                    <div id="item-stock">
+                        <label>Quantity</label>
+                        <select name="quantity" class="min">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                    </div>
+
+                    <div id="item-stock">
+                        <label class="property-513">Size (Inches)</label>
+                        <select class="variation" data-property-id="513"
+                                id="listing_variation[513]" name="listing_variation[513]">
+                            <option selected="selected" value="">
+                                Select an option
+                            </option>
+                            4 x 6 [US$ 12.00]
+                            </option>
+                            <option value="3020258233">
+                                5 x 7 [US$ 15.00]
+                            </option>
+                            <option value="3365406721">
+                                8 x 10 [US$ 27.00]
+                            </option>
+                            <option value="5202790854">
+                                8 x 12 [US$ 30.00]
+                            </option>
+                            <option value="3365406725">
+                                11 x 14 [US$ 47.00]
+                            </option>
+                            <option value="3293400342">
+                                12 x 18 [US$ 67.00]
+                            </option>
+                            <option value="3080643952">
+                                16 x 20 [US$ 87.00]
+                            </option>
+                            <option value="8235880186">
+                                16 x 24 [US$ 97.00]
+                            </option>
+                            <option value="5202790872">
+                                20 x 30 [US$ 132.00]
+                            </option>
+                            <option value="6984256577">
+                                24 x 36 [US$ 152.00]
+                            </option>
+                            <option value="27952599528">
+                                30 x 45 [US$ 227.00]
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="item-stock">
+                        <!--                            <label>Intro</label>-->
+                        <?php echo $product->getIntro(); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="cart_button" style="padding-top:10px;">
+        <button
+                data-cart-add="<?php echo $product->getId(); ?>"
+                data-cart-name="<?php echo $product->getName(); ?>"
+                data-cart-img="<?php echo $this->basePath($product->getImage()) ?>"
+                data-cart-price="<?php echo $product->getSalePrice(); ?>"
+                class="btn btn-success btn-block addToCart">
+            Add to cart
+        </button>
     </div>
 </div>

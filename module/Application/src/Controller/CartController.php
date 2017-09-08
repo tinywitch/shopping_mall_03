@@ -40,14 +40,17 @@ class CartController extends AbstractActionController
      */
     public function viewAction()
     {
-        $view = new ViewModel([
+        $cookie = $this->getRequest()->getCookie('Cart', 'default');
+        $cart_info = json_decode($cookie["Cart"]);
 
+        $view = new ViewModel([
+            'data' => $cart_info,
         ]);
         $this->layout('application/layout');
         return $view;
     }
 
-    public function addAction()
+    public function checkoutAction()
     {
         $cookie = $this->getRequest()->getCookie('Cart', 'default');
         $cart_info = json_decode($cookie["Cart"]);
@@ -119,7 +122,7 @@ class CartController extends AbstractActionController
         return $view;
     }
 
-    public function notifyAction()
+    public function successAction()
     {
         $view = new ViewModel([
 

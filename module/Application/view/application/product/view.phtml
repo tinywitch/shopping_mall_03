@@ -1,31 +1,44 @@
-<?php $this->url = $this->basePath() ?>
-<div class="body-margin">
-    <div id="fh5co-product">
+<div class="product_outer">
+    <div id="content">
         <div class="container">
-            <?php include_once '_product_details.phtml'; ?>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="fh5co-tabs animate-box">
-                <ul class="fh5co-tab-nav">
-                    <li class="active"><a href="#" data-tab="1">
-                            <span class="icon visible-xs"><i class="icon-bar-graph"></i></span>
-                            <span class="hidden-xs">Specification</span>
-                        </a></li>
-                    <li><a href="#" data-tab="2">
-                            <span class="icon visible-xs"><i class="icon-star"></i></span>
-                            <span class="hidden-xs">Feedback &amp; Ratings</span>
-                        </a></li>
-                </ul>
+            <div class="wrap white">
+                <div class="row clearfix">
+                    <div class="col-sm-7">
+                        <div class="" id="slider">
+                            <?php include_once '_product_images.phtml' ?>
+                            <!--                            <div id="slider-thumbs">-->
+                            <!--                                <ul class="hide-bullets smnav">-->
+                            <!--                                    <li>-->
+                            <!--                                        <a class="thumbnail" id="carousel-selector-0">-->
+                            <!--                                            <img src="http://premium-templates.org/ecommerce/html5/curie/demo/images/239pro1s.png">-->
+                            <!--                                        </a>-->
+                            <!--                                    </li>-->
+                            <!---->
+                            <!--                                    <li>-->
+                            <!--                                        <a class="thumbnail" id="carousel-selector-1"><img-->
+                            <!--                                                    src="http://premium-templates.org/ecommerce/html5/curie/demo/images/239pro2s.png"></a>-->
+                            <!---->
+                            <!--                                    </li>-->
+                            <!---->
+                            <!--                                    <li>-->
+                            <!--                                        <a class="thumbnail" id="carousel-selector-2"><img-->
+                            <!--                                                    src="http://premium-templates.org/ecommerce/html5/curie/demo/images/239pro3s.png"></a>-->
+                            <!--                                    </li>-->
+                            <!--                                </ul>-->
+                            <!--                            </div>-->
 
-                <!-- Tabs -->
-                <div class="fh5co-tab-content-wrap">
-                    <?php include_once '_product_info.phtml'; ?>
-                    <?php include_once '_product_comment_tab.phtml'; ?>
+                            <?php include_once '_product_details.phtml' ?>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 col-sm-5 col-xs-12">
+                        <?php include_once '_product_info.phtml' ?>
+                        <?php include_once '_recommend_product.phtml' ?>
+                    </div>
                 </div>
-
             </div>
-        </div>
+            <?php include_once '_tags.phtml' ?>
+        </div><!--container-->
+
     </div>
 </div>

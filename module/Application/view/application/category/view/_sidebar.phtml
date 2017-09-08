@@ -1,0 +1,112 @@
+<?php
+function in_list($categoryId, $listCategory)
+{
+    foreach ($listCategory as $category) {
+        if ($categoryId == $category->getId()) {
+            return true;
+        }
+    }
+    return false;
+}
+
+?>
+
+<div class="col-sm-3">
+    <div class="card">
+        <div class="panel-body">
+            <h5>Category</h5>
+            <nav class="nav-sidebar">
+                <ul class="nav tabs">
+                    <?php foreach ($mainCategories as $mainCategory) : ?>
+                        <?php $mainCategoryId = $mainCategory->getId(); ?>
+                        <?php $listSubCategory = $arrCateTree[$mainCategoryId] ?>
+
+                        <?php if (in_list($category->getId(), $listSubCategory)
+                            || $mainCategoryId == $category->getId()
+                        ) { ?>
+                            <li class="active">
+                                <a href="/category/view/<?php echo $mainCategoryId ?>">
+                                    <?php echo $mainCategory->getName(); ?>
+                                </a>
+                                <ul class="nav sub-nav">
+                                    <?php foreach ($listSubCategory as $subCategory): ?>
+                                        <?php if ($subCategory->getId() == $category->getId()) { ?>
+                                            <li class="active">
+                                                <a href="/category/view/<?php echo $subCategory->getId(); ?>">
+                                                    <?php echo $subCategory->getName(); ?>
+                                                </a>
+                                            </li>
+                                        <?php } else { ?>
+                                            <li>
+                                                <a href="/category/view/<?php echo $subCategory->getId(); ?>">
+                                                    <?php echo $subCategory->getName(); ?>
+                                                </a>
+                                            </li>
+                                        <?php } ?>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </li>
+                        <?php } else { ?>
+                            <li>
+                                <a href="/category/view/<?php echo $mainCategoryId ?>">
+                                    <?php echo $mainCategory->getName(); ?>
+                                </a>
+                            </li>
+                        <?php } ?>
+                    <?php endforeach; ?>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="card mt15">
+
+        <div class="panel-body">
+            <h5>Price</h5>
+            <div>
+                <form class="price row clearfix">
+                    <div class="col-xs-4">
+                        <input type="text" value="" class="form-control">
+                    </div>
+                    <div class="pull-left text-center">
+                        <span class="vcenter">to</span>
+                    </div>
+                    <div class="col-xs-4">
+                        <input type="text" value="" class="form-control">
+                    </div>
+                    <div class="col-xs-2">
+                        <input type="submit" value="Go" class="btn btn-default">
+                    </div>
+
+                </form>
+            </div>
+
+            <hr>
+
+            <h5>Filter by color</h5>
+            <ul class="swatch">
+                <li>
+                    <a href="" style="background-color: #f40b32;"></a>
+                </li>
+                <li>
+                    <a href="" style="background-color: #ff7f00;"></a>
+                </li>
+                <li>
+                    <a href="" style="background-color: #f3cc0c;"></a>
+                </li>
+                <li>
+                    <a href="" style="background-color: #0ac20a;"></a>
+                </li>
+                <li>
+                    <a href="" style="background-color: #0cccf3;"></a>
+                </li>
+                <li>
+                    <a href="" style="background-color: #a60cf3;"></a>
+                </li>
+                <li>
+                    <a href="" style="background-color: #000000;"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

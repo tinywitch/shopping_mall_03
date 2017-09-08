@@ -53,17 +53,21 @@ class CategoryController extends AbstractActionController
         $paginator->setDefaultItemCountPerPage(6);                
         $paginator->setCurrentPageNumber($page);
 
+        $mainCategories = $this->categoryManager->mainCategories();
+        $arrCateTree = $this->categoryManager->arrCateTree();
+
         foreach ($paginator as $product) {
             $truncate = new TrunCate();
             $truncate_name = $truncate($product->getName(), 30);
             $product->setName($truncate_name);
         }
-
         $view = new ViewModel([
             'products' => $paginator,
-            'category' => $category
+            'category' => $category,
+            'mainCategories' => $mainCategories,
+            'arrCateTree' => $arrCateTree,
         ]);
-        $this->layout('application/layout_category');
+        $this->layout('application/layout');
         return $view;
     }
 }
