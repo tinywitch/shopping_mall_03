@@ -41,10 +41,20 @@ class Store
 
     /**
      * One Product has One Address.
-     * @OneToOne(targetEntity="\Application\Entity\Address")
-     * @JoinColumn(name="address_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="\Application\Entity\Address")
+     * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
      */
     protected $address;
+
+    public function getAddress() 
+    {
+        return $this->address;
+    }
+
+    public function setAddress($address) 
+    {
+        $this->address = $address;
+    }
     
     /**
      * @ORM\Id
@@ -89,16 +99,6 @@ class Store
     public function setName($name) 
     {
         $this->name = $name;
-    }
-
-    public function getAddress() 
-    {
-        return $this->address;
-    }
-
-    public function setAddress($address) 
-    {
-        $this->address = $address;
     }
 
     public function getPhone() 

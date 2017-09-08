@@ -96,12 +96,12 @@ class Activity
         $this->type = $type;
     }
 
-    public function getTarget_id() 
+    public function getTargetId() 
     {
         return $this->target_id;
     }
 
-    public function setTarget_id($target_id) 
+    public function setTargetId($target_id) 
     {
         $this->target_id = $target_id;
     }

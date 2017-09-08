@@ -61,6 +61,24 @@ class Order
         $this->user = $user;
         $user->addOrder($this);
     }
+
+    /**
+    * One Order has One Address.
+    * @ORM\OneToOne(targetEntity="\Application\Entity\Address")
+    * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
+    */
+    protected $address;
+
+    public function getAddress() 
+    {
+        return $this->address;
+    }
+
+    public function setAddress($address) 
+    {
+        $this->address = $address;
+    }
+    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -87,11 +105,6 @@ class Order
      * @ORM\Column(name="phone")
      */
     protected $phone;
-
-    /**
-     * @ORM\Column(name="address")
-     */
-    protected $address;
 
     /**
      * @ORM\Column(name="cost")
@@ -160,15 +173,6 @@ class Order
         $this->phone = $phone;
     }
 
-    public function getAddress() 
-    {
-        return $this->address;
-    }
-
-    public function setAddress($address) 
-    {
-        $this->address = $address;
-    }
 
     public function getCost() 
     {

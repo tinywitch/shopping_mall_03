@@ -248,28 +248,10 @@ class Product
      */
     protected $rate_count = 0;
 
-    /**
-     * @ORM\Column(name="popular_level")
-     */
-    protected $popular_level = 0;
-
-
      /**
     * @ORM\Column(name="date_created")
     */
     protected $date_created;
-
-
-    public function getPopularLevel() 
-    {
-        return $this->popular_level;
-    }
-
-    // Sets ID of this product.
-    public function setPopularLevel($popular_level) 
-    {
-        $this->popular_level = $popular_level;
-    }
 
     // Returns ID of this product.
     public function getId() 
