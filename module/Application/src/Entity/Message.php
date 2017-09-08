@@ -33,29 +33,30 @@ class Message
         $user->addMessage($this);
     }
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\Chat_box", inversedBy="messages")
-     * @ORM\JoinColumn(name="chat_box_id", referencedColumnName="id")
-     */
-    protected $chat_box;
-    /*
-     * Returns associated chat_box.
-     * @return \Application\Entity\Chat_box
-     */
-    public function getChatBox() 
-    {
-        return $this->chat_box;
-    }
+    // /**
+    //  * @ORM\ManyToOne(targetEntity="\Application\Entity\Chat_box", inversedBy="messages")
+    //  * @ORM\JoinColumn(name="chat_box_id", referencedColumnName="id")
+    //  */
+    // protected $chat_box;
+    // /*
+    //  * Returns associated chat_box.
+    //  * @return \Application\Entity\Chat_box
+    //  */
+    // public function getChatBox() 
+    // {
+    //     return $this->chat_box;
+    // }
       
-    /**
-     * Sets associated chat_box.
-     * @param \Application\Entity\Chat_box $chat_box
-     */
-    public function setChatBox($chat_box) 
-    {
-        $this->chat_box = $chat_box;
-        $chat_box->addMessage($this);
-    }
+    // /**
+    //  * Sets associated chat_box.
+    //  * @param \Application\Entity\Chat_box $chat_box
+    //  */
+    // public function setChatBox($chat_box) 
+    // {
+    //     $this->chat_box = $chat_box;
+    //     $chat_box->addMessage($this);
+    // }
+    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

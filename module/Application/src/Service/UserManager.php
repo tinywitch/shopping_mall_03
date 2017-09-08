@@ -60,7 +60,7 @@ class UserManager
 
         $user->setStatus(User::STATUS_ACTIVE);
         $user->setDateCreated(date('Y-m-d H:i:s'));
-        $user->setAddress($data['address']);
+        //$user->setAddress($data['address']);
         $user->setPhone($data['phone']);
         $user->setRole(0);
         $user->setToken('null');
@@ -87,7 +87,7 @@ class UserManager
         // $user->setEmail($data['email']);
         $user->setName($data['full_name']);
         // $user->setStatus($data['status']);
-        $user->setAddress($data['address']);
+        // $user->setAddress($data['address']);
         $user->setPhone($data['phone']);
 
         // Apply changes to database.
@@ -112,7 +112,7 @@ class UserManager
             $user->setPassword($passwordHash);
             $user->setStatus(User::STATUS_ACTIVE);
             $user->setDateCreated(date('Y-m-d H:i:s'));
-            $user->setAddress('Hanoi');
+            // $user->setAddress('Hanoi');
             $user->setPhone('0968865835');
             $user->setRole(1);
             $user->setToken('null');

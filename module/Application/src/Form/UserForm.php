@@ -95,14 +95,14 @@ class UserForm extends Form
             ]);
         }
 
-        // Add "address" field
-        $this->add([
-            'type' => 'text',
-            'name' => 'address',
-            'options' => [
-                'label' => 'Address',
-            ],
-        ]);
+        // // Add "address" field
+        // $this->add([
+        //     'type' => 'text',
+        //     'name' => 'address',
+        //     'options' => [
+        //         'label' => 'Address',
+        //     ],
+        // ]);
 
         // Add "phone-number" field
         $this->add([
@@ -179,22 +179,22 @@ class UserForm extends Form
             ]);
         } else {
             // Add input for "address" field
-            $inputFilter->add([
-                'name' => 'address',
-                'required' => true,
-                'filters' => [
-                    ['name' => 'StringTrim'],
-                ],
-                'validators' => [
-                    [
-                        'name' => 'StringLength',
-                        'options' => [
-                            'min' => 1,
-                            'max' => 512
-                        ],
-                    ],
-                ],
-            ]);
+            // $inputFilter->add([
+            //     'name' => 'address',
+            //     'required' => true,
+            //     'filters' => [
+            //         ['name' => 'StringTrim'],
+            //     ],
+            //     'validators' => [
+            //         [
+            //             'name' => 'StringLength',
+            //             'options' => [
+            //                 'min' => 1,
+            //                 'max' => 512
+            //             ],
+            //         ],
+            //     ],
+            // ]);
 
             // Add input for "phone" field
             $inputFilter->add([

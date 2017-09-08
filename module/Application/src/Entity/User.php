@@ -56,10 +56,10 @@ class User
     protected $messages;
 
     /**
-     * One Product has One Address.
-     * @OneToOne(targetEntity="\Application\Entity\Address")
-     * @JoinColumn(name="address_id", referencedColumnName="id")
-     */
+    * One Product has One Address.
+    * @ORM\OneToOne(targetEntity="\Application\Entity\Address")
+    * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
+    */
     protected $address;
     /**
      * Constructor.
@@ -73,6 +73,17 @@ class User
         $this->orders = new ArrayCollection();  
         $this->messages = new ArrayCollection();                  
     }
+
+    public function getAddress() 
+    {
+        return $this->address;
+    }
+
+    public function setAddress($address) 
+    {
+        $this->address = $address;
+    }
+
 
     /**
      * Returns comments for this user.
@@ -259,16 +270,6 @@ class User
         $this->role = $role;
     }
 
-    public function getAddress() 
-    {
-        return $this->address;
-    }
-
-    public function setAddress($address) 
-    {
-        $this->address = $address;
-    }
-
     public function getPhone() 
     {
         return $this->phone;
@@ -287,16 +288,6 @@ class User
     public function setName($name) 
     {
         $this->name = $name;
-    }
-
-    public function getAddress() 
-    {
-        return $this->address;
-    }
-
-    public function setAddress($address) 
-    {
-        $this->address = $address;
     }
 
     public function getStatus() 

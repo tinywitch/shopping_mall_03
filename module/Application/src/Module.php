@@ -49,9 +49,9 @@ class Module
 
         $viewModel = $event->getViewModel();
 
-        //$categoryManager = $serviceManager->get('Application\Service\CategoryManager');
-        //$viewModel->mainCategories = $categoryManager->mainCategories();
-        //$viewModel->arrCateTree = $categoryManager->arrCateTree();
+        $categoryManager = $serviceManager->get('Application\Service\CategoryManager');
+        $viewModel->mainCategories = $categoryManager->mainCategories();
+        $viewModel->arrCateTree = $categoryManager->arrCateTree();
 
         $sessionContainer = new Container('UserLogin');
 
@@ -118,17 +118,17 @@ class Module
 
         $sessionContainer = new Container('UserLogin');
 
-        if (isset($sessionContainer->id)) {
-            if ($sessionContainer->id != 1
-                && ($controllerName == CategoryController::class
-                    || $controllerName == IndexController::class
-                    || $controllerName == OrderController::class
-                    || $controllerName == ProductController::class
-                    || $controllerName == StoreController::class
-                    || $controllerName == UserController::class)
-            ) {
-                return $controller->redirect()->toRoute('home');
-            }
-        }
+        // if (isset($sessionContainer->id)) {
+        //     if ($sessionContainer->id != 1
+        //         && ($controllerName == CategoryController::class
+        //             || $controllerName == IndexController::class
+        //             || $controllerName == OrderController::class
+        //             || $controllerName == ProductController::class
+        //             || $controllerName == StoreController::class
+        //             || $controllerName == UserController::class)
+        //     ) {
+        //         return $controller->redirect()->toRoute('home');
+        //     }
+        // }
     }
 }

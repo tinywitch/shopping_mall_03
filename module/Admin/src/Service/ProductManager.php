@@ -73,7 +73,6 @@ class ProductManager
         $product->setColor($data['color']);
         $product->setQuantity($data['quantity']);
         $product->setSize($data['size']);
-        $product->setPopular_level($data['popular_level']);
         $product->setDescription($data['description']);
         $product->setStatus($data['status']);
         $product->setSale($data['sale']);
