@@ -19,9 +19,10 @@
                                     <div class="col-lg-7 col-sm-7 col-xs-12 ">
                                         <div class="cart_product_description">
                                             <p><b><?php echo $item->name ?></b></p>
-                                            <p>Place holder for color, size</p>
+                                            <p>Color: <?php echo $item->color ?> | Size: <?php echo $item->size ?></p>
+                                            <p></p>
                                             <span>
-                                                <button class="btn btn-danger delete-btn"
+                                                <button class="btn btn-danger delete-item"
                                                         data-id="<?php echo $item->id ?>">
                                                     Remove
                                                 </button>
@@ -89,7 +90,7 @@
                                         VAT
                                     </li>
                                     <li class="list-group-item clearfix">
-                                        <b>SUBTOTAL</b>
+                                        <b>SUB TOTAL</b>
                                         <span class="pull-right cart-total-price"><b>$<?php echo $data->totalPrice * 1.1 ?></b></span>
                                     </li>
                                 </ul>

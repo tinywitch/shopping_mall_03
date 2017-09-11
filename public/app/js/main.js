@@ -6,6 +6,12 @@ Main.settings = {};
 
 Main.init = function () {
     this.bindUIActions();
+    Vue.use(VueMaterial);
+    Vue.use(VeeValidate);
+    Vue.material.registerTheme('default', {
+        primary: 'blue',
+        background: 'grey',
+    });
 };
 
 Main.bindUIActions = function () {

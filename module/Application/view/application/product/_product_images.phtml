@@ -1,21 +1,17 @@
 <!-- Top part of the slider -->
 <div class="row">
-    <div class="col-sm-12" id="carousel-bounding-box">
-        <div class="carousel slide" id="myCarousel">
-            <!-- Carousel items -->
-            <div class="carousel-inner">
-                <div class="active item" data-slide-number="0">
-                    <img src="<?php echo $this->basePath($product->getImage()) ?>"
-                         alt=""></div>
-                <!---->
-                <!--                                            <div class="item" data-slide-number="1">-->
-                <!--                                                <img src="http://premium-templates.org/ecommerce/html5/curie/demo/images/239pro2.png"-->
-                <!--                                                     alt=""></div>-->
-                <!---->
-                <!--                                            <div class="item" data-slide-number="2">-->
-                <!--                                                <img src="http://premium-templates.org/ecommerce/html5/curie/demo/images/239pro3.png"-->
-                <!--                                                     alt="img"></div>-->
-            </div>
-        </div>
+    <div class="col-md-12">
+        <span class="zoom">
+            <img :src="current_image">
+        </span>
+        <ul class="hide-bullets smnav col-md-2">
+            <li v-for="(image, index) in current_list_image" :key="index">
+                <a class="thumbnail"
+                   :class="{'active':index == current_image_index}"
+                   @click="changeImage(index)">
+                    <img :src="image">
+                </a>
+            </li>
+        </ul>
     </div>
 </div>

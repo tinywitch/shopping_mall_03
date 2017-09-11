@@ -1,71 +1,56 @@
 <div id="listing-page-cart">
     <div class="inner">
-        <h1><?= $this->escapeHtml($product->getName()) ?></td></h1>
+        <h1>{{product.name}}</h1>
         <div class="clearfix row">
             <div class="product_details">
                 <button type="button" class="btn-secondary pull-right">
                     Ask a Question
                 </button>
-                <div id="listing-price">$ <?php echo $product->getSalePrice(); ?></div>
+                <div id="listing-price">${{product.price}}</div>
 
                 <div id="item-stock">
-                    <div id="item-stock">
-                        <label>Quantity</label>
-                        <select name="quantity" class="min">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                        </select>
-                    </div>
-
-                    <div id="item-stock">
-                        <label class="property-513">Size (Inches)</label>
-                        <select class="variation" data-property-id="513"
-                                id="listing_variation[513]" name="listing_variation[513]">
-                            <option selected="selected" value="">
-                                Select an option
-                            </option>
-                            4 x 6 [US$ 12.00]
-                            </option>
-                            <option value="3020258233">
-                                5 x 7 [US$ 15.00]
-                            </option>
-                            <option value="3365406721">
-                                8 x 10 [US$ 27.00]
-                            </option>
-                            <option value="5202790854">
-                                8 x 12 [US$ 30.00]
-                            </option>
-                            <option value="3365406725">
-                                11 x 14 [US$ 47.00]
-                            </option>
-                            <option value="3293400342">
-                                12 x 18 [US$ 67.00]
-                            </option>
-                            <option value="3080643952">
-                                16 x 20 [US$ 87.00]
-                            </option>
-                            <option value="8235880186">
-                                16 x 24 [US$ 97.00]
-                            </option>
-                            <option value="5202790872">
-                                20 x 30 [US$ 132.00]
-                            </option>
-                            <option value="6984256577">
-                                24 x 36 [US$ 152.00]
-                            </option>
-                            <option value="27952599528">
-                                30 x 45 [US$ 227.00]
-                            </option>
-                        </select>
-                    </div>
-
                     <div class="item-stock">
-                        <!--                            <label>Intro</label>-->
-                        <?php echo $product->getIntro(); ?>
+                        {{product.intro}}
+                    </div>
+
+                    <div id="item-stock">
+                        <label class="property-513">Color: {{selected_color}}</label>
+                        <md-button-toggle md-single>
+                            <md-button v-for="color in product.colors"
+                                       :key="color"
+                                       class="color-button margin-button md-raised md-fab md-mini"
+                                       :class="{active: color == selected_color}"
+                                       :style="{background: color}"
+                                       @click="selectColor(color)">
+                            </md-button>
+                        </md-button-toggle>
+                    </div>
+
+                    <div id="item-stock">
+                        <label class="property-513">Size: {{product.sizes ? product.sizes[selected_size] : ''}}</label>
+                        <md-button-toggle md-single class="md-primary">
+                            <md-button v-for="size in product.sizes"
+                                       :key="size"
+                                       @click.native="selectSize(size)"
+                                       class="md-icon-button md-raised margin-button"
+                                       :class="{'md-toggle': size == selected_size}">
+                                {{size}}
+                            </md-button>
+                        </md-button-toggle>
+                    </div>
+
+                    <div id="item-stock">
+                        <md-input-container :class="[errors.has('quantity') ? 'md-input-invalid' : '']">
+                            <label>Quantity</label>
+                            <md-input type="number"
+                                      name="quantity"
+                                      v-validate="'required|between:1,100'"
+                                      :class="{'is-danger': errors.has('quantity')}"
+                                      v-model.number="quantity"></md-input>
+
+                            <span class="md-error"
+                                  v-show="errors.has('quantity')">{{errors.first('quantity')}}</span>
+                        </md-input-container>
                     </div>
                 </div>
             </div>
@@ -73,12 +58,8 @@
 
     </div>
     <div class="cart_button" style="padding-top:10px;">
-        <button
-                data-cart-add="<?php echo $product->getId(); ?>"
-                data-cart-name="<?php echo $product->getName(); ?>"
-                data-cart-img="<?php echo $this->basePath($product->getImage()) ?>"
-                data-cart-price="<?php echo $product->getSalePrice(); ?>"
-                class="btn btn-success btn-block addToCart">
+        <button class="btn btn-success btn-block addToCart"
+                @click="addToCart">
             Add to cart
         </button>
     </div>

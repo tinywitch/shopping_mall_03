@@ -16,6 +16,7 @@
         ->prependStylesheet($this->basePath('app/css/material-design-iconic-font.css'))
         ->prependStylesheet($this->basePath('app/css/main.css'))
         ->prependStylesheet($this->basePath('app/css/style.css'))
+        ->prependStylesheet($this->basePath('assets/vue-material/vue-material.css'))
         ->prependStylesheet($this->basePath('app/css/rateit.css'))
         ->prependStylesheet($this->basePath('app/css/font-awesome.css'))
         ->prependStylesheet($this->basePath('app/css/overwrite.css'))
@@ -27,7 +28,10 @@
     <!-- Scripts -->
     <?= $this->headScript()
         ->prependFile($this->basePath('app/js/cart.js'))
+        ->prependFile($this->basePath('app/js/product.js'))
         ->prependFile($this->basePath('app/js/main.js'))
+        ->prependFile($this->basePath('assets/vee-validate/vee-validate.js'))
+        ->prependFile($this->basePath('assets/vue-material/vue-material.js'))
         ->prependFile($this->basePath('assets/vue/dist/vue.js'))
         ->prependFile($this->basePath('app/js/bootsnav.js'))
         ->prependFile($this->basePath('app/js/jquery.rateit.js'))
@@ -51,14 +55,13 @@
         <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
     </div>
 
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div id="flash-message">
-            </div>
-        </div>
-    </div>
+    <md-snackbar :md-position="vertical + ' ' + horizontal" ref="snackbar" :md-duration="duration">
+        <span>{{notifyMessage}}.</span>
+        <md-button class="md-accent" @click="notifyActionAdapter">{{ notifyAction }}</md-button>
+    </md-snackbar>
 
     <?php echo $this->inlineScript() ?>
+
 </div>
 </body>
 </html>
