@@ -30,49 +30,19 @@ Cart.init = function () {
 Cart.bindUIActions = function () {
     const current = this;
 
-    $('.addToCart').on('click', function () {
-        let item = {};
-        let $this = $(this);
-        item.id = parseInt($this.attr('data-cart-add'));
-        item.name = $this.attr('data-cart-name');
-        item.quantity = parseInt($('select[name="quantity"]').val());
-        item.img = $this.attr('data-cart-img');
-        item.price = parseFloat($this.attr('data-cart-price'));
+    $('.delete-item').on('click', function (e) {
+        let id = $(this).attr('data-id');
 
-        let itemIndex = current.cart.items.findIndex(function (ele) {
-            return ele.id === item.id;
-        });
-
-        if (itemIndex < 0) {
-            current.cart.totalItem += 1;
-            current.cart.items.push(item);
-        } else {
-            current.cart.items[itemIndex].quantity += item.quantity;
-            current.cart.items[itemIndex].price = item.price;
-            current.updateItemPriceUI(item.id);
-        }
-
-        current.update();
-        $('#flash-message').append('<div class="alert alert-success"><strong>Success!</strong> Add product to cart successfully.</div>');
-        $('.alert').delay(3000).slideUp();
-    });
-
-    setTimeout(function () {
-        $('.like-btn2').click();
-    }, 800);
-
-    $('.delete-btn').on('click', function (e) {
-        e.preventDefault();
-        let id = parseInt($(this).attr('data-id'));
-        current.deleteElement('item' + id);
-
-        let idx = current.cart.items.findIndex(function (ele, i) {
+        let idx = current.cart.items.findIndex(function (ele) {
             return ele.id === id;
         });
+
+        console.log(idx);
 
         if (idx >= 0) {
             current.cart.totalItem -= 1;
             current.cart.items.splice(idx, 1);
+            current.deleteElement('item' + id);
         }
 
         current.update();
@@ -109,7 +79,7 @@ Cart.bindUIActions = function () {
             input.val(0);
         }
 
-        let id = parseInt(fieldName);
+        let id = fieldName;
         let idx = current.cart.items.findIndex((ele) => {
             return ele.id === id;
         });
@@ -144,7 +114,7 @@ Cart.bindUIActions = function () {
             $(this).val($(this).data('oldValue'));
         }
 
-        let id = parseInt(name);
+        let id = name;
 
         let idx = current.cart.items.findIndex((ele) => {
             return ele.id === id;
@@ -175,10 +145,27 @@ Cart.bindUIActions = function () {
     });
 };
 
+Cart.addToCart = function (item) {
+    let itemIndex = this.cart.items.findIndex(function (ele) {
+        return ele.id === item.id;
+    });
+
+    if (itemIndex < 0) {
+        this.cart.totalItem += 1;
+        this.cart.items.push(item);
+    } else {
+        this.cart.items[itemIndex].quantity += item.quantity;
+        this.cart.items[itemIndex].price = item.price;
+        this.updateItemPriceUI(item.id);
+    }
+
+    this.update();
+};
+
 Cart.calculateTotalPrice = function () {
-  this.cart.totalPrice = this.cart.items.reduce((sum, item) => {
-      return sum + item.price * item.quantity;
-  }, 0);
+    this.cart.totalPrice = this.cart.items.reduce((sum, item) => {
+        return sum + item.price * item.quantity;
+    }, 0);
 };
 
 Cart.updateNumberCartUI = function () {

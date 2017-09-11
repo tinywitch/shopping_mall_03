@@ -42,43 +42,43 @@ class ProductController extends AbstractActionController
      */
     public function viewAction()
     {
-        $id = (int)$this->params()->fromRoute('id', -1);
+//        $id = (int)$this->params()->fromRoute('id', -1);
+//
+//        $product = $this->entityManager->getRepository(Product::class)
+//            ->find($id);
+//
+//        if ($product == null) {
+//            $this->getResponse()->setStatusCode(404);
+//            return;
+//        }
+//        $comments = $product->getComments();
+//        $commentCount = $this->productManager->getCommentCountStr($product);
 
-        $product = $this->entityManager->getRepository(Product::class)
-            ->find($id);
-
-        if ($product == null) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-        $comments = $product->getComments();
-        $commentCount = $this->productManager->getCommentCountStr($product);
-
-        $comment_form = new CommentForm();
-
-        if($this->getRequest()->isPost()) {
-
-            $data = $this->params()->fromPost();
-                
-            $comment_form->setData($data);
-            if($comment_form->isValid()) {
-                                     
-                // Get validated form data.
-                $data = $comment_form->getData();
-                $data['user_id'] = $this->sessionContainer->id;
-                // Use product manager service to add new comment to product.
-                $this->productManager->addCommentToProduct($product, $data);
-                        
-                // Redirect the user again to "view" page.
-                return $this->redirect()->toRoute('product', ['action'=>'view', 'id' => $id]);
-            }
-        }
+//        $comment_form = new CommentForm();
+//
+//        if($this->getRequest()->isPost()) {
+//
+//            $data = $this->params()->fromPost();
+//
+//            $comment_form->setData($data);
+//            if($comment_form->isValid()) {
+//
+//                // Get validated form data.
+//                $data = $comment_form->getData();
+//                $data['user_id'] = $this->sessionContainer->id;
+//                // Use product manager service to add new comment to product.
+//                $this->productManager->addCommentToProduct($product, $data);
+//
+//                // Redirect the user again to "view" page.
+//                return $this->redirect()->toRoute('product', ['action'=>'view', 'id' => $id]);
+//            }
+//        }
         $view = new ViewModel([
             'user_id' => $this->sessionContainer->id,
-            'commentCount' => $commentCount,
-            'comment_form' => $comment_form,
-            'comments' => $comments,
-            'product' => $product
+//            'commentCount' => $commentCount,
+//            'comment_form' => $comment_form,
+//            'comments' => $comments,
+//            'product' => $product
         ]);
         $this->layout('application/layout');
         return $view;

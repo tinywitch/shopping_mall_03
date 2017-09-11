@@ -2,6 +2,7 @@
     background-color: #FFFFFF;
     margin-top: 40px;
     margin-bottom: 40px;
+    padding-top: 20px;
 }
 
 .register .register-form {
@@ -31,6 +32,10 @@
     margin: 9px 0;
     overflow: hidden;
     background-color: #e5e5e5;
+}
+
+.navbar-nav li {
+    margin: 0 !important;
 }
 
 /*Category*/
@@ -452,3 +457,31 @@
 }
 
 /*tracking.html ends*/
+
+.hide-bullets {
+    position: absolute;
+    top: 20px;
+    right: -5px;
+    color: #555;
+}
+
+.hide-bullets .active {
+    background-color: lightblue;
+}
+
+.zoom img {
+    width: 100%;
+}
+
+.thumbnail {
+    border-radius: 0;
+}
+
+/*product*/
+.margin-button {
+    margin-right: 5px !important;
+}
+
+.color-button.active {
+    border-bottom: solid 4px orangered;
+}

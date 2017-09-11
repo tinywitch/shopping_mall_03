@@ -18,7 +18,7 @@ $form->get('password')->setAttributes([
 <div class="row">
     <div class="col-md-4 col-md-offset-4 register">
         <div class="register-form">
-            <h2>Sign in</h2>
+            <h3>Sign in</h3>
 
             <?= $this->form()->openTag($form); ?>
             <?php if ($isLoginError): ?>
@@ -51,7 +51,7 @@ $form->get('password')->setAttributes([
             </div>
             <?= $this->form()->closeTag(); ?>
             <div class="divider"></div>
-            <button class="btn btn-cancel" onclick="location.href = '/register'">Create your account</button>
+            <button class="btn btn-cancel" onclick="location.href = '/register';">Create your account</button>
         </div>
     </div>
 </div>
