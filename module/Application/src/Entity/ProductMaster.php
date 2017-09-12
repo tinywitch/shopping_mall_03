@@ -7,6 +7,7 @@ use Application\Entity\Product;
 use Application\Entity\Store;
 /**
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\Application\Repository\ProductMasterRepository")
  * @ORM\Table(name="product_masters")
  */
 class ProductMaster
@@ -72,12 +73,6 @@ class ProductMaster
      */
     protected $color_id;
 
-     /**
-    * @ORM\Column(name="date_created")
-    */
-    protected $date_created;
-
-
     // Returns ID of this product.
     public function getId() 
     {
@@ -113,24 +108,14 @@ class ProductMaster
     }
 
 
-    public function getSize() 
+    public function getSizeId() 
     {
-        return $this->size;
+        return $this->size_id;
     }
 
-    public function setSize($size) 
+    public function setSizeId($size_id) 
     {
-        $this->size = $size;
-    }
-
-    public function getDateCreated() 
-    {
-        return $this->date_created;
-    }
-
-    public function setDateCreated($date_created) 
-    {
-        $this->date_created = $date_created;
+        $this->size_id = $size_id;
     }
 
 }

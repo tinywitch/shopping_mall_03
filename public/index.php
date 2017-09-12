@@ -2,7 +2,7 @@
 
 use Zend\Mvc\Application;
 use Zend\Stdlib\ArrayUtils;
-
+include_once 'define.php';
 /**
  * This makes our life easier when dealing with paths. Everything is relative
  * to the application root now.

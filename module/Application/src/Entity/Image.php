@@ -23,6 +23,11 @@ class image
     protected $image;
 
     /**
+     * @ORM\Column(name="parent_id")
+     */
+    protected $parent_id = 0;
+
+    /**
      * @ORM\Column(name="date_created")
      */
     protected $date_created;
@@ -81,6 +86,16 @@ class image
     public function getStatus() 
     {
         return $this->status;
+    }
+
+    public function getParentId() 
+    {
+        return $this->parent_id;
+    }
+
+    public function setParentId($parent_id) 
+    {
+        $this->parent_id = $parent_id;
     }
 
     public function setStatus($status) 
