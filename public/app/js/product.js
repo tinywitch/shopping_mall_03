@@ -1,13 +1,7 @@
 $(function () {
-    const App = new Vue({
-        el: '#app',
+    const product = new Vue({
+        el: '#product',
         data: {
-            vertical: 'bottom',
-            horizontal: 'center',
-            duration: 4000,
-            notifyMessage: '',
-            notifyAction: 'Close',
-
             product: {},
             selected_color: '',
             selected_size: '',
@@ -74,7 +68,7 @@ $(function () {
             },
             addToCart: function () {
                 if (this.quantity < 1 || this.quantity > 100) {
-                    this.pushMessage('The quantity must be between 1 and 100');
+                    Snackbar.pushMessage('The quantity must be between 1 and 100');
                     return;
                 }
 
@@ -90,18 +84,9 @@ $(function () {
 
                 Cart.addToCart(item);
 
-                this.pushMessage('Add to cart success', 'Checkout', function () {
+                Snackbar.pushMessage('Add to cart success', 'Checkout', function () {
                     window.location.href = '/cart/view';
                 });
-            },
-            pushMessage: function (message, action, action_fn) {
-                this.notifyMessage = message;
-                this.notifyAction = action ? action : 'Close';
-                this.action_fn = action_fn ? action_fn : null;
-                this.$refs.snackbar.open();
-            },
-            notifyActionAdapter: function () {
-                this.action_fn ? this.action_fn() : this.$refs.snackbar.close();
             },
         },
     });

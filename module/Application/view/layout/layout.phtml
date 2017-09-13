@@ -27,8 +27,11 @@
 
     <!-- Scripts -->
     <?= $this->headScript()
+        ->prependFile($this->basePath('app/js/checkout.js'))
         ->prependFile($this->basePath('app/js/cart.js'))
         ->prependFile($this->basePath('app/js/product.js'))
+        ->prependFile($this->basePath('app/js/snackbar.js'))
+        ->prependFile($this->basePath('js/address.js'))
         ->prependFile($this->basePath('app/js/main.js'))
         ->prependFile($this->basePath('assets/vee-validate/vee-validate.js'))
         ->prependFile($this->basePath('assets/vue-material/vue-material.js'))
@@ -55,7 +58,10 @@
         <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
     </div>
 
-    <md-snackbar :md-position="vertical + ' ' + horizontal" ref="snackbar" :md-duration="duration">
+    <md-snackbar :md-position="vertical + ' ' + horizontal"
+                 ref="snackbar"
+                 :md-duration="duration"
+                 id="snackbar">
         <span>{{notifyMessage}}.</span>
         <md-button class="md-accent" @click="notifyActionAdapter">{{ notifyAction }}</md-button>
     </md-snackbar>
