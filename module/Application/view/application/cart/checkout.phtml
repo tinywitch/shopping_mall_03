@@ -1,56 +1,44 @@
-<div class="checkout-outer">
-    <div class="container">
-        <div class="checkout-inner">
-            <div class="row">
-                <div class="col-lg-8 col-sm-8">
-                    <div class="center_section">
-                        <!--panel-shipping-address-->
-                        <?php include_once 'checkout/_shipping_form.phtml' ?>
-                        <!--panel-bill-info-->
-                        <?php include_once 'checkout/_bill_info.phtml' ?>
-                        <!--panel-payment-method-->
-                        <?php include_once 'checkout/_payment_method.phtml' ?>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-4">
-                    <div class="right_section">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <b>Order Summary</b>
-                            </div>
-                            <div class="panel-body">
-                                <div class="order-summary-inner">
-                                    <ul class="list-group">
-                                        <li class="list-group-item">
-                                            <span class=" pull-right">$65</span>
-                                            Sub total
-                                        </li>
-                                        <li class="list-group-item">
-                                            <span class="pull-right">$34</span>
-                                            Shipping
-                                        </li>
-                                        <li class="list-group-item">
-                                            <span class=" pull-right">$12</span>
-                                            Tax
-                                        </li>
-                                        <li class="list-group-item">
-                                            <span class=" pull-right">$111</span>
-                                            <b>Total</b>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="panel-footer">
-                                <form method="post" target="/cart/checkout">
-                                    <button type="submit" class="btn btn-success btn-block"><b>Place Your
-                                            Order</b></button>
-                                </form>
-                            </div>
+<div id="checkout">
+    <div class="checkout-outer" v-show="!success">
+        <div class="container">
+            <div class="checkout-inner">
+                <div class="row">
+                    <div class="col-lg-8 col-sm-8">
+                        <div class="center_section">
+                            <!--panel-shipping-address-->
+                            <?php include_once 'checkout/_shipping_form.phtml' ?>
+                            <!--panel-payment-method-->
+                            <?php include_once 'checkout/_payment_method.phtml' ?>
                         </div>
-                        <span>By placing your order, you agree to InfiniShop's <a href="#">Privacy policy and terms and conditions</a></span>
+                    </div>
+                    <div class="col-lg-4 col-sm-4">
+                        <?php include_once 'checkout/_order_summary.phtml' ?>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="success-outer" v-show="success">
+        <div class="success-inner">
+            <div class="icon-stack text-center">
+                <i class="fa fa-check success"></i>
+                <h1>You're all Set !</h1>
+                <span>Order #: {{ order_id }} </span>
+                <p class="lead text-center">
+                    Well, Isn't that fantastic? <br />
+                    We hope you enjoy your purchase!
+                </p>
+                <p class="text-center">
+                </p>
+                <!--            <ul class="tag_ul">-->
+                <!--                <li>B&O Beo Labs III Speaker</li>-->
+                <!--                <li>Ottoman Chaise </li>-->
+                <!--                <li>Me and Earl and the Dying Girl Ebook</li>-->
+                <!--                <li class="last">YAMAHA MONTAGE 8 Synthesizer 88 Key</li>-->
+                <!--            </ul>-->
+            </div>
+
         </div>
     </div>
 </div>

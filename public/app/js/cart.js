@@ -19,7 +19,6 @@ Cart.init = function () {
             totalPrice: 0,
         };
     }
-
     console.log(this.cart);
 
     this.updateUI();
@@ -104,13 +103,13 @@ Cart.bindUIActions = function () {
         if (valueCurrent >= minValue) {
             $('.btn-number[data-type=\'minus\'][data-field=\'' + name + '\']').removeAttr('disabled');
         } else {
-            alert('Sorry, the minimum value was reached');
+            Snackbar.pushMessage('The quantity must be between 1 and 100');
             $(this).val($(this).data('oldValue'));
         }
         if (valueCurrent <= maxValue) {
             $('.btn-number[data-type=\'plus\'][data-field=\'' + name + '\']').removeAttr('disabled');
         } else {
-            alert('Sorry, the maximum value was reached');
+            Snackbar.pushMessage('The quantity must be between 1 and 100');
             $(this).val($(this).data('oldValue'));
         }
 
@@ -166,6 +165,8 @@ Cart.calculateTotalPrice = function () {
     this.cart.totalPrice = this.cart.items.reduce((sum, item) => {
         return sum + item.price * item.quantity;
     }, 0);
+    this.cart.vat = Math.round(this.cart.totalPrice * 0.1);
+    this.cart.subTotalPrice = this.cart.totalPrice + this.cart.vat;
 };
 
 Cart.updateNumberCartUI = function () {
@@ -239,8 +240,8 @@ Cart.readCookie = function (name) {
 
 Cart.paymentInfoUpdateUI = function () {
     $('.cart-product-price').text('$' + this.cart.totalPrice);
-    $('.cart-vat').text('$' + Math.round(this.cart.totalPrice * 0.1));
-    $('.cart-total-price').text('$' + Math.round(this.cart.totalPrice * 1.1));
+    $('.cart-vat').text('$' + this.cart.vat);
+    $('.cart-total-price').text('$' + this.cart.subTotalPrice);
 };
 
 Cart.setCartUI = function () {
