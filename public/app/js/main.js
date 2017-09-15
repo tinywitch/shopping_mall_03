@@ -10,7 +10,7 @@ Main.init = function () {
     Vue.use(VeeValidate);
     Vue.material.registerTheme('default', {
         primary: 'blue',
-        background: 'grey',
+        background: 'white',
     });
 };
 

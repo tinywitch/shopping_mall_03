@@ -180,6 +180,20 @@ return [
                     ],
                 ],
             ],
+            'order' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/order[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\OrderController::class,
+                        'action' => 'view',
+                    ]
+                ]
+            ],
         ],
     ],
     'controllers' => [
@@ -191,6 +205,7 @@ return [
             Controller\CategoryController::class => Controller\Factory\CategoryControllerFactory::class,
             Controller\CartController::class => Controller\Factory\CartControllerFactory::class,
             Controller\CommentController::class => Controller\Factory\CommentControllerFactory::class,
+            Controller\OrderController::class => Controller\Factory\OrderControllerFactory::class,
         ],
     ],
     'access_filter' => [
@@ -205,7 +220,7 @@ return [
             Controller\HomeController::class => [
                 // Give access to "resetPassword", "message" and "setPassword" actions
                 // to anyone.
-                ['actions' => ['index'], 'allow' => '*'],
+                ['actions' => ['index', 'search'], 'allow' => '*'],
                 // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
                 // ['actions' => ['changePassword'], 'allow' => '@']
             ],
@@ -226,6 +241,11 @@ return [
             Controller\CartController::class => [
                 // Give access to "view" actions to anyone.
                 ['actions' => ['view', 'checkout', 'success'], 'allow' => '*'],
+            ],
+            Controller\OrderController::class => [
+                // Give access to "view" actions to anyone.
+                ['actions' => ['view'], 'allow' => '@'],
+                ['actions' => ['track'], 'allow' => '*'],
             ],
         ],
     ],

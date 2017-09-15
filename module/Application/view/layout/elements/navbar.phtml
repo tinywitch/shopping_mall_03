@@ -25,9 +25,8 @@
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <?php if ($user["id"] == null) { ?>
                     <ul id="hlink" class="nav navbar-nav navbar-right">
-
                         <li><a href="/">Home</a></li>
-                        <li><a href="#">Track my order</a></li>
+                        <li><a href="/order/track">Track my order</a></li>
                         <li class="sign_li"><a href="/register" class="signin">Register</a></li>
                         <li><a href="/login">Signin</a></li>
                         <li class="cart_li">
@@ -37,7 +36,7 @@
                         </li>
                     </ul>
                 <?php } else { ?>
-                    <?php include_once 'loggedInNavbar.phtml'?>
+                    <?php include_once 'loggedInNavbar.phtml' ?>
                 <?php } ?>
             </div>
         </div>
