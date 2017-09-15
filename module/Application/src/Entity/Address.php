@@ -10,21 +10,32 @@ use Doctrine\ORM\Mapping as ORM;
 class Address
 {
     /**
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\District", inversedBy="addresses")
+     * @ORM\JoinColumn(name="district_id", referencedColumnName="id")
+     */
+    protected $district;
+       
+    /*
+     * Returns associated district.
+     * @return \Application\Entity\District
+     */
+    public function getDistrict() 
+    {
+        return $this->district;
+    }
+
+    public function setDistrict($district) 
+    {
+        $this->district = $district;
+        $district->addAddress($this);
+    }
+
+    /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(name="id")
      */
     protected $id;
-
-    /**
-     * @ORM\Column(name="province")
-     */
-    protected $province;
-
-    /**
-     * @ORM\Column(name="district")
-     */
-    protected $district;
 
     /**
      * @ORM\Column(name="address")
@@ -46,26 +57,6 @@ class Address
     public function setId($id) 
     {
         $this->id = $id;
-    }
-
-    public function getProvince() 
-    {
-        return $this->province;
-    }
-
-    public function setProvince($province) 
-    {
-        $this->province = $province;
-    }
-
-    public function getDistrict() 
-    {
-        return $this->district;
-    }
-
-    public function setDistrict($district) 
-    {
-        $this->district = $district;
     }
 
     public function getAddress() 

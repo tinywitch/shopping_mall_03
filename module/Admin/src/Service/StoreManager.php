@@ -2,6 +2,8 @@
 namespace Admin\Service;
 
 use Application\Entity\Store;
+use Application\Entity\Address;
+use Application\Entity\District;
 use Zend\Filter\StaticFilter;
 
 // The UserManager service is responsible for adding new posts.
@@ -22,11 +24,26 @@ class StoreManager
     // This method adds a new store.
     public function addNewStore($data)
     {
-        // Create new Store entity.
+        // Create new Address entity.
+        $district = $this->entityManager->getRepository(District::class)
+            ->find($data['district']);
+        $address = new Address();
 
+        if($district != NULL)
+            $address->setDistrict($district);
+        $address->setAddress($data['address']);        
+        $address->setDateCreated($data['date_created']);
+
+        // Add the entity to entity manager.
+        $this->entityManager->persist($address);
+
+        // Apply changes.
+        $this->entityManager->flush();
+        
+        // Create new Store entity.
         $store = new Store();      
         $store->setName($data['name']);
-        $store->setAddress($data['address']);
+        $store->setAddress($address);
         $store->setPhone($data['phone']);
         $store->setDateCreated($data['date_created']);
         // Add the entity to entity manager.
@@ -37,8 +54,21 @@ class StoreManager
     
     public function updateStore($store,$data)
     {
+        $district = $this->entityManager->getRepository(District::class)
+            ->find($data['district']);
+        $address = $store->getAddress();
+
+        $address->setDistrict($district);
+        $address->setAddress($data['address']);        
+
+        // Add the entity to entity manager.
+        $this->entityManager->persist($address);
+
+        // Apply changes.
+        $this->entityManager->flush();
+
         $store->setName($data['name']);
-        $store->setAddress($data['address']);
+        $store->setAddress($address);
         $store->setPhone($data['phone']);
         // Apply changes to database.
         $this->entityManager->flush();

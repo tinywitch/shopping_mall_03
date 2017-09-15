@@ -6,6 +6,7 @@ use Zend\Form\Form;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilter;
 use Application\Validator\UserExistsValidator;
+use Application\Entity\Province;
 
 /**
  * This form is used to collect user's email, full name, password and status. The form
@@ -57,6 +58,11 @@ class UserForm extends Form
      */
     protected function addElements()
     {
+        $provinces = $this->entityManager->getRepository(Province::class)->findAll();   
+        $provinces_for_select[0] = "Select your province";
+        foreach ($provinces as $p) {
+            $provinces_for_select[$p->getId()] = $p->getName(); 
+        }
         // Add "full_name" field
         $this->add([
             'type' => 'text',
@@ -94,15 +100,46 @@ class UserForm extends Form
                 ],
             ]);
         }
-
-        // // Add "address" field
-        // $this->add([
-        //     'type' => 'text',
-        //     'name' => 'address',
-        //     'options' => [
-        //         'label' => 'Address',
-        //     ],
-        // ]);
+        $this->add([
+            'type'  => 'select',
+            'name' => 'province',
+            'attributes' => [
+                'class' => 'form-control',                
+                'id' => 'province',
+            ],
+            'options' => [
+                'label' => 'Province',
+                'value_options' => $provinces_for_select,
+            ],
+        ]);
+        $this->add([
+            'type'  => 'select',
+            'name' => 'district',
+            'attributes' => [
+                'class' => 'form-control',                
+                'id' => 'district',
+            ],
+            'options' => [
+                'disable_inarray_validator' => true,
+                'label' => 'District',
+                'value_options' => [0 => 'Select your district'],
+            ],
+        ]);
+        // Add "address" field
+        $this->add([
+            'type' => 'text',
+            'name' => 'address',
+            'options' => [
+                'label' => 'Address',
+            ],
+        ]);
+        $this->add([
+            'type' => 'text',
+            'name' => 'address',
+            'options' => [
+                'label' => 'Address',
+            ],
+        ]);
 
         // Add "phone-number" field
         $this->add([
@@ -179,22 +216,22 @@ class UserForm extends Form
             ]);
         } else {
             // Add input for "address" field
-            // $inputFilter->add([
-            //     'name' => 'address',
-            //     'required' => true,
-            //     'filters' => [
-            //         ['name' => 'StringTrim'],
-            //     ],
-            //     'validators' => [
-            //         [
-            //             'name' => 'StringLength',
-            //             'options' => [
-            //                 'min' => 1,
-            //                 'max' => 512
-            //             ],
-            //         ],
-            //     ],
-            // ]);
+            $inputFilter->add([
+                'name' => 'address',
+                'required' => true,
+                'filters' => [
+                    ['name' => 'StringTrim'],
+                ],
+                'validators' => [
+                    [
+                        'name' => 'StringLength',
+                        'options' => [
+                            'min' => 1,
+                            'max' => 512
+                        ],
+                    ],
+                ],
+            ]);
 
             // Add input for "phone" field
             $inputFilter->add([

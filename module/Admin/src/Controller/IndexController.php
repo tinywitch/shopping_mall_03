@@ -12,6 +12,7 @@ use Zend\View\Model\ViewModel;
 use Application\Entity\Product;
 use Application\Entity\User;
 use Application\Entity\Store;
+use Application\Entity\Province;
 
 class IndexController extends AbstractActionController
 {

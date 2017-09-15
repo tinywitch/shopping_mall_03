@@ -11,6 +11,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Entity\Category;
 use Application\Entity\Product;
+use Application\Entity\Province;
 use Admin\Helper\TrunCate;
 
 class HomeController extends AbstractActionController
@@ -68,6 +69,28 @@ class HomeController extends AbstractActionController
         $product_json = json_encode($productArray);
         $this->response->setContent($product_json);
 
+        return $this->response;
+    }
+
+    public function loaddistrictAction()
+    {
+        $data = $this->params()->fromPost();
+        $province_id = $data['province_id'];
+        $province = $this->entityManager->getRepository(Province::class)
+            ->find($province_id);
+
+        if ($province == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+
+        $districts = $province->getDistricts();
+        foreach ($districts as $d) {
+            $districts_for_select[$d->getId()] = $d->getName();
+        }
+
+        $data_json = json_encode($districts_for_select);
+        $this->response->setContent($data_json);
         return $this->response;
     }
 }

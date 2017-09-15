@@ -40,7 +40,21 @@ $form->prepare();
                 <?= $this->formElement($form->get('full_name')); ?>
                 <?= $this->formElementErrors($form->get('full_name')); ?>
             </div>
-
+            <div class="form-group">
+                <?= $this->formLabel($form->get('province')); ?>
+                <?= $this->formElement($form->get('province')); ?>
+                <?= $this->formElementErrors($form->get('province')); ?>                  
+            </div>
+            <div class="form-group">
+                <?= $this->formLabel($form->get('district')); ?>
+                <?= $this->formElement($form->get('district')); ?>
+                <?= $this->formElementErrors($form->get('district')); ?>                  
+            </div>
+            <div class="form-group">
+                <?= $this->formLabel($form->get('address')); ?>
+                <?= $this->formElement($form->get('address')); ?>
+                <?= $this->formElementErrors($form->get('address')); ?>                  
+            </div>
             <div class="form-group">
                 <?= $this->formLabel($form->get('phone')); ?>
                 <?= $this->formElement($form->get('phone')); ?>
