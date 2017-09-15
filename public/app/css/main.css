@@ -501,3 +501,7 @@
 .inner-table div.md-whiteframe {
     visibility: hidden;
 }
+
+.order-item {
+    margin-top: 20px;
+}

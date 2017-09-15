@@ -27,6 +27,7 @@
 
     <!-- Scripts -->
     <?= $this->headScript()
+        ->prependFile($this->basePath('app/js/order.js'))
         ->prependFile($this->basePath('app/js/tracking.js'))
         ->prependFile($this->basePath('app/js/checkout.js'))
         ->prependFile($this->basePath('app/js/cart.js'))
