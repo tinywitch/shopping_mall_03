@@ -16,7 +16,7 @@
         ->prependStylesheet($this->basePath('app/css/material-design-iconic-font.css'))
         ->prependStylesheet($this->basePath('app/css/main.css'))
         ->prependStylesheet($this->basePath('app/css/style.css'))
-        ->prependStylesheet($this->basePath('assets/vue-material/vue-material.css'))
+        ->prependStylesheet($this->basePath('css/vue-material.css'))
         ->prependStylesheet($this->basePath('app/css/rateit.css'))
         ->prependStylesheet($this->basePath('app/css/font-awesome.css'))
         ->prependStylesheet($this->basePath('app/css/overwrite.css'))
@@ -27,6 +27,7 @@
 
     <!-- Scripts -->
     <?= $this->headScript()
+        ->prependFile($this->basePath('app/js/tracking.js'))
         ->prependFile($this->basePath('app/js/checkout.js'))
         ->prependFile($this->basePath('app/js/cart.js'))
         ->prependFile($this->basePath('app/js/me.js'))
@@ -34,8 +35,8 @@
         ->prependFile($this->basePath('app/js/snackbar.js'))
         ->prependFile($this->basePath('js/address.js'))
         ->prependFile($this->basePath('app/js/main.js'))
-        ->prependFile($this->basePath('assets/vee-validate/vee-validate.js'))
-        ->prependFile($this->basePath('assets/vue-material/vue-material.js'))
+        ->prependFile($this->basePath('js/vee-validate.js'))
+        ->prependFile($this->basePath('js/vue-material.js'))
         ->prependFile($this->basePath('assets/vue/dist/vue.js'))
         ->prependFile($this->basePath('app/js/bootsnav.js'))
         ->prependFile($this->basePath('app/js/jquery.rateit.js'))

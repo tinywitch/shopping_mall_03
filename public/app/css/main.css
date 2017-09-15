@@ -484,3 +484,20 @@
 .color-button.active {
     border-bottom: solid 4px orangered;
 }
+
+/*order*/
+.track-product {
+    margin: 0 auto;
+}
+
+.track-form {
+
+ }
+
+.track-form .container {
+    padding: 60px;
+}
+
+.inner-table div.md-whiteframe {
+    visibility: hidden;
+}
