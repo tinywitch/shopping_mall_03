@@ -9,27 +9,32 @@
                     <tr>
                         <th>Name:</th>
                         <td>
-                        <?= $this->escapeHtml($store->getName()) ?></th>
+                        <?= $this->escapeHtml($store->getName()) ?></td>
                     </tr>
                     <tr>
                         <th>Number of Products:</th>
                         <td>
-                        <?= $this->escapeHtml(count($products)) ?></th>
+                        <?= $this->escapeHtml(count($products)) ?></td>
                     </tr>
                     <tr>
                         <th>Phone:</th>
                         <td>
-                        <?= $this->escapeHtml($store->getPhone()) ?></th>
+                        <?= $this->escapeHtml($store->getPhone()) ?></td>
                     </tr>
                     <tr>
                         <th>Address:</th>
                         <td>
-                        <?= $this->escapeHtml($store->getAddress()) ?></th>
+                            <?php echo $store->getAddress()->getAddress(); ?>
+                            <?php echo $store->getAddress()->getDistrict()->getName(); ?>
+                            <?php echo "District" ?>
+                            <?php echo $store->getAddress()->getDistrict()->getProvince()->getName(); ?>
+                            <?php echo "Province" ?>
+                        </td>
                     </tr>
                     <tr>
                         <th>Date Created:</th>
                         <td>
-                        <?= $this->escapeHtml($store->getDateCreated()) ?></th>
+                        <?= $this->escapeHtml($store->getDateCreated()) ?></td>
                     </tr>
                 </table>
             </div>

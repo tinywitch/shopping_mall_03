@@ -4,6 +4,7 @@ namespace Admin\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Entity\Store;
+use Application\Entity\Province;
 use Admin\Form\StoreForm;
 
 class StoreController extends AbstractActionController
@@ -39,6 +40,7 @@ class StoreController extends AbstractActionController
         if ($this->getRequest()->isPost()) {
             // Get POST data.
             $data = $this->params()->fromPost();
+            
             $form->setData($data);
             if ($form->isValid()) {
                 // Get validated form data.
@@ -87,10 +89,25 @@ class StoreController extends AbstractActionController
         {
             $data = [
                 'name'  =>  $store->getName(),
-                'address'  =>  $store->getAddress(), 
+                'province' => $store->getAddress()->getDistrict()->getProvince()->getId(),
+                'district' => $store->getAddress()->getDistrict()->getId(),
+                'address'  =>  $store->getAddress()->getAddress(), 
                 'phone'  =>  $store->getPhone(), 
                 ];
+            if($data['province'] != NULL){
+                $province_id = $data['province'];
+                $province = $this->entityManager->getRepository(Province::class)
+                    ->find($province_id);
 
+                $districts = $province->getDistricts();
+                $districts_for_select[0] = 'Select your district';
+                foreach ($districts as $d) {
+                    $districts_for_select[$d->getId()] = $d->getName();
+                }
+                $form->get('district')->setOptions([
+                    'value_options' => $districts_for_select,  
+                ]);
+            }
             $form->setData($data);
         }
 

@@ -20,13 +20,17 @@
                 <?php echo $store->getName(); ?>
             </td>
             <td>
-                <?php echo $store->getAddress(); ?>
+                <?php echo $store->getAddress()->getAddress(); ?>
+                <?php echo $store->getAddress()->getDistrict()->getName(); ?>
+                <?php echo "District" ?>
+                <?php echo $store->getAddress()->getDistrict()->getProvince()->getName(); ?>
+                <?php echo "Province" ?>
             </td>
             <td>
                 <?php echo $store->getPhone(); ?>
             </td>
             <td>
-                <?php echo count($store->getProducts()) ?>
+                <?php //echo count($store->getProducts()) ?>
             </td>
             <td>
             

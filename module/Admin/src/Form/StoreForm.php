@@ -6,6 +6,7 @@ use Zend\Form\Form;
 use Zend\Form\Element;
 use Zend\InputFilter\InputFilter;
 use Application\Entity\Store;
+use Application\Entity\Province;
 use Zend\Validator\Regex;
 use Admin\Validator\StoreExistsValidator;
 /**
@@ -24,11 +25,9 @@ class StoreForm extends Form
      */
     private $store = null;
 
-    public function __construct($entityManager = null, $store = null){
+    public function __construct($entityManager = null, $store = null)
+    {
         parent::__construct();
-        $this->entityManager = $entityManager;
-        $this->store = $store;
-        // FORM Attribute
         $this->setAttributes([
             'action'    => '#',
             'method'    => 'POST',
@@ -37,8 +36,31 @@ class StoreForm extends Form
             'id'        => 'StoreForm',
             'enctype'   => 'multipart/form-data'
             ]);
+        $this->entityManager = $entityManager;
+        $this->store = $store;
 
-        // ID
+        $this->addElements();
+        $this->addInputFilter();
+
+    }
+    /**
+     * This method creates input filter (used for form filtering/validation).
+     */
+
+    protected function addElements() 
+    {
+        //make list province for select box
+        $provinces = $this->entityManager->getRepository(Province::class)->findAll();   
+        foreach ($provinces as $p) {
+            $provinces_for_select[$p->getId()] = $p->getName(); 
+        }
+
+        $province = $this->entityManager->getRepository(Province::class)->find(1);
+        $districts = $province->getDistricts();
+        foreach ($districts as $d) {
+            $districts_for_select[$d->getId()] = $d->getName();
+        }
+
         $this->add([
             'name'          => 'id',
             'attributes'    => [
@@ -61,6 +83,31 @@ class StoreForm extends Form
                     ]
                 ],
             ]);
+        $this->add([
+            'type'  => 'select',
+            'name' => 'province',
+            'attributes' => [
+                'class' => 'form-control',                
+                'id' => 'province',
+            ],
+            'options' => [
+                'label' => 'Province',
+                'value_options' => $provinces_for_select,
+            ],
+        ]);
+        $this->add([
+            'type'  => 'select',
+            'name' => 'district',
+            'attributes' => [
+                'class' => 'form-control',                
+                'id' => 'district',
+            ],
+            'options' => [
+                'disable_inarray_validator' => true,
+                'label' => 'District',
+                'value_options' => $districts_for_select,
+            ],
+        ]);
         $this->add([
             'name'          => 'address',
             'type'          => 'text',
@@ -102,12 +149,7 @@ class StoreForm extends Form
                 'class' => 'btn btn-primary'
                 ],
             ]);           
-        $this->addInputFilter();
-
     }
-    /**
-     * This method creates input filter (used for form filtering/validation).
-     */
     private function addInputFilter() 
     { 
        // Create main input filter

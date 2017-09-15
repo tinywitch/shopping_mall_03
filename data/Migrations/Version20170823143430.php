@@ -17,6 +17,23 @@ class Version20170823143430 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
 
+        $table = $schema->getTable('districts');
+        $table->addForeignKeyConstraint(
+            'provinces',
+            ['province_id'],
+            ['id'],
+            [], 
+            'district_province_id_fk'
+            );
+        $table = $schema->getTable('addresses');
+        $table->addForeignKeyConstraint(
+            'districts',
+            ['district_id'],
+            ['id'],
+            [], 
+            'address_district_id_fk'
+            );
+
         $table = $schema->getTable('comments');
         $table->addForeignKeyConstraint(
             'users',
@@ -188,5 +205,10 @@ class Version20170823143430 extends AbstractMigration
         $table->removeForeignKey('comment_product_id_fk');
         $table->removeForeignKey('comment_user_id_fk');
 
+        $table = $schema->getTable('addresses');
+        $table->removeForeignKey('address_district_id_fk');
+
+        $table = $schema->getTable('districts');
+        $table->removeForeignKey('district_province_id_fk');
     }
 }
