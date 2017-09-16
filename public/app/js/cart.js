@@ -103,13 +103,13 @@ Cart.bindUIActions = function () {
         if (valueCurrent >= minValue) {
             $('.btn-number[data-type=\'minus\'][data-field=\'' + name + '\']').removeAttr('disabled');
         } else {
-            Snackbar.pushMessage('The quantity must be between 1 and 100');
+            Snackbar.pushMessage('The quantity must be between 1 and 100', 'warning');
             $(this).val($(this).data('oldValue'));
         }
         if (valueCurrent <= maxValue) {
             $('.btn-number[data-type=\'plus\'][data-field=\'' + name + '\']').removeAttr('disabled');
         } else {
-            Snackbar.pushMessage('The quantity must be between 1 and 100');
+            Snackbar.pushMessage('The quantity must be between 1 and 100', 'warning');
             $(this).val($(this).data('oldValue'));
         }
 
