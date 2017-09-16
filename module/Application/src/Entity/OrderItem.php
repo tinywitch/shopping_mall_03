@@ -11,26 +11,26 @@ use Application\Entity\Order;
 class OrderItem
 {
     /**
-     * @ORM\OneToOne(targetEntity="\Application\Entity\ProductMaster")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\ProductMaster")
+     * @ORM\JoinColumn(name="product_master_id", referencedColumnName="id")
      */
-    protected $product;
+    protected $product_master;
     /*
      * Returns associated product.
      * @return \Application\Entity\ProductMaster
      */
-    public function getProduct() 
+    public function getProductMaster() 
     {
-        return $this->product;
-    }
+        return $this->product_master;
+    }   
       
     /**
      * Sets associated product.
      * @param \Application\Entity\Product $product
      */
-    public function setProduct($product) 
+    public function setProductMaster($product_master) 
     {
-        $this->product = $product;
+        $this->product_master = $product_master;
     }
 
     /**
