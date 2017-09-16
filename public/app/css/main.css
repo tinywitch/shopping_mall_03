@@ -1,3 +1,20 @@
+.danger {
+    background-color: #f44336;
+}
+
+.success {
+    background-color: #4CAF50;
+}
+
+.info {
+    background-color: #2196F3;
+}
+
+
+.warning {
+    background-color: #ffeb3b;
+}
+
 .register {
     background-color: #FFFFFF;
     margin-top: 40px;
@@ -504,4 +521,14 @@
 
 .order-item {
     margin-top: 20px;
+}
+
+/*rating*/
+.rate-wrapper {
+    position: relative;
+}
+
+.write_review h5{
+    margin-top: 20px;
+    margin-bottom: 30px;
 }

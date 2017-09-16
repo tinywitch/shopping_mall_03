@@ -25,6 +25,8 @@
         ->prependStylesheet($this->basePath('app/css/bootstrap.min.css'))
     ?>
 
+    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+
     <!-- Scripts -->
     <?= $this->headScript()
         ->prependFile($this->basePath('app/js/order.js'))
@@ -65,8 +67,8 @@
                  ref="snackbar"
                  :md-duration="duration"
                  id="snackbar">
-        <span>{{notifyMessage}}.</span>
-        <md-button class="md-accent" @click="notifyActionAdapter">{{ notifyAction }}</md-button>
+        <span style="color: #000;"><b>{{notifyMessage}}.</b></span>
+        <md-button @click="notifyActionAdapter" style="color: #000;">{{ notifyAction }}</md-button>
     </md-snackbar>
 
     <?php echo $this->inlineScript() ?>

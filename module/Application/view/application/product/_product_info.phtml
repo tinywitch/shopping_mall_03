@@ -1,11 +1,27 @@
 <div id="listing-page-cart">
     <div class="inner">
         <h1>{{product.name}}</h1>
+
+        <md-layout md-vertical-align="center" md-gutter>
+            <md-layout md-vertical-align="center">
+                <md-rating-bar v-model="rate_avg"
+                               class="md-primary"
+                               disabled>
+                </md-rating-bar>
+                ({{ product.rate_count }})
+            </md-layout>
+            <md-layout>
+                <a href="#product-details"
+                   class="md-primary"
+                   @click="writeReview">
+                    <md-icon>edit</md-icon>
+                    Write a review
+                </a>
+            </md-layout>
+        </md-layout>
+
         <div class="clearfix row">
             <div class="product_details">
-                <button type="button" class="btn-secondary pull-right">
-                    Ask a Question
-                </button>
                 <div id="listing-price">${{product.price}}</div>
 
                 <div id="item-stock">
@@ -27,9 +43,9 @@
                     </div>
 
                     <div id="item-stock">
-                        <label class="property-513">Size: {{product.sizes ? product.sizes[selected_size] : ''}}</label>
+                        <label class="property-513">Size: {{selected_size}}</label>
                         <md-button-toggle md-single class="md-primary">
-                            <md-button v-for="size in product.sizes"
+                            <md-button v-for="size in current_list_size"
                                        :key="size"
                                        @click.native="selectSize(size)"
                                        class="md-icon-button md-raised margin-button"
