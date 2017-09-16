@@ -8,6 +8,7 @@ use Application\Entity\User;
 use Application\Form\UserForm;
 use Application\Form\PasswordChangeForm;
 use Application\Form\PasswordResetForm;
+use Application\Entity\Province;
 use Zend\Session\Container;
 
 /**
@@ -192,12 +193,28 @@ class UserController extends AbstractActionController
                 $data = $form->getData();
             }
         } else {
-            $form->setData(array(
+            $data = [
                 'full_name' => $user->getName(),
                 'email' => $user->getEmail(),
                 'phone' => $user->getPhone(),
-                'address' => $user->getAddress(),
-            ));
+                'address' => $user->getAddress()->getAddress(),
+            ];
+            if($user->getAddress()!=NULL){
+                $data['province']= $user->getAddress()->getDistrict()->getProvince()->getId();
+                $data['district']= $user->getAddress()->getDistrict()->getId();
+                $province_id = $data['province'];
+                $province = $this->entityManager->getRepository(Province::class)
+                    ->find($province_id);
+
+                $districts = $province->getDistricts();
+                foreach ($districts as $d) {
+                    $districts_for_select[$d->getId()] = $d->getName();
+                }
+                $form->get('district')->setOptions([
+                    'value_options' => $districts_for_select,  
+                ]);
+            }
+            $form->setData($data);
         }
 
         $view = new ViewModel(array(
