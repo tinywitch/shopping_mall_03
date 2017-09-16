@@ -13,27 +13,33 @@
                 <tr>
                     <th>Category:</th>
                     <td>
-                        <?php if($product->getCategory() != null)
-                            $this->escapeHtml($product->getCategory()->getName()) ?>
+                        <?php if ($product->getCategory() != null){ ?>
+                        <a href="<?= $this->url('categories',
+                            ['action' => 'view', 'id' => $product->getCategory()->getId()]) ?>">
+                        <?php echo $product->getCategory()->getName(); ?>
+                        <?php } ?>
+                    </a>
                     </td>
                 </tr>
-                <tr>
-                    <th>Store:</th>
-                    <td>
-                        <?php if($product->getStore() != null) 
-                            $this->escapeHtml($product->getStore()->getName()) ?>
-                        </td>
-                </tr>
+                
                 <tr>
                     <th>Price:</th>
                     <td>
                     <?= $this->escapeHtml($product->getPrice()) ?></td>
                 </tr>
+                
                 <tr>
-                    <th>Quantity:</th>
+                    <th>Size:</th>
                     <td>
-                    <?= $this->escapeHtml($product->getQuantity()) ?></td>
+                    <?php 
+                        foreach ($sizes as $size){
+                            echo $size.'  ';
+                        }
+                     ?>
+                        
+                    </td>
                 </tr>
+
                 <tr>
                     <th>Intro:</th>
                     <td>
@@ -56,8 +62,18 @@
 
         <div class="col-md-5">
             <h2> Image : </h2>
-            <img src="<?php echo $this->basePath($product->getImage()) ?>" class="width-custom">
-
+            <?php foreach ($images as $image) :?>
+                
+                
+                <img src="<?php echo $this->basePath($image['image']) ?>" class="width-custom">
+                <br><br>
+                <div>
+                <?php foreach ($image['detail'] as $detail) { ?>
+                    <img src="<?php echo $this->basePath($detail) ?>" class="width-50 inline">
+                <?php } ?>
+                </div>
+                <br><br>
+            <?php endforeach ?>
         </div>
     </div>
 </div>

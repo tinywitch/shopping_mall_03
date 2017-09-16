@@ -4,6 +4,7 @@ namespace Admin\Form;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\Validator\Regex;
+use Zend\Form\Element;
 use Admin\Validator\ProductExistsValidator;
 use Zend\InputFilter\InputFilterProviderInterface;
 
@@ -23,7 +24,6 @@ class ProductForm extends Form {
     private $product;
 
     private $categories;
-    private $stores;
     private $color = [
         '1' => 'White',
         '2' => 'Black',
@@ -37,11 +37,22 @@ class ProductForm extends Form {
         '10' => 'Sky blue',
         '11' => 'Grey',
         ];
-
+    private $size = [
+        '21' => '21',
+        '22' => '22',
+        '23' => '23',
+        '24' => '24',
+        '25' => '25',
+        '26' => '26',
+        '27' => '27',
+        '28' => '28',
+        '29' => '29',
+        '30' => '30',
+        '31' => '31',
+        ];    
     public function __construct(
                                 $scenario,
                                 $categories,
-                                $stores, 
                                 $entityManager,
                                 $product = null
                                 )
@@ -49,7 +60,7 @@ class ProductForm extends Form {
         parent::__construct();
 
         $this->categories = $categories;
-        $this->stores = $stores;
+       // $this->stores = $stores;
         $this->scenario = $scenario;
         $this->entityManager = $entityManager;
         $this->product = $product;
@@ -69,6 +80,7 @@ class ProductForm extends Form {
 
     protected function addElements()
     {
+        // Name
         $this->add([
             'name' => 'name',
             'type' => 'text',
@@ -92,19 +104,6 @@ class ProductForm extends Form {
                 ],
             'options' => [
                 'label' => 'Description :',
-                ],
-            ]);
-
-        // File picture
-        $this->add([
-            'name' => 'image',
-            'type' => 'File',
-            'attributes' => [
-                'class' => 'file form-control width-custom',
-                'id' => 'image',
-                ],
-            'options' => [
-                'label' => 'Picture',
                 ],
             ]);
 
@@ -149,74 +148,108 @@ class ProductForm extends Form {
                 ],
             ]);
 
-        // Store
+        // File picture
         $this->add([
-            'name' => 'store_id',
-            'type' => 'Select',
-            'options' => [
-                'value_options' => $this->stores,
-                'label' => 'Store',
-                ],
+            'name' => 'image[]',
+            'type' => 'File',
             'attributes' => [
-                'class' => 'form-control width-custom',
+                'class' => 'file form-control width-custom',
+                'id' => 'image',
+                ],
+            'options' => [
+                'label' => 'Picture',
                 ],
             ]);
 
-        // Sale value
+        // File image detail 1
         $this->add([
-            'name' => 'sale',
-            'type' => 'Text',
+            'name' => 'imageDetail1[]',
+            'type' => 'File',
             'attributes' => [
-                'class' => 'form-control width-custom',
-                'id' => 'sale',
-                'placeholder' => 'Enter sale off value:',
+                'class' => 'file form-control width-150',
                 ],
             'options' => [
-                'label' => 'Sale off value:',
+                'label' => 'Image details',
                 ],
             ]);
 
-        //Quantity
+        // File image detail 2
         $this->add([
-            'name' => 'quantity',
-            'type' => 'Text',
+            'name' => 'imageDetail2[]',
+            'type' => 'File',
             'attributes' => [
-                'class' => 'form-control width-custom',
-                'id' => 'quantity',
-                'placeholder' => 'Enter quantity :',
+                'class' => 'file form-control width-150',
                 ],
             'options' => [
-                'label' => 'Quantity :',
+                'label' => 'Image detail 2',
                 ],
             ]);
+
+        // File image detail 3
+        $this->add([
+            'name' => 'imageDetail3[]',
+            'type' => 'File',
+            'attributes' => [
+                'class' => 'file form-control width-150',
+                ],
+            'options' => [
+                'label' => 'Image detail 3',
+                ],
+            ]);
+
+        // File image detail 4
+        $this->add([
+            'name' => 'imageDetail4[]',
+            'type' => 'File',
+            'attributes' => [
+                'class' => 'file form-control width-150',
+
+                ],
+            'options' => [
+                'label' => 'Image detail 4',
+                ],
+            ]);
+        
 
         //Color
         $this->add([
-            'name' => 'color',
+            'name' => 'color[]',
             'type' => 'Select',
             'attributes' => [
                 'class' => 'form-control width-custom',
-                'id' => 'color',
+                
                 ],
             'options' => [
                 'value_options' => $this->color,
                 'label' => 'Color :',
                 ],    
             ]);
-
+ 
         //Size
+        // $this->add([
+        //     'name' => 'size',
+        //     'type' => Element\Checkbox::class,
+        //     'attributes' => [
+        //         'class' => 'form-control',
+        //         'id' => 'size',
+        //         ],
+        //     'options' => [
+        //         'label' => 'Size :',
+        //         'value_options' => [
+        //             '0' => 'Apple',
+        //             '1' => 'Orange',
+        //             '2' => 'Lemon',
+        //             ],
+        //         ],    
+        //     ]);
         $this->add([
+            'type' => 'Zend\Form\Element\MultiCheckbox',
             'name' => 'size',
-            'type' => 'text',
-            'attributes' => [
-                'class' => 'form-control width-custom',
-                'id' => 'size',
-                ],
             'options' => [
-                'label' => 'Size :',
-                ],    
-            ]);
-
+                'label' => 'Size : ',
+                'value_options' => $this->size,
+            ]
+        ]);
         //Keyword
         $this->add([
             'type'  => 'text',
@@ -248,22 +281,7 @@ class ProductForm extends Form {
                     ],
                 ]);
 
-            $this->add([
-                'name' => 'popular_level',
-                'type' => 'Select',
-                'attributes' => [
-                    'class' => 'form-control width-custom',
-                    'id' => 'popular_level',
-                    ],
-                'options' => [
-                    'empty_option' => '-- Select type --',
-                    'value_options' => [
-                        '1' => 'Special',
-                        '0' => 'Normal',
-                        ],
-                    'label' => 'Product type :',
-                    ],    
-                ]);
+            
         }
 
         //Submit button
@@ -354,35 +372,16 @@ class ProductForm extends Form {
             ]);
 
         //Size
-        $inputFilter->add([
-            'name'     => 'size',
-            'required' => true,
-            'validators'  => [                    
-                ['name'     => 'Digits',],
-                ],                   
-            ]);
-
-        //Quantity
-        $inputFilter->add([
-            'name'     => 'quantity',
-            'required' => true,
-            'validators'  => [                    
-                ['name'     => 'Digits',],
-                ],                   
-            ]);    
+        // $inputFilter->add([
+        //     'name'     => 'size',
+        //     'required' => true,
+        //     'validators'  => [                    
+        //         ['name'     => 'Digits',],
+        //         ],                   
+        //     ]);  
         
         //if form is edit form
         if($this->scenario == 'edit'){
-            //sale 
-            $inputFilter->add(
-                [
-                'name'      => 'sale',
-                'required'  => false,
-                'validators'  => [                    
-                    ['name'     => 'Digits',],
-                    ], 
-                ]
-                );
             
             //status 
             $inputFilter->add(
@@ -392,13 +391,7 @@ class ProductForm extends Form {
                 ]
                 );
             
-            //popular_level 
-            $inputFilter->add(
-                [
-                'name'      => 'popular_level',
-                'required'  => true,
-                ]
-                );
+            
         }
     }     
 }

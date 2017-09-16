@@ -4,6 +4,7 @@ namespace Admin\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Entity\Product;
+use Application\Entity\ProductMaster;
 use Admin\Form\ProductForm;
 use Zend\File\Transfer\Adapter\Http;
 
@@ -58,41 +59,51 @@ class ProductController extends AbstractActionController
     {
         
         $productId = $this->params()->fromRoute('id', -1);
-
+    
         $product = $this->entityManager->getRepository(Product::class)
             ->findOneById($productId);
-
+        $sizes = $this->productManager->findSizeByProductId($productId);
+        $images = $this->productManager->findAllColorByProductId($productId);
         if ($product == null) {
             $this->getResponse()->setStatusCode(404);
             return;                        
         }
+        
         return new ViewModel([
-            'product' => $product
+            'product' => $product,
+            'sizes' => $sizes,
+            'images' => $images,
             ]);     
     }
 
     public function addAction(){
         $categories = $this->categoryManager->categories_for_select();
-        $stores = $this->storeManager->stores_for_select();
 
-        $form = new ProductForm('create', $categories, $stores, $this->entityManager);
+        $form = new ProductForm('create', $categories, $this->entityManager);
 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-
-            $files =  $_FILES;
-            $httpadapter = new \Zend\File\Transfer\Adapter\Http();
-            $httpadapter->setDestination('public/img/products/');
-            $httpadapter->receive();
-            $data['image'] = $httpadapter->getFileName();
-            $data['image'] = ltrim($data['image'], "public");
-
+            $count = count($_FILES['image']['name']);
+            $data['color[]'] = $data['color'][0];
+            $data['count'] = $count;
+            
+            
+            
             $form->setData($data);
-
             if ($form->isValid()) {
                 $data['alias'] = $this->slug($data['name']);
+                
+                $httpadapter = new \Zend\File\Transfer\Adapter\Http();
+                $httpadapter->setDestination('public/img/products/');
+                
+                $files = $httpadapter->getFileInfo();
+                $data['image'] = $httpadapter->getFileName();
+                foreach ($files as $file => $info) {
+                    $httpadapter->receive($file);
+                }
+                
                 $this->productManager->addNewProduct($data);             
-
+                
                 return $this->redirect()->toRoute('products', ['action'=>'list']);
             }
         }
@@ -105,7 +116,6 @@ class ProductController extends AbstractActionController
     public function editAction()
     {  
         $categories = $this->categoryManager->categories_for_select();
-        $stores = $this->storeManager->stores_for_select();
 
         $productId = $this->params()->fromRoute('id', -1);
 
@@ -114,7 +124,7 @@ class ProductController extends AbstractActionController
             $this->getResponse()->setStatusCode(404);                      
         }
 
-        $form = new ProductForm('edit', $categories, $stores, $this->entityManager, $product);
+        $form = new ProductForm('edit', $categories, $this->entityManager, $product);
 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
@@ -156,15 +166,9 @@ class ProductController extends AbstractActionController
                 'price' => $product->getPrice(),
                 'intro' => $product->getIntro(),
                 'image' => $product->getImage(),
-                'popular_level' => $product->getPopular_level(),  
                 'description' => $product->getDescription(),   
                 'status' => $product->getStatus(),
-                'sale' => $product->getSale(),
-                'color' => $product->getColor(),
-                'size' => $product->getSize(),
-                'quantity' => $product->getQuantity(),
                 'category_id' => $product->getCategory(),
-                'store_id' => $product->getStore(),
                 'keywords' => $this->productManager->convertKeywordsToString($product)   
                 ];
             $form->setData($data);

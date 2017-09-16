@@ -176,7 +176,7 @@ class Version20170823143430 extends AbstractMigration
 
         $table = $schema->getTable('product_masters');
         $table->removeForeignKey('product_master_product_id_fk');
-        $table->removeForeignKey('product_master_store_id_fk');
+        
 
         $table = $schema->getTable('reviews');
         $table->removeForeignKey('review_product_id_fk');

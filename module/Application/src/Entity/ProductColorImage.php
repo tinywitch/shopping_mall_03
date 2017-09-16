@@ -35,10 +35,10 @@ class ProductColorImage
     public function setProduct($product) 
     {
         $this->product = $product;
-        $product->addProductImage($this);
+        $product->addProductColorImage($this);
     }
      /**
-     * @ORM\OneToMany(targetEntity="\Application\Entity\Image", mappedBy="productcolorimage")
+     * @ORM\OneToMany(targetEntity="\Application\Entity\Image", mappedBy="product_color_image")
      * @ORM\JoinColumn(name="id", referencedColumnName="product_color_image_id")
      */
     protected $images;
@@ -72,14 +72,14 @@ class ProductColorImage
     protected $id;
 
     /**
-     * @ORM\Column(name="color")
+     * @ORM\Column(name="color_id")
      */
-    protected $color;
+    protected $color_id;
 
     /**
-     * @ORM\Column(name="status")
+     * @ORM\Column(name="date_created")
      */
-    protected $status;
+    protected $date_created;
 
     // Returns ID of this post.
     public function getId() 
@@ -93,24 +93,24 @@ class ProductColorImage
         $this->id = $id;
     }
 
-    public function getColor() 
+    public function getColorId() 
     {
-        return $this->color;
+        return $this->color_id;
     }
 
-    public function setColor($color) 
+    public function setColorId($color_id) 
     {
-        $this->color = $color;
+        $this->color_id = $color_id;
     }
 
-
-    public function getStatus() 
+    public function getDateCreated() 
     {
-        return $this->status;
+        return $this->date_created;
     }
 
-    public function setStatus($status) 
+    public function setDateCreated($date_created) 
     {
-        $this->status = $status;
+        $this->date_created = $date_created;
     }
+
 }
