@@ -58,11 +58,18 @@ class UserForm extends Form
      */
     protected function addElements()
     {
+        //Get Pre-province and district to form
         $provinces = $this->entityManager->getRepository(Province::class)->findAll();   
-        $provinces_for_select[0] = "Select your province";
         foreach ($provinces as $p) {
             $provinces_for_select[$p->getId()] = $p->getName(); 
         }
+
+        $province = $this->entityManager->getRepository(Province::class)->find(1);
+        $districts = $province->getDistricts();
+        foreach ($districts as $d) {
+            $districts_for_select[$d->getId()] = $d->getName();
+        }
+
         // Add "full_name" field
         $this->add([
             'type' => 'text',
@@ -122,7 +129,7 @@ class UserForm extends Form
             'options' => [
                 'disable_inarray_validator' => true,
                 'label' => 'District',
-                'value_options' => [0 => 'Select your district'],
+                'value_options' => $districts_for_select,
             ],
         ]);
         // Add "address" field

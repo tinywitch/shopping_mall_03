@@ -2,6 +2,8 @@
 namespace Application\Service;
 
 use Application\Entity\User;
+use Application\Entity\District;
+use Application\Entity\Address;
 use Zend\Crypt\Password\Bcrypt;
 use Zend\Math\Rand;
 use Zend\Session\Container;
@@ -79,6 +81,23 @@ class UserManager
      */
     public function updateUser($user, $data) 
     {
+        $district = $this->entityManager->getRepository(District::class)
+            ->find($data['district']);
+        $address = $user->getAddress();
+        if($address == NULL){
+            $address = new Address();
+            $currentDate = date('Y-m-d H:i:s');
+            $address->setDateCreated($currentDate); 
+        }
+
+        $address->setDistrict($district);
+        $address->setAddress($data['address']);        
+
+        // Add the entity to entity manager.
+        $this->entityManager->persist($address);
+
+        // Apply changes.
+        $this->entityManager->flush();
         // Do not allow to change user email if another user with such email already exits.
         if($user->getEmail()!=$data['email'] && $this->checkUserExists($data['email'])) {
             throw new \Exception("Another user with email address " . $data['email'] . " already exists");
@@ -87,7 +106,7 @@ class UserManager
         // $user->setEmail($data['email']);
         $user->setName($data['full_name']);
         // $user->setStatus($data['status']);
-        // $user->setAddress($data['address']);
+        $user->setAddress($address);
         $user->setPhone($data['phone']);
 
         // Apply changes to database.
