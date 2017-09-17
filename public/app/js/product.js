@@ -2,6 +2,9 @@ $(function () {
     const product = new Vue({
         el: '#product',
         data: {
+            login: true,
+            user_id: 1,
+
             product: {},
             selected_color: '',
             selected_size: '',
@@ -16,6 +19,9 @@ $(function () {
                 rate: 0,
                 content: '',
             },
+
+            comment_content: '',
+            replies: {},
         },
         mounted: function () {
             this.fetchData();
@@ -25,6 +31,9 @@ $(function () {
                 return this.current_list_image[this.current_image_index];
             },
             rate_avg: function () {
+                if (this.product.rate_count === 0) {
+                    return 0;
+                }
                 return Math.round(this.product.rate_sum * 100 / this.product.rate_count) / 100;
             },
         },
@@ -80,6 +89,33 @@ $(function () {
                                 province: 'Ha Noi',
                                 content: 'Ao rat dep, minh chon size 30 vua luon',
                                 date_created: (new Date()).toDateString(),
+                            },
+                        ],
+                    },
+                    comment: {
+                        size: 10,
+                        page: 1,
+                        total: 30,
+                        items: [
+                            {
+                                id: 1,
+                                user_id: 1,
+                                user_name: 'Admin',
+                                content: 'Minh nang 80 can mac mau gi thi hop nhi?',
+                                replies: [
+                                    {
+                                        id: 30,
+                                        user_id: 1,
+                                        user_name: 'Admin',
+                                        content: 'wtf :|',
+                                    },
+                                ],
+                            },
+                            {
+                                id: 2,
+                                user_id: 2,
+                                user_name: 'Ninh Ninh',
+                                content: 'Ao the nay ma cung ban :|',
                             },
                         ],
                     },
@@ -172,13 +208,18 @@ $(function () {
             writeReview: function () {
                 this.is_write_review = true;
             },
+            tabChange: function (idx) {
+                if (idx !== 1) {
+                    this.is_write_review = false;
+                }
+            },
             postReview: function () {
                 if (this.review.rate === 0) {
                     this.review.error = 'You must rate the product';
                     Snackbar.pushMessage(this.review.error, 'danger');
                 } else {
-                    // recive data
-                    let recive = {
+                    // receive data
+                    let receive = {
                         id: 1,
                         rate: this.review.rate,
                         user_name: 'Nguyen Phuc Long',
@@ -187,7 +228,7 @@ $(function () {
                         date_created: (new Date()).toDateString(),
                     };
 
-                    this.product.review.items.unshift(recive);
+                    this.product.review.items.unshift(receive);
 
                     this.product.rate_sum += this.review.rate;
                     this.product.rate_count++;
@@ -197,6 +238,102 @@ $(function () {
                     this.review.rate = 0;
                     this.review.content = '';
                     this.is_write_review = false;
+                }
+            },
+            postComment: function () {
+                let data = {
+                    content: this.comment_content,
+                };
+                console.log(data);
+
+                // Post and receive data
+                let receive = {
+                    id: 100,
+                    user_id: this.user_id,
+                    user_name: 'Admin',
+                    content: this.comment_content,
+                };
+
+                this.product.comment.items.unshift(receive);
+                this.product.comment.total++;
+
+                this.comment_content = '';
+            },
+            postReply: function (comment_id) {
+                let data = {};
+                data.content = this.replies[comment_id];
+                data.comment_id = comment_id;
+                console.log(data);
+
+                // Post and receive data
+                let receive = {
+                    id: 123,
+                    comment_id: comment_id,
+                    user_id: this.user_id,
+                    user_name: 'Admin',
+                    content: this.replies[comment_id],
+                };
+
+                let items = this.product.comment.items;
+
+                let idx = items.findIndex(item => {
+                    return item.id === receive.comment_id;
+                });
+
+                if (!items[idx].replies) {
+                    items[idx].replies = [];
+                }
+
+                items[idx].replies.push(receive);
+
+                this.replies[comment_id] = '';
+            },
+            deleteComment: function (comment_id, parent_id) {
+                let data = {
+                    comment_id: comment_id,
+                };
+
+                if (parent_id) {
+                    data.parent_id = parent_id;
+                    data.type = 'delete_reply';
+                } else {
+                    data.type = 'delete_comment';
+                }
+
+                // Post and receive data
+                let receive = {
+                    status: 'done',
+                    type: data.type,
+                    comment_id: data.comment_id,
+                };
+
+                if (parent_id) {
+                    receive.parent_id = parent_id;
+                }
+
+                console.log(receive);
+
+                let comments = this.product.comment.items;
+
+                if (receive.status === 'done') {
+                    if (receive.type === 'delete_comment') {
+                        let idx = comments.findIndex(item => {
+                            return item.id === receive.comment_id;
+                        });
+                        comments.splice(idx, 1);
+                    } else {
+                        let idx = comments.findIndex(item => {
+                            return item.id === receive.parent_id;
+                        });
+                        let replies = comments[idx].replies;
+                        idx = replies.findIndex(item => {
+                            return item.id === receive.comment_id;
+                        });
+                        replies.splice(idx, 1);
+
+                        comments.push({});
+                        comments.pop();
+                    }
                 }
             },
         },

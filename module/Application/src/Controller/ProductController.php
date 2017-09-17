@@ -56,10 +56,10 @@ class ProductController extends AbstractActionController
 
 //        $comment_form = new CommentForm();
 //
-//        if($this->getRequest()->isPost()) {
-//
-//            $data = $this->params()->fromPost();
-//
+        if($this->getRequest()->isPost()) {
+
+            $data = $this->params()->fromPost();
+            print_r($data); die();
 //            $comment_form->setData($data);
 //            if($comment_form->isValid()) {
 //
@@ -72,7 +72,7 @@ class ProductController extends AbstractActionController
 //                // Redirect the user again to "view" page.
 //                return $this->redirect()->toRoute('product', ['action'=>'view', 'id' => $id]);
 //            }
-//        }
+        }
         $view = new ViewModel([
             'user_id' => $this->sessionContainer->id,
 //            'commentCount' => $commentCount,

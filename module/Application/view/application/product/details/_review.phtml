@@ -6,7 +6,13 @@
                        class="md-primary"
                        disabled>
         </md-rating-bar>
-        <b>{{ rate_avg }}</b>/5 on {{ product.rate_count }} review
+        <template v-if="product.rate_count == 0">Be the first to review this product</template>
+        <template v-if="product.rate_count == 1">
+            <b>{{ rate_avg }}</b>/5 on {{ product.rate_count }} review
+        </template>
+        <template v-if="product.rate_count > 1">
+            <b>{{ rate_avg }}</b>/5 on {{ product.rate_count }} reviews
+        </template>
     </md-layout>
     <md-layout md-align="end">
         <md-button class="md-primary md-raised"
