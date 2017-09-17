@@ -105,7 +105,27 @@
                         </a>
                     </li>
                 </ul>
-	      	</li>
-  		</ul>
-  	</section>
+          	</li>
+          	<li class="treeview">
+                <a href="">
+                    <i class="fa fa-percent"></i>
+                    <span>Sale Programs</span>
+                </a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a href="<?= $this->url('sale_programs', ['action' => 'index']); ?>">
+                            <i class="glyphicon glyphicon-list"></i>
+                            <span>List Sale Programs</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-calendar"></i>
+                            <span>Sale Program Plans</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
 </aside>

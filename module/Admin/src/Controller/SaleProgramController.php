@@ -30,7 +30,12 @@ class SaleProgramController extends AbstractActionController
 
     public function indexAction()
     {
-    	return new ViewModel();
+        $sale_programs = $this->entityManager->getRepository(SaleProgram::class)
+            ->findBy([], ['status' => 'ASC']);
+
+        return new ViewModel([
+            'sale_programs' => $sale_programs
+            ]);
     }
 
     public function addAction()
@@ -45,7 +50,6 @@ class SaleProgramController extends AbstractActionController
                 // Get validated form data.
                 $data = $form->getData();
 
-                // Check if Category exists?
                 if ($this->saleProgramManager->addNewSaleProgram($data) != 0)             
                     return $this->redirect()->toRoute('sale_programs',['action'=>'index']);
             }
@@ -54,5 +58,58 @@ class SaleProgramController extends AbstractActionController
     	return new ViewModel([
     		'form' => $form
     		]);
+    }
+
+    public function editAction()
+    {
+        $saleProgramId = $this->params()->fromRoute('id', -1);
+        $saleProgram = $this->entityManager->getRepository(SaleProgram::class)
+            ->findOneById($saleProgramId);        
+        if ($saleProgram == null) {
+          $this->getResponse()->setStatusCode(404);
+          return;                        
+        }
+
+        $form = new SaleProgramForm();
+
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $form->setData($data);
+            if ($form->isValid()) {
+
+                // Get validated form data.
+                $data = $form->getData();
+
+                if ($this->saleProgramManager->updateSaleProgram($saleProgram, $data) != 0)             
+                    return $this->redirect()->toRoute('sale_programs',['action'=>'index']);
+            }
+        }
+        else {
+            $data = [
+               'name' => $saleProgram->getName(),
+               'date_start' => $saleProgram->getDateStart(),
+               'date_end' => $saleProgram->getDateEnd(),
+            ];
+            $form->setData($data);
+        }
+
+        return new ViewModel([
+            'form' => $form
+            ]);
+    }
+
+    public function cancelAction()
+    {
+        $saleProgramId = $this->params()->fromRoute('id', -1);
+        $saleProgram = $this->entityManager->getRepository(SaleProgram::class)
+            ->findOneById($saleProgramId);        
+        if ($saleProgram == null) {
+          $this->getResponse()->setStatusCode(404);
+          return;                        
+        }
+
+        $this->saleProgramManager->cancelSaleProgram($saleProgram);
+
+        return $this->redirect()->toRoute('sale_programs',['action'=>'index']);
     }
 }

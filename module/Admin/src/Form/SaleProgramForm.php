@@ -65,6 +65,7 @@ class SaleProgramForm extends Form
             'name' => 'date_end',
             'type' => 'text',
             'attributes' => [
+                'disabled' => 'disabled',
                 'class' => 'form-control',
                 'id' => 'date-end',
                 'placeholder' => 'Enter sale program ending date: ',
@@ -89,6 +90,37 @@ class SaleProgramForm extends Form
 
     private function addInputFilter()
     {
+        $inputFilter = new InputFilter();        
+        $this->setInputFilter($inputFilter);
+        
+        $inputFilter->add([
+            'name'     => 'name',
+            'required' => true,
+            'filters'  => [
+                ['name' => 'StringTrim'],
+                ['name' => 'StripTags'],
+                ['name' => 'StripNewlines'],
+            ],                
+            'validators' => [
+                [
+                    'name'    => 'StringLength',
+                    'options' => [
+                        'min' => 1,
+                        'max' => 32
+                    ],
+                ],
+            ],
+        ]);
+
+        $inputFilter->add([
+            'name'     => 'date_start',
+            'required' => true,
+        ]);
+
+        $inputFilter->add([
+            'name'     => 'date_end',
+            'required' => false,
+        ]);
 
     }
 }

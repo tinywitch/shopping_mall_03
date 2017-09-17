@@ -93,6 +93,24 @@ $(document).ready(function(){
         format: 'DD/MM/YYYY'
     });
 
+    $('#date-start').on("dp.change", function(){
+      $('#date-end').removeAttr("disabled");
+    })
+    $('#date-end').on("dp.change", function(){
+      var date_start = $('#date-start').val();
+      var date_end = $('#date-end').val();
+
+      var parts = date_start.split('/');
+      var date_start = new Date(parts[2], parts[1]-1, parts[0]);
+
+      var parts = date_end.split('/');
+      var date_end = new Date(parts[2], parts[1]-1, parts[0]);
+      if (date_end < date_start){
+        alert('Date end must be after date start');
+        $('#date-end').val(null);
+      }
+    })
+
     $('#1-day').on("click", function(){
       var date = $('#date-start').val();
 

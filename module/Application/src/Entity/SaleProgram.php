@@ -4,6 +4,7 @@ namespace Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Application\Entity\Sale;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\DBAL\Types\DateTimeType;
 
 /**
  * @ORM\Entity
@@ -11,6 +12,12 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class SaleProgram
 {
+    //constant for status varriable
+    const ACTIVE = 0; //in sale's time 
+    const PENDING = 1; //waiting for time up to date start
+    const DONE = 2; //after sale's time (date end)
+    const CANCEL = 3; //cancel sale program
+    
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Sale", mappedBy="sale_program")
      * @ORM\JoinColumn(name="id", referencedColumnName="sale_program_id")
@@ -48,12 +55,12 @@ class SaleProgram
     protected $name;
 
     /**
-     * @ORM\Column(name="date_start")
+     * @ORM\Column(name="date_start", type="datetime")
      */
     protected $date_start;
 
     /**
-     * @ORM\Column(name="date_end")
+     * @ORM\Column(name="date_end", type="datetime")
      */
     protected $date_end;
 
@@ -92,21 +99,25 @@ class SaleProgram
 
     public function getDateStart() 
     {
-        return $this->date_start;
+        return $this->date_start->format('d-m-Y');
     }
 
     public function setDateStart($date_start) 
     {
+        $date_start = str_replace('/', '-', $date_start);
+        $date_start = new \DateTime($date_start);
         $this->date_start = $date_start;
     }
 
     public function getDateEnd() 
     {
-        return $this->date_end;
+        return $this->date_end->format('d-m-Y');
     }
 
     public function setDateEnd($date_end) 
     {
+        $date_end = str_replace('/', '-', $date_end);
+        $date_end = new \DateTime($date_end);
         $this->date_end = $date_end;
     }
 
