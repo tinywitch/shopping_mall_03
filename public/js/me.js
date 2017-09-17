@@ -85,4 +85,45 @@ $(document).ready(function(){
 });
 
     
+$(document).ready(function(){
+    $('#date-start').datetimepicker({
+        format: 'DD/MM/YYYY'
+    });
+    $('#date-end').datetimepicker({
+        format: 'DD/MM/YYYY'
+    });
 
+    $('#1-day').on("click", function(){
+      var date = $('#date-start').val();
+
+      //change date format to YYYYMMDD
+      var parts = date.split('/');
+      var date_start = new Date(parts[2], parts[1]-1, parts[0]);
+
+      var day = 60 * 60 * 24 * 1000; 
+      var date_end = new Date(date_start.getTime() + day);
+      $('#date-end').data("DateTimePicker").date(date_end);
+    })
+    $('#1-week').on("click", function(){
+      var date = $('#date-start').val();
+      
+      //change date format to YYYYMMDD
+      var parts = date.split('/');
+      var date_start = new Date(parts[2], parts[1]-1, parts[0]);
+
+      var days = 7 * 60 * 60 * 24 * 1000; 
+      var date_end = new Date(date_start.getTime() + days);
+      $('#date-end').data("DateTimePicker").date(date_end);
+    })
+    $('#1-month').on("click", function(){
+      var date = $('#date-start').val();
+
+      //change date format to YYYYMMDD
+      var parts = date.split('/');
+      var date_start = new Date(parts[2], parts[1]-1, parts[0]); 
+
+      var days = 30 * 60 * 60 * 24 * 1000; 
+      var date_end = new Date(date_start.getTime() + days);
+      $('#date-end').data("DateTimePicker").date(date_end);
+    })
+})

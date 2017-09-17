@@ -97,6 +97,20 @@ return [
                     ],
                 ],
             ],
+            'sale_programs' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/admin/sale_programs[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]*'
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\SaleProgramController::class,
+                        'action' => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -111,6 +125,8 @@ return [
                 Controller\Factory\ProductControllerFactory::class,
             Controller\StoreController::class => 
                 Controller\Factory\StoreControllerFactory::class,
+            Controller\SaleProgramController::class => 
+                Controller\Factory\SaleProgramControllerFactory::class,
             Controller\OrderController::class => 
                 Controller\Factory\OrderControllerFactory::class,
         ],
@@ -121,7 +137,7 @@ return [
             Service\CategoryManager::class => Service\Factory\CategoryManagerFactory::class,
             Service\OrderManager::class => Service\Factory\OrderManagerFactory::class,
             Service\StoreManager::class => Service\Factory\StoreManagerFactory::class,
-
+            Service\SaleProgramManager::class => Service\Factory\SaleProgramManagerFactory::class,
         ],
         'abstract_factories' => array(
             'Zend\Form\FormAbstractServiceFactory',

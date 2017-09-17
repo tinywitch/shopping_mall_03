@@ -33,6 +33,6 @@ class Version20170801055231_image extends AbstractMigration
     public function down(Schema $schema)
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $schema->dropTable('product_images');
+        $schema->dropTable('images');
     }
 }

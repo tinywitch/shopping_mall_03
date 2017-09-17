@@ -18,13 +18,13 @@ class Version20170822145010_sale_program extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $table = $schema->createTable('sale_programs');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
+        $table->addColumn('name', 'text');
         $table->addColumn('date_start', 'datetime');
         $table->addColumn('date_end', 'datetime');
         $table->addColumn('date_created', 'datetime');
         $table->addColumn('status', 'integer', ['notnull' => false]);
         $table->setPrimaryKey(['id']);
         $table->addOption('engine', 'InnoDB');
-
     }
 
     /**

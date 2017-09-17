@@ -3,6 +3,8 @@ namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Application\Entity\Sale;
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="sale_programs")
@@ -41,6 +43,11 @@ class SaleProgram
     protected $id;
 
     /**
+     * @ORM\Column(name="Name")
+     */
+    protected $name;
+
+    /**
      * @ORM\Column(name="date_start")
      */
     protected $date_start;
@@ -71,6 +78,16 @@ class SaleProgram
     public function setId($id) 
     {
         $this->id = $id;
+    }
+
+    public function getName() 
+    {
+        return $this->name;
+    }
+
+    public function setName($name) 
+    {
+        $this->name = $name;
     }
 
     public function getDateStart() 
