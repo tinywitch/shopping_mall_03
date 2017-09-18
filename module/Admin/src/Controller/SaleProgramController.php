@@ -51,12 +51,17 @@ class SaleProgramController extends AbstractActionController
 
         $products = $this->entityManager->getRepository(Product::class)
             ->findAll();
-        $products_in_sale_program= $saleProgram->getProducts();
+        $products_in_sale= $saleProgram->getProducts();
+        
+        $sale_array = $this->saleProgramManager->getSaleArray($saleProgram);
 
+        $currentDate = date('d-m-Y');
         return new ViewModel([
-            'products_in_sale_program' => $products_in_sale_program,
+            'products_in_sale' => $products_in_sale,
             'saleProgram' => $saleProgram,
-            'products' => $products
+            'products' => $products,
+            'currentDate' => $currentDate,
+            'sale_array' => $sale_array
             ]);
     }
 
@@ -154,6 +159,20 @@ class SaleProgramController extends AbstractActionController
             $this->saleProgramManager->addProductToSaleProgram($saleProgram, $data);
             
             $this->redirect()->toRoute('sale_programs', ['action'=>'view', 'id' => $saleProgram->getId()]);
+        } else {
+            $this->redirect()->toRoute('sale_programs', ['action'=>'index']);
+        }
+    }
+
+    public function removeproductAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            //get data from POST request
+
+            $data = $this->params()->fromPost();
+
+            $this->saleProgramManager->removeProductOutOfSaleProgram($data);
+            $this->redirect()->toRoute('sale_programs', ['action'=>'view', 'id' => $data['sale_program_id']]);
         } else {
             $this->redirect()->toRoute('sale_programs', ['action'=>'index']);
         }

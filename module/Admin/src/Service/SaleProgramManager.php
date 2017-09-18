@@ -61,11 +61,11 @@ class SaleProgramManager
 
     public function addProductToSaleProgram($saleProgram, $data)
     {
-        for ($i = 0; $i < count($data['products']); $i++){ 
+        for ($i = 0; $i < count($data['products']['id']); $i++){ 
             $sale = new Sale();
             $product = $this->entityManager->getRepository(Product::class)
                 ->findOneById($data['products']['id'][$i]);
-                
+
             $sale->setSaleProgram($saleProgram);
             $sale->setProduct($product);
             $sale->setSale($data['products']['sale'][$i]);
@@ -74,8 +74,30 @@ class SaleProgramManager
             $sale->setDateCreated($currentDate);
 
             $this->entityManager->persist($sale);
-        }
+        }            
+
         $this->entityManager->flush();
+    }
+
+    public function removeProductOutOfSaleProgram($data)
+    {
+        $saleProgram = $this->entityManager->getRepository(SaleProgram::class)
+            ->findOneById($data['sale_program_id']);
+        $product = $this->entityManager->getRepository(Product::class)
+            ->findOneById($data['product_id']);
+
+        $saleProgram->removeProductAssociation($product);
+        
+        $this->entityManager->flush();
+    }
+
+    public function getSaleArray($saleProgram)
+    {   
+        $sales = $saleProgram->getSales();
+        foreach ($sales as $s) {
+            $sale_array[$s->getProduct()->getId()] = $s->getSale();
+        }
+        return $sale_array;
     }
 
     private function get_status_depend_on_time($date_start, $date_end)
