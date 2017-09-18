@@ -515,10 +515,6 @@
     padding: 60px;
 }
 
-.inner-table div.md-whiteframe {
-    visibility: hidden;
-}
-
 .order-item {
     margin-top: 20px;
 }
@@ -531,4 +527,15 @@
 .write_review h5{
     margin-top: 20px;
     margin-bottom: 30px;
+}
+
+/*comment*/
+#comment .user_name {
+    color: #0D47A1;
+    font-weight: bold;
+}
+
+#comment .content {
+    font-weight: lighter;
+    font-size: 14px;
 }
