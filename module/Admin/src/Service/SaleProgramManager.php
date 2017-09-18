@@ -2,6 +2,8 @@
 namespace Admin\Service;
 
 use Application\Entity\SaleProgram;
+use Application\Entity\Sale;
+use Application\Entity\Product;
 use Zend\Filter\StaticFilter;
 
 class SaleProgramManager 
@@ -54,6 +56,25 @@ class SaleProgramManager
     public function cancelSaleProgram($saleProgram)
     {
         $saleProgram->setStatus(SaleProgram::CANCEL);
+        $this->entityManager->flush();
+    }
+
+    public function addProductToSaleProgram($saleProgram, $data)
+    {
+        for ($i = 0; $i < count($data['products']); $i++){ 
+            $sale = new Sale();
+            $product = $this->entityManager->getRepository(Product::class)
+                ->findOneById($data['products']['id'][$i]);
+                
+            $sale->setSaleProgram($saleProgram);
+            $sale->setProduct($product);
+            $sale->setSale($data['products']['sale'][$i]);
+
+            $currentDate = date('Y-m-d H:i:s');
+            $sale->setDateCreated($currentDate);
+
+            $this->entityManager->persist($sale);
+        }
         $this->entityManager->flush();
     }
 

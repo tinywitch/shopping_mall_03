@@ -10,6 +10,7 @@ namespace Admin\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Entity\SaleProgram;
+use Application\Entity\Product;
 use Admin\Form\SaleProgramForm;
 
 class SaleProgramController extends AbstractActionController
@@ -38,6 +39,27 @@ class SaleProgramController extends AbstractActionController
             ]);
     }
 
+    public function viewAction()
+    {
+        $saleProgramId = $this->params()->fromRoute('id', -1);
+        $saleProgram = $this->entityManager->getRepository(SaleProgram::class)
+            ->findOneById($saleProgramId);        
+        if ($saleProgram == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;                        
+        }
+
+        $products = $this->entityManager->getRepository(Product::class)
+            ->findAll();
+        $products_in_sale_program= $saleProgram->getProducts();
+
+        return new ViewModel([
+            'products_in_sale_program' => $products_in_sale_program,
+            'saleProgram' => $saleProgram,
+            'products' => $products
+            ]);
+    }
+
     public function addAction()
     {
         $form = new SaleProgramForm();
@@ -51,7 +73,7 @@ class SaleProgramController extends AbstractActionController
                 $data = $form->getData();
 
                 if ($this->saleProgramManager->addNewSaleProgram($data) != 0)             
-                    return $this->redirect()->toRoute('sale_programs',['action'=>'index']);
+                    return $this->redirect()->toRoute('sale_programs', ['action'=>'index']);
             }
         }
 
@@ -81,7 +103,7 @@ class SaleProgramController extends AbstractActionController
                 $data = $form->getData();
 
                 if ($this->saleProgramManager->updateSaleProgram($saleProgram, $data) != 0)             
-                    return $this->redirect()->toRoute('sale_programs',['action'=>'index']);
+                    return $this->redirect()->toRoute('sale_programs', ['action'=>'index']);
             }
         }
         else {
@@ -111,5 +133,29 @@ class SaleProgramController extends AbstractActionController
         $this->saleProgramManager->cancelSaleProgram($saleProgram);
 
         return $this->redirect()->toRoute('sale_programs',['action'=>'index']);
+    }
+
+    public function addproductAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            //get data from POST request
+            $data = $this->params()->fromPost();
+
+            //find $salProgram by ID
+            $saleProgramId = $this->params()->fromRoute('id', -1);
+            $saleProgram = $this->entityManager->getRepository(SaleProgram::class)
+                ->findOneById($saleProgramId);        
+            if ($saleProgram == null) {
+                $this->getResponse()->setStatusCode(404);
+
+                return;                        
+            }
+            
+            $this->saleProgramManager->addProductToSaleProgram($saleProgram, $data);
+            
+            $this->redirect()->toRoute('sale_programs', ['action'=>'view', 'id' => $saleProgram->getId()]);
+        } else {
+            $this->redirect()->toRoute('sale_programs', ['action'=>'index']);
+        }
     }
 }

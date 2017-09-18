@@ -145,3 +145,59 @@ $(document).ready(function(){
       $('#date-end').data("DateTimePicker").date(date_end);
     })
 })
+
+$(document).ready(function(){
+  var product_id;
+  var product_name;
+  
+  $(document).on('click', '.btn-add', function() {
+    product_id = $(this).attr('id');
+    product_name = $('#name-'+ product_id).text();
+  })
+
+  $(document).on('click', '.btn-ok', function() {
+    var sale = $('#sale').val();
+    
+    if(sale != ""){
+      if ($("#btn-remove-" + product_id).length){
+        $("#btn-remove-" + product_id).remove();
+      }
+
+      $('#sale-product-box').append('<span style="margin: 3px 3px" class="btn btn-remove bg-green" id="btn-remove-'
+        + product_id + '"><i class="fa fa-close"></i>'
+        + product_name + '(' + sale + '%)' +
+        '<input type="hidden" name="products[id][]" value="'+ product_id +
+        '"><input type="hidden" name="products[sale][]" value="'+ sale +
+        '"></span>');
+      
+      $('#sale').val(null);
+    }
+  })
+
+  $(document).on('click', '.btn-remove', function() {
+    $(this).remove();
+  })
+
+})
+
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+$(document).ready(function(){
+
+  $('#sale').on("change", function(){
+    var value = $('#sale').val();
+    if(!isNumber(value)){
+      $('.modal-body').append('<p>Value must be number</p>');
+      $('#sale').val(null);
+      return;
+    }
+    if (value < 1 || value > 100){
+      $('.modal-body').append('<p>Value must be from 1 to 100</p>');
+      $('#sale').val(null);
+      return;
+    }
+  })
+
+})

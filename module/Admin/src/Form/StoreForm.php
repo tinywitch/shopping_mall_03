@@ -124,40 +124,6 @@ class StoreForm extends Form
                     ]
                 ],
             ]);
-        //Province
-        $this->add([
-            'name'          => 'province',
-            'type'          => 'text',
-            'attributes'    => [
-                'class'         => 'form-control',
-                'id'            => 'province',
-                'placeholder'   => 'Enter store province : ',
-                ],
-            'options'       => [
-                'label'             => 'Store province :',
-                'label_attributes'  => [
-                    'for'       => 'province',
-                    'class'     => 'control-label ',
-                    ]
-                ],
-            ]);
-        //District
-        $this->add([
-            'name'          => 'district',
-            'type'          => 'text',
-            'attributes'    => [
-                'class'         => 'form-control',
-                'id'            => 'district',
-                'placeholder'   => 'Enter store district : ',
-                ],
-            'options'       => [
-                'label'             => 'Store district :',
-                'label_attributes'  => [
-                    'for'       => 'district',
-                    'class'     => 'control-label ',
-                    ]
-                ],
-            ]);
 
         $this->add([
             'name'          => 'phone',

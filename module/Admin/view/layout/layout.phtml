@@ -14,6 +14,7 @@
         <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
             // ->prependStylesheet($this->basePath('css/style.css'))
             ->prependStylesheet($this->basePath('css/admin.css'))
+            ->prependStylesheet($this->basePath('assets/select2/dist/css/select2.min.css'))
             ->prependStylesheet($this->basePath('assets/AdminLTE/dist/css/skins/skin-blue.min.css'))
             ->prependStylesheet($this->basePath('assets/AdminLTE/dist/css/AdminLTE.min.css'))
             ->prependStylesheet($this->basePath('assets/components-font-awesome/css/font-awesome.min.css'))
@@ -25,18 +26,7 @@
         ?>
 
         <!-- Scripts -->
-        <?= $this->headScript()
-            ->prependFile($this->basePath('js/me.js'))
-            ->prependFile($this->basePath('assets/semantic/dist/semantic.min.js'))
-            ->prependFile($this->basePath('assets/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'))
-            ->prependFile($this->basePath('assets/moment/min/moment.min.js'))
-            ->prependFile($this->basePath('assets/AdminLTE/dist/js/demo.js'))   
-            ->prependFile($this->basePath('assets/AdminLTE/dist/js/app.min.js'))
-            ->prependFile($this->basePath('assets/datatables/media/js/dataTables.semanticui.min.js'))
-            ->prependFile($this->basePath('assets/datatables/media/js/jquery.dataTables.min.js'))
-            ->prependFile($this->basePath('assets/bootstrap/dist/js/bootstrap.min.js'))                  
-            ->prependFile($this->basePath('assets/jquery/dist/jquery.min.js'))   
-        ?>
+
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -50,5 +40,20 @@
 
             <?= $this->inlineScript() ?>
         </div>
+        <?= $this->headScript()
+            ->prependFile($this->basePath('js/me.js'))
+            ->prependFile($this->basePath('assets/select2/dist/js/select2.min.js'))
+            ->prependFile($this->basePath('assets/semantic/dist/semantic.min.js'))
+            ->prependFile($this->basePath('assets/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'))
+            ->prependFile($this->basePath('assets/moment/min/moment.min.js'))
+            ->prependFile($this->basePath('assets/AdminLTE/dist/js/demo.js'))   
+            ->prependFile($this->basePath('assets/AdminLTE/dist/js/app.min.js'))
+            ->prependFile($this->basePath('assets/datatables/media/js/dataTables.semanticui.min.js'))
+            ->prependFile($this->basePath('assets/datatables/media/js/jquery.dataTables.min.js'))
+            ->prependFile($this->basePath('assets/bootstrap/dist/js/bootstrap.min.js'))                  
+            ->prependFile($this->basePath('assets/jquery/dist/jquery.min.js'))   
+        ?>
     </body>
+
 </html>
+

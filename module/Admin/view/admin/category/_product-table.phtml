@@ -4,7 +4,6 @@
             <th style="width: 15px">#</th>
             <th>Name</th>
             <th>Image</th>
-            <th>Quantity</th>
             <th>Price</th>
             <th>Store</th>
             <th>Option</th>
@@ -18,15 +17,9 @@
             <td>
                 <img src="<?php echo $this->basePath($product->getImage()) ?>" class="image_product">
             </td>
-            <td><?php echo $product->getQuantity(); ?></td>
             <td><?php echo $product->getPrice(); ?></td>
             <td>
-                <?php if($product->getStore()!= null){ ?>
-                    <a href="<?= $this->url('stores',
-                        ['action' => 'view', 'id' => $product->getStore()->getId()]) ?>">
-                        <?php echo $product->getStore()->getName(); ?>
-                    </a>
-                <?php } ?>
+
             </td>
             <td>
                 <a href="<?= $this->url('products', ['action' => 'view', 'id' => $product->getId()]) ?>">
