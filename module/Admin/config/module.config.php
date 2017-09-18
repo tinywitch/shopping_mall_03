@@ -137,7 +137,9 @@ return [
             Service\CategoryManager::class => Service\Factory\CategoryManagerFactory::class,
             Service\OrderManager::class => Service\Factory\OrderManagerFactory::class,
             Service\StoreManager::class => Service\Factory\StoreManagerFactory::class,
+            Service\ImageManager::class => Service\Factory\ImageManagerFactory::class,
             Service\SaleProgramManager::class => Service\Factory\SaleProgramManagerFactory::class,
+            
         ],
         'abstract_factories' => array(
             'Zend\Form\FormAbstractServiceFactory',

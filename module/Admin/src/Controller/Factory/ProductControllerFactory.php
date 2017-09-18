@@ -12,6 +12,7 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 use Admin\Service\ProductManager;
 use Admin\Service\CategoryManager;
 use Admin\Service\StoreManager;
+use Admin\Service\ImageManager;
 use Admin\Controller\ProductController;
 
 /**
@@ -27,7 +28,14 @@ class ProductControllerFactory implements FactoryInterface
         $productManager = $container->get(ProductManager::class);
         $categoryManager = $container->get(CategoryManager::class);
         $storeManager = $container->get(StoreManager::class);
+        $imageManager = $container->get(ImageManager::class);
         // Instantiate the controller and inject dependencies
-        return new ProductController($entityManager, $productManager, $categoryManager, $storeManager);
+        return new ProductController(
+            $entityManager, 
+            $productManager, 
+            $categoryManager, 
+            $storeManager, 
+            $imageManager
+            );
     }
 }

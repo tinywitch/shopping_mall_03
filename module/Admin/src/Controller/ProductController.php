@@ -6,6 +6,7 @@ use Zend\View\Model\ViewModel;
 use Application\Entity\Product;
 use Application\Entity\ProductMaster;
 use Admin\Form\ProductForm;
+use Admin\Form\EditProductForm;
 use Zend\File\Transfer\Adapter\Http;
 
 class ProductController extends AbstractActionController
@@ -28,14 +29,26 @@ class ProductController extends AbstractActionController
     private $categoryManager;
     private $storeManager;
     /**
+     * User manager.
+     * @var Admin\Service\ImageManager
+     */
+    private $imageManager;
+    /**
      * Constructor is used for injecting dependencies into the controller.
      */
-    public function __construct($entityManager, $productManager, $categoryManager, $storeManager)
-    {
+    public function __construct(
+        $entityManager, 
+        $productManager, 
+        $categoryManager, 
+        $storeManager, 
+        $imageManager
+    ) {
         $this->entityManager = $entityManager;
         $this->productManager = $productManager;
         $this->categoryManager = $categoryManager; 
-        $this->storeManager = $storeManager;     
+        $this->storeManager = $storeManager;
+        $this->imageManager = $imageManager;
+
     }
 
     /**
@@ -87,7 +100,7 @@ class ProductController extends AbstractActionController
             $data['color[]'] = $data['color'][0];
             $data['count'] = $count;
             
-            
+            echo "<pre>";print_r($_FILES);echo "<pre>";
             
             $form->setData($data);
             if ($form->isValid()) {
@@ -116,67 +129,94 @@ class ProductController extends AbstractActionController
     public function editAction()
     {  
         $categories = $this->categoryManager->categories_for_select();
-
+        
         $productId = $this->params()->fromRoute('id', -1);
 
         $product = $this->entityManager->getRepository(Product::class)->find($productId);
+        $images = $this->productManager->findAllColorByProductId($productId);
+        //var_dump($images);die();
         if ($product == null) {
             $this->getResponse()->setStatusCode(404);                      
         }
 
-        $form = new ProductForm('edit', $categories, $this->entityManager, $product);
-
+        $form = new EditProductForm(count($images), $categories, $this->entityManager, $product);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            
-            $httpadapter = new \Zend\File\Transfer\Adapter\Http();
-            $httpadapter->setDestination('public/img/products/');
-            $httpadapter->receive();
-            if(!empty($httpadapter->getFileName())) {
-                $data['image'] = $httpadapter->getFileName();
-                $data['image'] = ltrim($data['image'], "public");
-                //delete old image
-                $filename = 'public'.$product->getImage();
-
-                if (file_exists($filename)) {
-                    if (!unlink($filename)) {
-                      $Message = "Error deleting $filename";
-                    } else {
-                      $Message = "Deleted $filename";
-                    }
-                } else {
-                    $Message = "The file $filename does not exist";
-                }
-
-            }else $data['image'] = $product->getImage();
+            //var_dump($_POST);echo "<pre>";print_r($_FILES);echo "<pre>";die();
+    
             $form->setData($data);
 
             if ($form->isValid()) {
                 $data = $form->getData();
-                $data['alias'] = $this->slug($data['name']);
 
-                $this->productManager->updateProduct($product, $data);
+                //edit $_FILES :
+                $countOfFiles = count($_FILES['image']['name']);
+                $temp = [];
+                for ($i = 0; $i < $countOfFiles; $i++){
+                    $temp['image']['name'][$i] = $_FILES['image']['name'][$i]['image'];
+                    $temp['image']['type'][$i] = $_FILES['image']['type'][$i]['image'];
+                    $temp['image']['tmp_name'][$i] = $_FILES['image']['tmp_name'][$i]['image'];
+                    $temp['image']['error'][$i] = $_FILES['image']['error'][$i]['image'];
+                    $temp['image']['size'][$i] = $_FILES['image']['size'][$i]['image'];
+                    for ($j = 1; $j < 5; $j++){
+                        $temp['imageDetail' . $j]['name'][$i] = $_FILES['image']['name'][$i]['imageDetail' . $j];
+                        $temp['imageDetail' . $j]['type'][$i] = $_FILES['image']['type'][$i]['imageDetail' . $j];
+                        $temp['imageDetail' . $j]['tmp_name'][$i] = $_FILES['image']['tmp_name'][$i]['imageDetail' . $j];
+                        $temp['imageDetail' . $j]['error'][$i] = $_FILES['image']['error'][$i]['imageDetail' . $j];
+                        $temp['imageDetail' . $j]['size'][$i] = $_FILES['image']['size'][$i]['imageDetail' . $j];
+                    }
+                }
+
+                $_FILES = $temp;
+                
+                $data['picture'] = $this->imageManager->saveImages($temp);
+               
+                // covert $data['image'] string to array
+                if (is_string($data['picture'])) {
+                    for ($i = 0; $i < $countOfFiles; $i++) {
+                        if (!empty($temp['image']['name'][$i])) {
+                            $data['picture'] = ['image_' . $i . '_' => $data['picture']];
+                        }
+                        for ($j = 1; $j < 5; $j++) {
+                            if (!empty($temp['imageDetail' . $j]['name'][$i])) {
+                                $data['picture'] = ['imageDetail' . $j . '_' . $i . "_" => $data['picture']];
+                            }
+                        }
+                    }
+                }
+
+                $mesDelete = $this->imageManager->deleteFiles($images, $data['picture']);
+
+                $data['alias'] = $this->slug($data['name']);
+                //var_dump($data);die();
+                $this->productManager->updateProduct($product, $data, $images);
                 // Redirect the user to "index" page.
                 return $this->redirect()->toRoute('products', ['action'=>'list']);
             }
-        }else 
+        } else 
         {
             $data = [
                 'name' => $product->getName(),
                 'price' => $product->getPrice(),
                 'intro' => $product->getIntro(),
-                'image' => $product->getImage(),
+                
                 'description' => $product->getDescription(),   
                 'status' => $product->getStatus(),
                 'category_id' => $product->getCategory(),
-                'keywords' => $this->productManager->convertKeywordsToString($product)   
+                'keywords' => $this->productManager->convertKeywordsToString($product)
+
                 ];
+            for ($i = 0;$i < count($images); $i++){
+                $data['image'][$i]['size'] = $images[$i]['size'];
+                $data['image'][$i]['color'] = $images[$i]['color']; 
+            }     
             $form->setData($data);
         }
 
         return new ViewModel([
             'form' => $form,
-            'product' => $product
+            'product' => $product,
+            'images' => $images,
             ]);
     }
 
@@ -190,7 +230,7 @@ class ProductController extends AbstractActionController
             return;                        
         }
 
-        $filename = 'public'.$product->getImage();
+        $filename = 'public' . $product->getImage();
 
         if (file_exists($filename)) {
             if (!unlink($filename)) {
@@ -221,4 +261,5 @@ class ProductController extends AbstractActionController
         $str = preg_replace('/([\s]+)/', '-', $str);
         return $str;
     }
+    
 }

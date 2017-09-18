@@ -29,17 +29,17 @@ class ProductManager
     public function addNewProduct($data)
     {
         //delete "public" in first of image_url
-        for($i = 0; $i < $data['count']; $i++){
+        for ($i = 0; $i < $data['count']; $i++){
             $data['image']['image_'.$i.'_'] = ltrim($data['image']['image_'.$i.'_'], 
                 "public");
-            for($detail = 1;$detail < COUNT_IMAGE_DETAILS; $detail++){
-                if(!empty($data['image']['imageDetail'.$detail.'_'.$i.'_']))
+            for ($detail = 1;$detail < COUNT_IMAGE_DETAILS; $detail++){
+                if (!empty($data['image']['imageDetail'.$detail.'_'.$i.'_']))
                     $data['image']['imageDetail'.$detail.'_'.$i.'_'] = 
                     ltrim($data['image']['imageDetail'.$detail.'_'.$i.'_'],"public");    
             }
         }
         // xu ly $data
-        for($i = 0; $i < $data['count']; $i++){
+        for ($i = 0; $i < $data['count']; $i++){
             $data['color'][$i] = (int)$data['color'][$i];
 
         }    
@@ -51,10 +51,10 @@ class ProductManager
 
         for ($i = 0; $i < $data['count']; $i++){
             $product_color_image[$i] = new ProductColorImage();
-            for($j = 0;$j < COUNT_IMAGE_DETAILS;$j++){
+            for ($j = 0; $j < COUNT_IMAGE_DETAILS; $j++){
                 $image[$i][$j] = new Image();
             }
-            for($j = 0;$j < count($data['size']); $j++){
+            for ($j = 0; $j < count($data['size']); $j++){
                 $product_master[$i][$j] = new ProductMaster();
             }
             
@@ -86,13 +86,13 @@ class ProductManager
             $product_color_image[$i]->setDateCreated($data['date_created']);
             $image[$i][0]->setImage($data['image']['image_'.$i.'_']);
             $image[$i][0]->setStatus(1);
-            if( $i == 0 ) $image[$i][0]->setParentId(0);
+            if ( $i == 0 ) $image[$i][0]->setParentId(0);
             else $image[$i][0]->setParentId(-1);
             $image[$i][0]->setDateCreated($data['date_created']);
             $image[$i][0]->setProductColorImage($product_color_image[$i]);
             $this->entityManager->persist($image[$i][0]);
-            for($j = 1;$j < COUNT_IMAGE_DETAILS;$j++){
-                if(!empty($data['image']['imageDetail'.$j.'_'.$i.'_'])){
+            for ($j = 1; $j < COUNT_IMAGE_DETAILS; $j++){
+                if (!empty($data['image']['imageDetail'.$j.'_'.$i.'_'])){
                     $image[$i][$j]->setImage($data['image']['imageDetail'.$j.'_'.$i.'_']);
                     $image[$i][$j]->setStatus(1);
                     $image[$i][$j]->setParentId($image[$i][0]->getId());
@@ -100,7 +100,7 @@ class ProductManager
                     $image[$i][$j]->setProductColorImage($product_color_image[$i]);
                 }
             }
-            for($j = 0;$j < count($data['size']); $j++){
+            for ($j = 0;$j < count($data['size']); $j++){
                 $product_master[$i][$j]->setProduct($product);
                 $product_master[$i][$j]->setSizeId((int)$data['size'][$j]);
                 $product_master[$i][$j]->setColorId($data['color'][$i]);
@@ -116,12 +116,12 @@ class ProductManager
         for ($i = 0; $i < $data['count']; $i++){
             $this->entityManager->persist($product_color_image[$i]);
             $this->entityManager->persist($image[$i][0]);
-            for($j = 1;$j < COUNT_IMAGE_DETAILS;$j++){
-                if(!empty($data['image']['imageDetail'.$j.'_'.$i.'_'])){
+            for ($j = 1;$j < COUNT_IMAGE_DETAILS;$j++){
+                if (!empty($data['image']['imageDetail'.$j.'_'.$i.'_'])){
                     $this->entityManager->persist($image[$i][$j]);    
                 }
             }
-            for($j = 0;$j < count($data['size']); $j++){
+            for ($j = 0;$j < count($data['size']); $j++){
                 $this->entityManager->persist($product_master[$i][$j]);
             }
             
@@ -134,12 +134,42 @@ class ProductManager
     public function findSizeByProductId($productId){
         $product_masters =$this->entityManager->getRepository(ProductMaster::class)
             ->findSizeByProductId($productId);
-            foreach($product_masters as $product_master){
+            foreach ($product_masters as $product_master){
                 $size[] = $product_master['size_id'];
             };
-            sort($size); 
+            sort($size);
+            
             return $size;
     }
+    
+    public function findSizeByProductColorImageId($product_color_image_id){
+        $productColorImage = $this->entityManager->getRepository(ProductColorImage::class)->findOneById($product_color_image_id);
+
+        $colorId = $productColorImage->getColorId();
+        $productId = $productColorImage->getProduct()->getId();
+
+        $product_masters =$this->entityManager->getRepository(ProductMaster::class)
+            ->findSizeByProductIdColorId($productId, $colorId);
+
+            foreach ($product_masters as $product_master){
+                $size[] = $product_master['size_id'];
+            };
+            sort($size);
+
+            return $size;
+    }
+    public function findSizeByProductIdColorId($productId, $colorId){
+
+        $product_masters =$this->entityManager->getRepository(ProductMaster::class)
+            ->findSizeByProductIdColorId($productId, $colorId);
+
+            foreach ($product_masters as $product_master){
+                $size[] = $product_master['size_id'];
+            };
+            sort($size);
+            return $size;
+    }
+
 
     public function findAllColorByProductId($productId){
         $product = $this->entityManager->getRepository(Product::class)->findOneById($productId);
@@ -147,24 +177,35 @@ class ProductManager
         $count = 0;
         foreach ($productColorImages as $productColorImage) {
             $images = $productColorImage->getImages();
-            
+            $color_id = $productColorImage->getColorId();
             foreach ($images as $image) {
 
-                if($image->getParentId() == 0){ 
+                if ($image->getParentId() == 0){
+                    $data[0]['productColorImageId'] = 
+                        $image->getProductColorImage()->getId();
                     $data[0]['image'] = $image->getImage();
+                    $data[0]['color'] = $color_id;
+                    $data[0]['size'] = $this->findSizeByProductColorImageId(
+                        $image->getProductColorImage()->getId());
 
                     foreach ($images as $i) {
 
-                        if($i->getParentId() == $image->getId()){
+                        if ($i->getParentId() == $image->getId()){
                             $data[0]['detail'][] = $i->getImage();    
                         }
                     }
                 }
-                if($image->getParentId() == -1){ 
+                if ($image->getParentId() == -1){ 
                     $count++;
+                    $data[$count]['productColorImageId'] = 
+                        $image->getProductColorImage()->getId();
                     $data[$count]['image'] = $image->getImage();
+                    $data[$count]['color'] = $color_id;
+                    $data[$count]['size'] = $this->findSizeByProductColorImageId(
+                        $image->getProductColorImage()->getId());
+
                     foreach ($images as $i) {
-                        if($i->getParentId() == $image->getId())
+                        if ($i->getParentId() == $image->getId())
                             $data[$count]['detail'][] = $i->getImage();
                     }
                 }
@@ -175,10 +216,24 @@ class ProductManager
        
         return $data;
     }
-    public function updateProduct($product, $data) 
+
+    public function updateProduct($product, $data, $images) 
     {
-        $data['store'] = $this->entityManager->
-            getRepository('Application\Entity\Store')->find($data['store_id']);
+        // data processing
+        for ($i = 0; $i < count($data['image']); $i++) {
+            $data['image'][$i]['color'] = (int)$data['image'][$i]['color'];
+            if (!empty($data['picture']['image_' . $i . '_'])) 
+                $data['picture']['image_' . $i . '_'] = 
+                    ltrim($data['picture']['image_' . $i . '_'],"public");
+            for ($j = 0; $j <count($data['image'][$i]['size']); $j++) {
+                $data['image'][$i]['size'][$j] = (int)$data['image'][$i]['size'][$j];
+            }
+        }
+        //var_dump($data);var_dump($images);die();
+        $currentDate = date('Y-m-d H:i:s');
+        
+        $productId = $product->getId();
+        $countImage = count($data['image']);
         $data['category'] = $this->entityManager->
             getRepository('Application\Entity\Category')->find($data['category_id']);
         
@@ -186,17 +241,86 @@ class ProductManager
         $product->setAlias($data['alias']);
         $product->setPrice($data['price']);
         $product->setIntro($data['intro']);
-        $product->setImage($data['image']);
-        $product->setColor($data['color']);
-        $product->setQuantity($data['quantity']);
-        $product->setSize($data['size']);
         $product->setDescription($data['description']);
         $product->setStatus($data['status']);
-        $product->setSale($data['sale']);
+        if (!empty($data['picture']['image_0_'])) {
+            $product->setImage($data['picture']['image_0_']);
+        }
         if ($data['category'] != null)
             $product->setCategory($data['category']);
-        if ($data['store'] != null)
-            $product->setStore($data['store']);
+
+        // add, delete product_master
+        foreach ($data['image'] as $master) {
+            $sizeOlds = $this->findSizeByProductIdColorId($productId,$master['color']); 
+            $sizeNews = $master['size'];
+            foreach ($sizeOlds as $size) {
+                if(!in_array($size, $sizeNews)) {
+                    $productMaster = $this->entityManager->getRepository(ProductMaster::class)
+                        ->findOneBy([
+                            'product' => $product, 
+                            'color_id' => $master['color'],
+                            'size_id' => $size
+                        ],[]);
+                    $this->entityManager->remove($productMaster);
+                }
+            }
+            foreach ($sizeNews as $size) {
+                if(!in_array($size, $sizeOlds)) {
+                    $productMaster = new ProductMaster();
+                    $productMaster->setProduct($product);
+                    $productMaster->setSizeId($size);
+                    $productMaster->setColorId($master['color']);
+                    $this->entityManager->persist($productMaster);
+
+                }
+            }
+        }
+
+        //edit Image
+        for ($i = 0; $i < $countImage; $i++) {
+            $productCIId = $images[$i]['productColorImageId'];
+            if (!empty($data['picture']['image_' . $i . '_'])) {
+                $image = $this->entityManager->getRepository(Image::class)
+                    ->findOneBy([
+                        'product_color_image' => $productCIId, 
+                        'parent_id' => [0,-1],
+                    ],[]);
+
+                $image->setImage($data['picture']['image_' . $i . '_']);
+            }
+            $primaryColorId = $this->entityManager->getRepository(Image::class)
+                ->findOneBy([
+                        'product_color_image' => $productCIId, 
+                        'parent_id' => [0,-1],
+                    ],[])->getId();
+            $productCI = $this->entityManager->getRepository(ProductColorImage::class)
+                ->findOneById($productCIId);                                            
+            for ($j = 1; $j < 5; $j++) {
+
+                if (!empty($data['picture']['imageDetail' . $j . '_' . $i . '_'])) {
+                    $data['picture']['imageDetail' . $j . '_' . $i . '_'] = 
+                        ltrim($data['picture']['imageDetail' . $j . '_' . $i . '_'],"public");
+
+                    if ($j <= count($images[$i]['detail'])) {
+                        $image = $this->entityManager->getRepository(Image::class)
+                            ->findOneBy([
+                                'product_color_image' => $productCIId, 
+                                'image' => $images[$i]['detail'][$j-1],
+                            ],[]);
+                        $image->setImage($data['picture']['imageDetail' . $j . '_' . $i . '_']);
+                    } else {
+                        $image = new Image();
+                        $image->setImage($data['picture']['imageDetail' . $j . '_' . $i . '_']);
+                        $image->setParentId($primaryColorId);
+                        $image->setDateCreated($currentDate);
+                        $image->setStatus(1);
+                        $image->setProductColorImage($productCI);
+                        $this->entityManager->persist($image);
+                    }
+                }
+            }
+        }
+        //$productMasters = $product->getProductMasters();
         
         // Apply changes to database.
         $this->entityManager->flush();

@@ -32,4 +32,21 @@ class ProductMasterRepository extends EntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+    public function findSizebyProductIdColorId($product_id,$color_id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $queryBuilder = $entityManager->createQueryBuilder();
+
+        $queryBuilder->select('pm.size_id')
+            ->from(ProductMaster::class, 'pm')
+            ->join('pm.product', 'p')
+            ->where('p.id = :product_id')
+            ->andWhere('pm.color_id = :color_id')
+            ->setParameters(array('product_id' => $product_id,'color_id' => $color_id))
+            ->distinct(true);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
 }
