@@ -49,7 +49,7 @@ class StoreController extends AbstractActionController
                 $data['date_created'] = $currentDate;
                 $this->storeManager->addNewStore($data);             
                   // Redirect the user to "index" page.
-                return $this->redirect()->toRoute('stores',['action'=>'list']);
+                return $this->redirect()->toRoute('stores', ['action'=>'list']);
             }
         }
         

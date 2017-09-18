@@ -17,6 +17,14 @@ class SaleProgram
     const PENDING = 1; //waiting for time up to date start
     const DONE = 2; //after sale's time (date end)
     const CANCEL = 3; //cancel sale program
+    /**
+     * @ORM\ManyToMany(targetEntity="\Application\Entity\Product", inversedBy="sale_programs")
+     * @ORM\JoinTable(name="sales",
+     *      joinColumns={@ORM\JoinColumn(name="sale_program_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $products;
     
     /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Sale", mappedBy="sale_program")
@@ -26,6 +34,18 @@ class SaleProgram
     public function __construct() 
     {
         $this->sales = new ArrayCollection();
+        $this->products = new ArrayCollection();
+    }
+
+    public function getProducts() 
+    {
+        return $this->products;
+    }      
+      
+    // Adds a new product to this product.
+    public function addProduct($product) 
+    {
+        $this->products[] = $product;        
     }
 
     /**
