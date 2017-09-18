@@ -14,10 +14,19 @@
             <td>
                 <img src="<?php echo $this->basePath($product->getImage()) ?>" class="image_product">
             </td>
-            <td><?php echo $product->getCategory()->getName(); ?></td>
             <td>
-                <button id="<?php echo $product->getID() ?>" class="btn btn-primary btn-sm btn-add"
-                    data-toggle="modal" data-target="#modal-info">Add</button>
+                <?php if ($product->getCategory() != null){ ?>
+                    <a href="<?= $this->url('categories',
+                        ['action' => 'view', 'id' => $product->getCategory()->getId()]) ?>">
+                        <?php echo $product->getCategory()->getName(); ?>
+                    </a>
+                <?php } ?>
+            </td>
+            <td>
+                <?php if ($sale_array[$product->getId()] == null) { ?>
+                    <button id="<?php echo $product->getID() ?>" class="btn btn-primary btn-sm btn-add"
+                        data-toggle="modal" data-target="#modal-info">Add</button>
+                <?php } ?>
             </td>
         </tr>
     <?php endforeach; ?>    

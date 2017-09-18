@@ -1,12 +1,18 @@
-<h1>Sale Programs</h1>
+<h2>Sale Programs: <?php echo $saleProgram->getName() ?></h2>
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        <?php include_once '_timeline.phtml';?>
+    </div>
+</div>
 
-<?php include_once '_sale-program-info.phtml';?>
 <br>
 <div class="box">
     <div class="box-header">
         <h2 clasa="box-title">Products in Sale Program</h2>
     </div>
     <div class="box-body">
+        <?php include_once '_product-in-sale.phtml';?>
     </div>
 </div>
 <div class="row">

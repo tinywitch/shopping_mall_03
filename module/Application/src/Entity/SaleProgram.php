@@ -47,6 +47,10 @@ class SaleProgram
     {
         $this->products[] = $product;        
     }
+    public function removeProductAssociation($product) 
+    {
+        $this->products->removeElement($product);
+    }
 
     /**
      * Returns products for this category.
