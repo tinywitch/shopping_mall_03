@@ -115,6 +115,22 @@ class ProductController extends AbstractActionController
                 foreach ($files as $file => $info) {
                     $httpadapter->receive($file);
                 }
+                $countOfFiles = count($_FILES['image']['name']);
+
+                //processing $data
+                if (is_string($data['image'])) {
+                    for ($i = 0; $i < $countOfFiles; $i++) {
+                        if (!empty($_FILES['image']['name'][$i])) {
+                            $data['image'] = ['image_' . $i . '_' => $data['image']];
+                           
+                        }
+                        for ($j = 1; $j < 5; $j++) {
+                            if (!empty($_FILES['imageDetail' . $j]['name'][$i])) {
+                                $data['image'] = ['imageDetail' . $j . '_' . $i . "_" => $data['image']];
+                            }
+                        }
+                    }
+                }
                 
                 $this->productManager->addNewProduct($data);             
                 
