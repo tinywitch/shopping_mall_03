@@ -11,7 +11,24 @@ use Application\Entity\Store;
  * @ORM\Table(name="product_masters")
  */
 class ProductMaster
-{
+{   
+    // constant of Size id 
+    const S = 1;
+    const M = 2;
+    const L = 3;
+    const XL = 4;
+    const XXL = 5;
+
+    // constant of Color id
+    const WHITE = 1;
+    const BLACK = 2;
+    const YELLOW = 3;
+    const RED = 4;
+    const GREEN = 5;
+    const PURPLE = 6;
+    const ORANGE = 7;
+    const BLUE = 8;
+    const GREY = 9;
     /**
      * @ORM\ManyToOne(targetEntity="\Application\Entity\Product", inversedBy="product_masters")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")

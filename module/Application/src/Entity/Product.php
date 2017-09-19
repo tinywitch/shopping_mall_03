@@ -239,6 +239,10 @@ class Product
     protected $status = 0;
 
     /**
+     * @ORM\Column(name="popular_level")
+     */
+    protected $popular_level = 0;
+    /**
      * @ORM\Column(name="rate_sum")
      */
     protected $rate_sum = 0;
@@ -343,6 +347,16 @@ class Product
     public function setRateSum($rate_sum) 
     {
         $this->rate_sum = $rate_sum;
+    }
+
+    public function getPopularLevel() 
+    {
+        return $this->popular_level;
+    }
+
+    public function setPopularLevel($popular_level) 
+    {
+        $this->popular_level = $popular_level;
     }
 
     public function getRateCount() 
