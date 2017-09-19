@@ -11,6 +11,18 @@ use Application\Entity\Product;
 class Category
 {
     /**
+     * One Category has Many Categories.
+     * @ORM\OneToMany(targetEntity="\Application\Entity\Category", mappedBy="parent")
+     */
+    private $childrens;
+
+    /**
+     * Many Categories have One Category.
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\Category", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     */
+    private $parent;
+    /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Product", mappedBy="category")
      * @ORM\JoinColumn(name="id", referencedColumnName="category_id")
      */
@@ -18,6 +30,28 @@ class Category
     public function __construct() 
     {
         $this->products = new ArrayCollection();
+        $this->childrens = new ArrayCollection();
+    }
+
+    public function getChildrens() 
+    {
+        return $this->childrens;
+    }
+
+    public function addChildrens($children) 
+    {
+        $this->childrens[] = $children;
+    }
+
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
+        $parent->addChildrens($this);
     }
 
     /**
@@ -26,7 +60,14 @@ class Category
      */
     public function getProducts() 
     {
-        return $this->products;
+        $products = $this->products;
+
+        foreach ($this->getChildrens() as $cate) {
+            $products = new ArrayCollection(
+                array_merge($products->toArray(), $cate->getProducts()->toArray())
+            );
+        }
+        return $products;
     }
       
     /**
@@ -37,6 +78,7 @@ class Category
     {
         $this->products[] = $product;
     }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -62,7 +104,7 @@ class Category
     /**
      * @ORM\Column(name="parent_id")
      */
-    protected $parent_id = 0;
+    protected $parent_id;
 
     /**
      * @ORM\Column(name="date_created")
@@ -114,11 +156,6 @@ class Category
     public function getParentId() 
     {
         return $this->parent_id;
-    }
-
-    public function setParentId($parent_id) 
-    {
-        $this->parent_id = $parent_id;
     }
 
     public function getDateCreated() 

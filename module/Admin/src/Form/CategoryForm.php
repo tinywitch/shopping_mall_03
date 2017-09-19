@@ -41,7 +41,7 @@ class CategoryForm extends Form
             'attributes' => [
                 'class' => 'form-control',
                 'id' => 'name',
-                'placeholder'   => 'Enter Category name : ',
+                'placeholder'   => 'Enter Category name : '
             ],
             'options' => [
                 'label' => 'Category Name',

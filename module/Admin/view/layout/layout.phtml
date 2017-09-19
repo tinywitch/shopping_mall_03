@@ -26,20 +26,6 @@
         ?>
 
         <!-- Scripts -->
-
-    </head>
-    <body class="hold-transition skin-blue sidebar-mini">
-        <div class="wrapper">
-            <?php include_once 'html/nav.php';?>
-            <?php include_once 'html/sidebar.php';?>
-            <div class="content-wrapper">
-                <section class="content">
-                    <?= $this->content ?>   
-                </section>
-            </div>
-
-            <?= $this->inlineScript() ?>
-        </div>
         <?= $this->headScript()
             ->prependFile($this->basePath('js/me.js'))
             ->prependFile($this->basePath('assets/select2/dist/js/select2.min.js'))
@@ -53,6 +39,19 @@
             ->prependFile($this->basePath('assets/bootstrap/dist/js/bootstrap.min.js'))                  
             ->prependFile($this->basePath('assets/jquery/dist/jquery.min.js'))   
         ?>
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <?php include_once 'html/nav.php';?>
+            <?php include_once 'html/sidebar.php';?>
+            <div class="content-wrapper">
+                <section class="content">
+                    <?= $this->content ?>   
+                </section>
+            </div>
+
+            <?= $this->inlineScript() ?>
+        </div>
     </body>
 
 </html>

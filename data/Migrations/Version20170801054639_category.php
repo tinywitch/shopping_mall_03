@@ -21,7 +21,7 @@ class Version20170801054639_category extends AbstractMigration
         $table->addColumn('name', 'text');
         $table->addColumn('alias', 'text', ['notnull' => false]);
         $table->addColumn('description', 'text', ['notnull' => false]);
-        $table->addColumn('parent_id', 'integer', ['default' => 0]);
+        $table->addColumn('parent_id', 'integer', ['notnull' => false]);
         $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);
         $table->addOption('engine', 'InnoDB');

@@ -25,11 +25,17 @@ class CategoryManager
         if($this->checkCategoryExists($data['name'])) {
             return 0;
         }
+
+        $parent = $this->entityManager->getRepository(Category::class)
+            ->findOneById($data['parent_id']);
+
         $category = new Category();
         $category->setName($data['name']);
         $category->setAlias($data['alias']);
         $category->setDescription($data['description']);
-        $category->setParentId($data['parent_id']);
+        if ($parent != null)
+            $category->setParent($parent);
+
         $currentDate = date('Y-m-d H:i:s');
         $category->setDateCreated($currentDate);       
             
@@ -89,15 +95,26 @@ class CategoryManager
         return $this->categories_for_select;
     }
 
-    public function category_parent($parent_id = 0, $str = "--")
-    {        
-         
+    public function category_parent($parent_id = 0, $str = "")
+    {                 
         foreach($this->categories as $cate){
             if($cate->getParentId() == $parent_id){
-                $this->categories_for_select[$cate->getID()] = $str.$cate->getName();
-                $this->category_parent($cate->getID(), $str."--");
+                $this->categories_for_select[$cate->getId()] = $str.$cate->getName();
+                $this->category_parent($cate->getId(), $str."--");
             }
         } 
         return $this->categories_for_select;    
     }
+
+    // public function categoriesTreeview($category){
+    //     if (count($category->getChildrens()) == 0)
+    //         $data['text'] = $category->getName();
+    //     else {
+    //         foreach ($category->getChildrens() as $c) {
+    //             $data['text'] = $category->getName();
+    //             $data['children'][] = $this->categoriesTreeview($c);
+    //         }
+    //     }
+    //     return $data;
+    // }
 }

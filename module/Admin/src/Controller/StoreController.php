@@ -144,11 +144,10 @@ class StoreController extends AbstractActionController
             $this->getResponse()->setStatusCode(404);
             return;                        
         }
-        $products = $store->getProducts();
+
         return new ViewModel([
             'products' => $products,
             'store' => $store
-            ]);
-             
+            ]);        
     }
 }

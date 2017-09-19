@@ -100,8 +100,6 @@ class ProductController extends AbstractActionController
             $data['color[]'] = $data['color'][0];
             $data['count'] = $count;
             
-            echo "<pre>";print_r($_FILES);echo "<pre>";
-            
             $form->setData($data);
             if ($form->isValid()) {
                 $data['alias'] = $this->slug($data['name']);
