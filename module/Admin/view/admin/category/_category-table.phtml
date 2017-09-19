@@ -5,6 +5,7 @@
             <th>Name</th>
             <th>Number of Product</th>
             <th>Description</th>
+            <th>Parent Category</th>
             <th>Option</th>
         </tr>
     </thead>
@@ -16,6 +17,14 @@
                 <td><?php echo $category->getName() ?></td>
                 <td><?php echo count($category->getProducts()) ?></td>
                 <td><?php echo $category->getDescription() ?></td>
+                <td>
+                    <?php if ($category->getParent() != null){ ?>
+                        <a href="<?= $this->url('categories',
+                            ['action' => 'view', 'id' => $category->getParent()->getId()]) ?>">
+                            <?php echo $category->getParent()->getName(); ?>
+                        </a>
+                    <?php } ?>
+                </td>
                 <td>
                     <a href="<?= $this->url('categories', ['action' => 'view', 'id' => $category->getId()]) ?>">
                         <i class="glyphicon glyphicon-log-in"></i>

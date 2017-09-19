@@ -22,6 +22,7 @@ class CategoryController extends AbstractActionController
      */
     private $categoryManager;
 
+
     /**
      * Constructor is used for injecting dependencies into the controller.
      */
@@ -34,9 +35,12 @@ class CategoryController extends AbstractActionController
     public function indexAction(){
     	$categories = $this->entityManager->getRepository(Category::class)->findAll();
         // Render the view template
-
+        
+        $category = $this->entityManager->getRepository(Category::class)
+            ->findOneById(1);
+        
         return new ViewModel([
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 

@@ -5,7 +5,7 @@
             <th>Name</th>
             <th>Image</th>
             <th>Price</th>
-            <th>Store</th>
+            <th>Category</th>
             <th>Option</th>
         </tr>
     </thead>
@@ -19,7 +19,12 @@
             </td>
             <td><?php echo $product->getPrice(); ?></td>
             <td>
-
+                <?php if ($product->getCategory() != null){ ?>
+                    <a href="<?= $this->url('categories',
+                        ['action' => 'view', 'id' => $product->getCategory()->getId()]) ?>">
+                        <?php echo $product->getCategory()->getName(); ?>
+                    </a>
+                <?php } ?>
             </td>
             <td>
                 <a href="<?= $this->url('products', ['action' => 'view', 'id' => $product->getId()]) ?>">
