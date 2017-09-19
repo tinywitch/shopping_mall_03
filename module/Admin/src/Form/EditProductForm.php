@@ -5,6 +5,7 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\Validator\Regex;
 use Zend\Form\Element;
+use Application\Entity\ProductMaster;
 use Admin\Validator\ProductExistsValidator;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Hydrator\ClassMethods as ClassMethodsHydrator;
@@ -27,30 +28,22 @@ class EditProductForm extends Form {
 
     private $categories;
     private $color = [
-        '1' => 'White',
-        '2' => 'Black',
-        '3' => 'Blue',
-        '4' => 'Yellow',
-        '5' => 'Red',
-        '6' => 'Green',
-        '7' => 'Purple',
-        '8' => 'Orange',
-        '9' => 'Light blue',
-        '10' => 'Sky blue',
-        '11' => 'Grey',
+        ProductMaster::WHITE => 'White',
+        ProductMaster::BLACK => 'Black',
+        ProductMaster::YELLOW => 'Yellow',
+        ProductMaster::RED => 'Red',
+        ProductMaster::GREEN => 'Green',
+        ProductMaster::PURPLE => 'Purple',
+        ProductMaster::ORANGE => 'Orange',
+        ProductMaster::BLUE => 'Blue',
+        ProductMaster::GREY => 'Grey',
         ];
     private $size = [
-        '21' => '21',
-        '22' => '22',
-        '23' => '23',
-        '24' => '24',
-        '25' => '25',
-        '26' => '26',
-        '27' => '27',
-        '28' => '28',
-        '29' => '29',
-        '30' => '30',
-        '31' => '31',
+        ProductMaster::S => 'S',
+        ProductMaster::M => 'M',
+        ProductMaster::L => 'L',
+        ProductMaster::XL => 'XL',
+        ProductMaster::XXL => 'XXL',
         ];    
     public function __construct(
                                 $countOfImages = 1,

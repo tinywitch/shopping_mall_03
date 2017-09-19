@@ -391,4 +391,12 @@ class ProductManager
         }
     }
 
+    public function convertSizeView($sizes) {     
+        $arr =['S','M','L','XL','XXL'];
+        for($i = 0; $i < count($sizes); $i++) {
+            $sizes[$i] = $arr[$sizes[$i] - 1];
+        }
+        return $sizes;
+    }
+
 }

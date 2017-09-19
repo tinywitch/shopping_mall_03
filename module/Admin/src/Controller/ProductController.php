@@ -76,7 +76,10 @@ class ProductController extends AbstractActionController
         $product = $this->entityManager->getRepository(Product::class)
             ->findOneById($productId);
         $sizes = $this->productManager->findSizeByProductId($productId);
+        $sizes = $this->productManager->convertSizeView($sizes);
+        
         $images = $this->productManager->findAllColorByProductId($productId);
+
         if ($product == null) {
             $this->getResponse()->setStatusCode(404);
             return;                        
