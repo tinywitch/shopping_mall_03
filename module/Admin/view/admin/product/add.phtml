@@ -40,95 +40,33 @@
                     </div>
 
                     <div class="form-group">
-                        <?= $this->formLabel($form->get('size')); ?>
-                        <?= $this->formElement($form->get('size')); ?>
-                        <?= $this->formElementErrors($form->get('size')); ?>                  
-                    </div>
-
-                    <div class="form-group">
                         <?= $this->formLabel($form->get('keywords')); ?>
                         <?= $this->formElement($form->get('keywords')); ?>
                         <?= $this->formElementErrors($form->get('keywords')); ?>                  
                         <p class="help-block">Separate tags with comma.</p>
                     </div>
-                </div>
-                <!-- end left row -->
-                
-
-                <!-- right row -->
-                <div class="col-md-7 col-xs-12 col-sm-7 ">
-                    
-
-                    <div class="well" id="field-color">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <?= $this->formLabel($form->get('image[]')); ?>
-                                    <?= $this->formFile($form->get('image[]')); ?>
-                                    <?= $this->formElementErrors($form->get('image[]')); ?>         
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="upload-image">
-                                        <img class="width-custom">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <?= $this->formLabel($form->get('color[]')); ?>
-                                    <?= $this->formElement($form->get('color[]')); ?>
-                                    <?= $this->formElementErrors($form->get('color[]')); ?>
-                                </div>
-
-                                
-                            </div>
-                            <div class="col-md-1"></div>
-                            <div class="col-md-5">
-                                <div class="form-group ">
-                                    <?= $this->formLabel($form->get('imageDetail1[]')); ?>
-                                    <?= $this->formFile($form->get('imageDetail1[]')); ?>
-                                    <?= $this->formElementErrors($form->get('imageDetail1[]')); ?>         
-                                </div>
-                                <div class="form-group ">
-                                    <?= $this->formLabel($form->get('imageDetail2[]')); ?>
-                                    <?= $this->formFile($form->get('imageDetail2[]')); ?>
-                                    <?= $this->formElementErrors($form->get('imageDetail2[]')); ?>         
-                                </div>
-                                <div class="form-group ">
-                                    <?= $this->formLabel($form->get('imageDetail3[]')); ?>
-                                    <?= $this->formFile($form->get('imageDetail3[]')); ?>
-                                    <?= $this->formElementErrors($form->get('imageDetail3[]')); ?>         
-                                </div>
-                                <div class="form-group ">
-                                    <?= $this->formLabel($form->get('imageDetail4[]')); ?>
-                                    <?= $this->formFile($form->get('imageDetail4[]')); ?>
-                                    <?= $this->formElementErrors($form->get('imageDetail4[]')); ?>         
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    
-
-                    <div class="form-group">
-                        <span class="btn btn-primary" id="add-new-field">
-                            Add new Color
-                        </span>
-                    </div>
-
-                    
-                    
 
                     <div class="form-group">
                         <?= $this->formElement($form->get('submit')); ?>
                     </div>
                 </div>
-                <!-- end right row -->
+                <!-- end left row -->
+                <div class="col-md-7 col-xs-12 col-sm-7 ">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <label for="input-b3">Select File</label>
+                            <input id="input-b3" name="image[]" type="file" class="file" 
+                                data-show-upload="false"
+                                data-show-caption="true"
+                                data-theme="explorer"
+                                data-allowed-file-extensions='["jpeg", "jpg"]'>
+                        </div>
+                    </div>
+                </div>
+
 
                 <?= $this->form()->closeTag(); ?>   
             </div>    
         </div>
     </div>
 </div>
-
