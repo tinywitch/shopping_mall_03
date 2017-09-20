@@ -26,6 +26,7 @@
     "handlebars": "^4.0.10",
     "vue": "^2.4.2",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
-    "select2": "^4.0.3"
+    "select2": "^4.0.3",
+    "bootstrap-fileinput": "^4.4.3"
   }
 }

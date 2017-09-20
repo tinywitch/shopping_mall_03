@@ -25,24 +25,7 @@ class ProductForm extends Form {
     private $product;
 
     private $categories;
-    private $color = [
-        ProductMaster::WHITE => 'White',
-        ProductMaster::BLACK => 'Black',
-        ProductMaster::YELLOW => 'Yellow',
-        ProductMaster::RED => 'Red',
-        ProductMaster::GREEN => 'Green',
-        ProductMaster::PURPLE => 'Purple',
-        ProductMaster::ORANGE => 'Orange',
-        ProductMaster::BLUE => 'Blue',
-        ProductMaster::GREY => 'Grey',
-        ];
-    private $size = [
-        ProductMaster::S => 'S',
-        ProductMaster::M => 'M',
-        ProductMaster::L => 'L',
-        ProductMaster::XL => 'XL',
-        ProductMaster::XXL => 'XXL',
-        ]; 
+
     public function __construct(
                                 $scenario,
                                 $categories,
@@ -144,7 +127,7 @@ class ProductForm extends Form {
 
         // File picture
         $this->add([
-            'name' => 'image[]',
+            'name' => 'image',
             'type' => 'File',
             'attributes' => [
                 'class' => 'file form-control width-custom',
@@ -154,97 +137,6 @@ class ProductForm extends Form {
                 'label' => 'Picture',
                 ],
             ]);
-
-        // File image detail 1
-        $this->add([
-            'name' => 'imageDetail1[]',
-            'type' => 'File',
-            'attributes' => [
-                'class' => 'file form-control width-150',
-                ],
-            'options' => [
-                'label' => 'Image details',
-                ],
-            ]);
-
-        // File image detail 2
-        $this->add([
-            'name' => 'imageDetail2[]',
-            'type' => 'File',
-            'attributes' => [
-                'class' => 'file form-control width-150',
-                ],
-            'options' => [
-                'label' => 'Image detail 2',
-                ],
-            ]);
-
-        // File image detail 3
-        $this->add([
-            'name' => 'imageDetail3[]',
-            'type' => 'File',
-            'attributes' => [
-                'class' => 'file form-control width-150',
-                ],
-            'options' => [
-                'label' => 'Image detail 3',
-                ],
-            ]);
-
-        // File image detail 4
-        $this->add([
-            'name' => 'imageDetail4[]',
-            'type' => 'File',
-            'attributes' => [
-                'class' => 'file form-control width-150',
-
-                ],
-            'options' => [
-                'label' => 'Image detail 4',
-                ],
-            ]);
-        
-
-        //Color
-        $this->add([
-            'name' => 'color[]',
-            'type' => 'Select',
-            'attributes' => [
-                'class' => 'form-control width-custom',
-                
-                ],
-            'options' => [
-                'value_options' => $this->color,
-                'label' => 'Color :',
-                ],    
-            ]);
- 
-        //Size
-        // $this->add([
-        //     'name' => 'size',
-        //     'type' => Element\Checkbox::class,
-        //     'attributes' => [
-        //         'class' => 'form-control',
-        //         'id' => 'size',
-        //         ],
-        //     'options' => [
-        //         'label' => 'Size :',
-        //         'value_options' => [
-        //             '0' => 'Apple',
-        //             '1' => 'Orange',
-        //             '2' => 'Lemon',
-        //             ],
-        //         ],    
-        //     ]);
-        $this->add([
-            'type' => 'Zend\Form\Element\MultiCheckbox',
-            'name' => 'size',
-            'options' => [
-                'label' => 'Size : ',
-                'value_options' => $this->size,
-            ]
-        ]);
-        
 
         //Keyword
         $this->add([
@@ -275,17 +167,7 @@ class ProductForm extends Form {
                 'attributes' => [
                     'class' => 'form-control width-custom',
                     ],
-                ]);
-            // $this->add([
-            //     'type' => 'Zend\Form\Element\MultiCheckbox',
-            //     'name' => 'size',
-            //     'options' => [
-            //         'label' => 'Size : ',
-            //         'value_options' => $this->size,
-            //     ]
-            //     ]);
-
-            
+                ]);   
         }
 
         //Submit button

@@ -4,8 +4,9 @@
             <th style="width: 15px">#</th>
             <th>Name</th>
             <th>Image</th>
-            <th>Intro</th>
             <th>Price</th>
+            <th>Colors</th>
+            <th>Current Sale</th>
             <th>Category</th>
             <th>Option</th>
         </tr>
@@ -15,12 +16,28 @@
         
         <tr>
             <td><?php echo ++$i ?></td>
-            <td><?php echo $product->getName(); ?></td>
+            <td>                    
+                <a href="<?= $this->url('products',
+                    ['action' => 'view', 'id' => $product->getId()]) ?>">
+                    <?php echo $product->getName(); ?>
+                </a>
+            </td>
             <td>
                 <img src="<?php echo $this->basePath($product->getImage()) ?>" class="image_product">
             </td>
-            <td><?php echo $product->getIntro(); ?></td>
             <td><?php echo $product->getPrice(); ?></td>
+            <td>
+                <?php foreach ($product->getColors() as $c) { ?>
+                        <i class="set-size-icon pull-right color-<?php echo $c ?>" >
+                            <p class="hidden"><?php echo $list_color[$c] ?></p>
+                        </i>
+                <?php } ?>
+            </td>
+            <td>
+                <small class="label pull-right bg-red">
+                    <?php echo $product->getCurrentSale() ?>%
+                </small>
+            </td>
             <td>
                 <?php if ($product->getCategory() != null){ ?>
                     <a href="<?= $this->url('categories',

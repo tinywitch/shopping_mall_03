@@ -142,7 +142,7 @@ $(function () {
                             'https://static.zara.net/photos///2017/I/0/1/p/7252/223/800/2/w/400/7252223800_2_1_1.jpg',
                         ],
                     },
-                    intro: 'Jacquard sweatshirt with round neckline, long sleeves and front embroidery with long threads.',
+                    intro: 'Jacquard sweatshir',
                 };
 
                 this.product = product_data;

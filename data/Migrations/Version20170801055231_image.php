@@ -20,7 +20,7 @@ class Version20170801055231_image extends AbstractMigration
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('image', 'text');
         $table->addColumn('status', 'integer', ['default' => 1]);
-        $table->addColumn('parent_id', 'integer', ['default' => 0]);
+        $table->addColumn('type', 'integer');
         $table->addColumn('product_color_image_id', 'integer');
         $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);

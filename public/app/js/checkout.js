@@ -7,14 +7,9 @@ $(function () {
     let config = {
         el: '#checkout',
         data: {
-            // states: Object.keys(address),
-            // districts: [],
-
             login: false,
 
             is_phone_number: true,
-            // selected_state: '',
-            // selected_dist: '',
 
             ship_add: {},
 
@@ -26,7 +21,7 @@ $(function () {
         },
         mounted: function () {
             this.fetchShipAddress();
-            this.selected_state = this.ship_add.state;
+            this.selected_state = this.ship_add.province;
             this.selectState();
             this.selected_dist = this.ship_add.dist;
         },
@@ -36,7 +31,7 @@ $(function () {
                     full_name: 'Nguyen Phuc Long',
                     phone_number: '012345678',
                     email: 'admin@gmail.com',
-                    state: 'Ha Noi',
+                    province: 'Ha Noi',
                     dist: 'Hai Ba Trung',
                     address: 'No1 - Dai Co Viet',
                 };
@@ -47,6 +42,9 @@ $(function () {
             //     this.districts = address[this.selected_state];
             // },
             checkout: function () {
+                this.ship_add.province = this.selected_state;
+                this.ship_add.dist = this.selected_dist;
+
                 let data = {
                     ship_add: this.ship_add,
                     sub_total: this.sub_total,
@@ -54,11 +52,46 @@ $(function () {
                 };
                 console.log(data);
 
-                // post data and receive order_id
+                if (!this.validateData(data.ship_add)) {
+                    Snackbar.pushMessage('You must fill all information.', 'warning');
+                    return;
+                }
 
-                // show success page
-                this.success = true;
-                this.order_id = '123456';
+                // post data and receive order_id
+                axios.post('/cart/checkout', data)
+                    .then(res => {
+                        console.log(res.data);
+                        // show success page
+                        if (res.data.status === 'ok') {
+                            this.success = true;
+                            this.order_id = res.data.order_id;
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            },
+            validateData: function (data) {
+                let valid = {
+                    full_name: 'required',
+                    phone_number: 'required',
+                    email: 'required',
+                    province: 'required',
+                    dist: 'required',
+                    address: 'required',
+                };
+
+                let result = true;
+
+                Object.keys(valid).forEach(key => {
+                    if (valid[key] === 'required') {
+                        if (!data[key] || data[key] === '') {
+                            result = false;
+                        }
+                    }
+                });
+
+                return result;
             },
         },
     };

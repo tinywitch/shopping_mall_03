@@ -59,6 +59,14 @@ class SaleProgramManager
         $this->entityManager->flush();
     }
 
+    public function setStatusDependOnTime($saleProgram)
+    {
+        $saleProgram->setStatus($this->get_status_depend_on_time(
+            $saleProgram->getDateStart(), $saleProgram->getDateEnd()));
+
+        $this->entityManager->flush();
+    }
+
     public function addProductToSaleProgram($saleProgram, $data)
     {
         for ($i = 0; $i < count($data['products']['id']); $i++){ 
@@ -98,6 +106,42 @@ class SaleProgramManager
             $sale_array[$s->getProduct()->getId()] = $s->getSale();
         }
         return $sale_array;
+    }
+
+    public function getSaleProgramNeedActive()
+    {
+        $currentDate = date('d-m-Y');
+        $salePrograms = $this->entityManager->getRepository(SaleProgram::class)
+            ->findBy(['status' => SaleProgram::PENDING]);
+        $list = [];
+        foreach ($salePrograms as $sP) {
+            $date_start = $sP->getDateStart();
+            $date_start = date('d-m-Y', strtotime($date_start));
+            $date_end = $sP->getDateEnd();
+            $date_end = date('d-m-Y', strtotime($date_end));
+            if ($date_start <= $currentDate && $date_end >= $currentDate) {
+                array_push($list, $sP);
+            }
+        }
+
+        return $list;
+    }
+
+    public function getSaleProgramNeedDone()
+    {
+        $currentDate = date('d-m-Y');
+        $salePrograms = $this->entityManager->getRepository(SaleProgram::class)
+            ->findBy(['status' => SaleProgram::ACTIVE]);
+        $list = [];
+        foreach ($salePrograms as $sP) {
+            $date_end = $sP->getDateEnd();
+            $date_end = date('d-m-Y', strtotime($date_end));
+            if ($date_end < $currentDate) {
+                array_push($list, $sP);
+            }
+        }
+
+        return $list;
     }
 
     private function get_status_depend_on_time($date_start, $date_end)

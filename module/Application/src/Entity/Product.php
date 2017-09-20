@@ -9,6 +9,7 @@ use Application\Entity\ProductColorImage;
 use Application\Entity\Review;
 use Application\Entity\ProductMaster;
 use Application\Entity\Sale;
+
 /**
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\Application\Repository\ProductRepository")
@@ -97,7 +98,7 @@ class Product
     {
         $this->sales[] = $sale;
     }
-    
+
     /**
      * Returns comments for this product.
      * @return array
@@ -379,15 +380,61 @@ class Product
     {
         $this->date_created = $date_created;
     }
+
     public function getCurrentSale()
     {
         $sales = $this->getSales();
 
         $arr = [0];
         foreach ($sales as $sale) {
+            if ($sale->getSaleProgram()->getStatus() == 0)
             $arr[] = $sale->getSale();
         }
 
         return max($arr);
+    }
+
+    public function getCurrentPrice()
+    {
+        return (int)($this->getPrice()*(100-$this->getCurrentSale())/100);
+    }
+
+    public function getSizeAndImageEachColors()
+    {
+        $product_masters = $this->getProductMasters();
+        $product_color_images = $this->getProductColorImages();
+
+        // get Size each Color
+        foreach ($product_masters as $pm){
+            if ($size_and_images[$pm->getColorId()] == null) {
+                $size_and_images[$pm->getColorId()] = ['size'=>[], 'image' => ['0' => null,'1' => []]];
+            } else {
+                array_push($size_and_images[$pm->getColorId()]['size'], $pm->getSizeId());
+            }
+        };
+
+        // get Image each Color
+        foreach ($product_color_images as $pci) {
+            foreach ($pci->getImages() as $image) {
+                if ($image->getType() == IMAGE::MAIN) {
+                    $size_and_images[$pci->getColorId()]['image'][0] = $image->getImage();
+                } else {
+                    array_push($size_and_images[$pci->getColorId()]['image'][1], $image->getImage());
+                }
+            }       
+        }
+
+        return $size_and_images;
+    }
+
+    public function getColors()
+    {
+        $color = [];
+        $product_color_images = $this->getProductColorImages();
+        foreach ($product_color_images as $pci) {
+            array_push($color, $pci->getColorId());
+        }
+
+        return $color;
     }
 }

@@ -4,7 +4,7 @@
             <?php foreach ($products as $product) { ?>
                 <li class="col-sm-4">
                     <div class="card clearfix">
-                        <?php if ($product->getSale() > 0) { ?>
+                        <?php if ($product->getCurrentSale() > 0) { ?>
                             <div class="badge badge-sale">Sale</div>
                         <?php } ?>
                         <img src="<?php echo $this->basePath($product->getImage()) ?>"
@@ -21,7 +21,7 @@
                                         <?php echo $product->getCategory()->getName(); ?>
                                     </a>
                                 </div>
-                                <div class="card-price pull-right">$<?php echo $product->getSalePrice(); ?></div>
+                                <div class="card-price pull-right">$<?php echo $product->getCurrentPrice(); ?></div>
                             </div>
                         </div>
                     </div>

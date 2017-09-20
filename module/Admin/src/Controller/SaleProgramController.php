@@ -177,4 +177,19 @@ class SaleProgramController extends AbstractActionController
             $this->redirect()->toRoute('sale_programs', ['action'=>'index']);
         }
     }
+
+    public function setStatusAction()
+    {
+        $saleProgramId = $this->params()->fromRoute('id', -1);
+        $saleProgram = $this->entityManager->getRepository(SaleProgram::class)
+            ->findOneById($saleProgramId);        
+        if ($saleProgram == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;                        
+        }
+
+        $this->saleProgramManager->setStatusDependOnTime($saleProgram);
+
+        return $this->redirect()->toRoute('sale_programs', ['action'=>'view', 'id' => $saleProgram->getId()]);
+    }
 }
