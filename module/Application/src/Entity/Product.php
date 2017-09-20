@@ -15,7 +15,8 @@ use Application\Entity\Sale;
  * @ORM\Table(name="products")
  */
 class Product
-{
+{   
+    const STATUS_PUBLISHED = 1;
      /**
      * @ORM\OneToMany(targetEntity="\Application\Entity\Comment", mappedBy="product")
      * @ORM\JoinColumn(name="id", referencedColumnName="product_id")
@@ -378,5 +379,15 @@ class Product
     {
         $this->date_created = $date_created;
     }
+    public function getCurrentSale()
+    {
+        $sales = $this->getSales();
 
+        $arr = [0];
+        foreach ($sales as $sale) {
+            $arr[] = $sale->getSale();
+        }
+
+        return max($arr);
+    }
 }

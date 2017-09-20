@@ -41,150 +41,66 @@
         <div>
             <h2 class="home-content-title recently_viewed">Trending on Infini Shop</h2>
             <div class="clearfix">
+                <?php foreach ($bestSellProducts as $bestSellProduct) :?>
                 <div class="col-sm-3">
                     <div class="card">
-                        <img class="card-img-top img-responsive" src="app/img/04pro1.jpg" alt="Card image cap">
+                        <img class="card-img-top img-responsive" src="<?= $this->basePath($bestSellProduct->getImage()) ?>" alt="Card image cap">
                         <div class="card-block sm card-block-new">
-                            <p class="card-title">Bang and Olufsen BEO Labs</p>
+                            <p class="card-title"><?= $bestSellProduct->getName()?></p>
                             <div class="clearfix">
                                 <span class="card-shop-name pull-left">B & O</span>
-                                <span class="card-price pull-right">US$700</span>
+                                <span class="card-price pull-right">US$<?= $bestSellProduct->getPrice()?></span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-3">
-                    <div class="card">
-                        <img class="card-img-top img-responsive" src="app/img/04pro2.jpg" alt="Card image cap">
-                        <div class="card-block sm card-block-new">
-                            <p class="card-title">NativeBlue Pottery</p>
-                            <div class="clearfix">
-                                <span class="card-shop-name pull-left">Exoctic America</span>
-                                <span class="card-price pull-right">US$200</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="card">
-                        <img class="card-img-top img-responsive" src="app/img/04pro3.jpg" alt="Card image cap">
-                        <div class="card-block sm card-block-new">
-                            <p class="card-title">Faber Castell Box set</p>
-                            <div class="clearfix">
-                                <span class="card-shop-name pull-left">Faber Castell</span>
-                                <span class="card-price pull-right">US$450</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="card">
-                        <img class="card-img-top img-responsive" src="app/img/04pro4.jpg" alt="Card image cap">
-                        <div class="card-block sm card-block-new">
-                            <p class="card-title">Tan Leather Handbag for Women</p>
-                            <div class="clearfix">
-                                <span class="card-shop-name pull-left">Hide Sign</span>
-                                <span class="card-price pull-right">US$200</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
 
         <div>
-            <h2 class="home-content-title">Shop by category</h2>
+            <h2 class="home-content-title">Sale</h2>
             <div class="clearfix">
+                <?php foreach ($bestSaleProducts as $product) : ?>
                 <div class="col-sm-2 sm-2">
-                    <div class="card">
+                    <!-- <div class="card">
                         <img class="card-img-top img-responsive" src="app/img/05pro1.jpg" alt="Card image cap">
                         <div class="card-block sm card-block-sc">
                             <p class="card-title"><a href="categorylist.html">APPLE ACCESSORIES</a></p>
-                            <!--<div class="clearfix">
+                                <div class="clearfix">
                                 <span class="card-shop-name pull-left">plains shopwood</span>
                                 <span class="card-price pull-right">US$200</span>
-                            </div>-->
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-sm-2 sm-2">
+                    </div> --> 
+                    <div class="col-sm-2 sm-2">
                     <div class="card">
-                        <img class="card-img-top img-responsive" src="app/img/05pro2.jpg" alt="Card image cap">
-                        <div class="card-block sm card-block-sc">
-                            <p class="card-title"><a href="categorylist.html">Women Care Essentials</a></p>
+                        <img class="card-img-top img-responsive" src="<?= $this->basePath($product->getImage()) ?>" alt="Card image cap">
+                        <div class="card-block sm card-block-new">
+                            <p class="card-title"><?= $product->getName(); ?></p>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-2 sm-2">
-                    <div class="card">
-                        <img class="card-img-top img-responsive" src="app/img/05pro3.jpg" alt="Card image cap">
-                        <div class="card-block sm card-block-sc">
-                            <p class="card-title"><a href="categorylist.html">SHOES & More</a></p>
-                        </div>
-                    </div>
                 </div>
-                <div class="col-sm-2 sm-2">
-                    <div class="card">
-                        <img class="card-img-top img-responsive" src="app/img/05pro4.jpg" alt="Card image cap">
-                        <div class="card-block sm card-block-sc">
-                            <p class="card-title"><a href="categorylist.html">Breakfast Mix</a></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2 sm-2">
-                    <div class="card">
-                        <img class="card-img-top img-responsive" src="app/img/05pro5.jpg" alt="Card image cap">
-                        <div class="card-block sm card-block-sc">
-                            <p class="card-title"><a href="categorylist.html">Art & Collectibles</a></p>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
 
         <div>
             <h2 class="home-content-title">New on Infini Shop</h2>
             <div class="clearfix">
+            <?php foreach ($newProducts as $product) : ?>
+               
+            
                 <div class="col-sm-2 sm-2">
                     <div class="card">
-                        <img class="card-img-top img-responsive" src="app/img/06pro1.jpg" alt="Card image cap">
+                        <img class="card-img-top img-responsive" src="<?= $this->basePath($product->getImage()) ?>" alt="Card image cap">
                         <div class="card-block sm card-block-new">
-                            <p class="card-title">Jane Loveseat White sofa</p>
+                            <p class="card-title"><?= $product->getName(); ?></p>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-2 sm-2">
-                    <div class="card">
-                        <img class="card-img-top img-responsive" src="app/img/06pro2.jpg" alt="Card image cap">
-                        <div class="card-block sm card-block-new">
-                            <p class="card-title">TINTIN in Black Island comic</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2 sm-2">
-                    <div class="card">
-                        <img class="card-img-top img-responsive" src="app/img/06pro3.jpg" alt="Card image cap">
-                        <div class="card-block sm card-block-new">
-                            <p class="card-title">Me and Earl and the Dying Girl DVD</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2 sm-2">
-                    <div class="card">
-                        <img class="card-img-top img-responsive" src="app/img/06pro4.jpg" alt="Card image cap">
-                        <div class="card-block sm card-block-new">
-                            <p class="card-title">Billy Joel Platinum collection CD set </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2 sm-2">
-                    <div class="card">
-                        <img class="card-img-top img-responsive" src="app/img/06pro5.gif" alt="Card image cap">
-                        <div class="card-block sm card-block-new">
-                            <p class="card-title">Dumbledore Art with Frame</p>
-                        </div>
-                    </div>
-                </div>
+            <?php endforeach; ?>   
 
             </div>
         </div>

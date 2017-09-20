@@ -2,6 +2,7 @@
 namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\ArrayCollection;
 use Application\Entity\Product;
 use Application\Entity\Store;
@@ -71,6 +72,21 @@ class ProductMaster
     public function setStore($store) 
     {
         $this->stores[] = $store;
+    }
+    /**
+     * @ORM\OneToMany(targetEntity="\Application\Entity\OrderItem", mappedBy="product_master")
+     * @ORM\JoinColumn(name="id", referencedColumnName="product_master_id")
+     */
+    protected $order_items;
+
+    public function getOrderItems() 
+    { 
+        return $this->order_items;
+    }
+      
+    public function setOrderItems($order_items) 
+    {
+        $this->order_items[] = $order_items;
     }   
     /**
      * @ORM\Id
@@ -133,6 +149,17 @@ class ProductMaster
     public function setSizeId($size_id) 
     {
         $this->size_id = $size_id;
+    }
+
+    public function findOrderByMonth() {
+        $currentMonth = mktime(0, 0, 0, date("m"), 1, date("Y"));
+        //$string = (string)date("Y") . '-' . (string)date("m") . '-' . '00';
+        $data = date("Y-m-d h:i:sa", $currentMonth);
+    
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->gt("date_created", $data))
+            ->andWhere(Criteria::expr()->eq("status", OrderItem::STATUS_COMPLETED));
+        return $this->order_items->matching($criteria);
     }
 
 }

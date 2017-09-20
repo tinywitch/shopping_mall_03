@@ -2,6 +2,7 @@
 namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Criteria;
 use Application\Entity\ProductMaster;
 use Application\Entity\Order;
 /**
@@ -9,7 +10,10 @@ use Application\Entity\Order;
  * @ORM\Table(name="order_items")
  */
 class OrderItem
-{
+{   
+    const STATUS_PENDING = 1; //Pending for admin accept ship
+    const STATUS_SHIPPING = 2; // start shipping
+    const STATUS_COMPLETED = 3; // finish
     /**
      * @ORM\ManyToOne(targetEntity="\Application\Entity\ProductMaster")
      * @ORM\JoinColumn(name="product_master_id", referencedColumnName="id")
@@ -133,4 +137,5 @@ class OrderItem
     {
         $this->cost = $cost;
     }
+    
 }
