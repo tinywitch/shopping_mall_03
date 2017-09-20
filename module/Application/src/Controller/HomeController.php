@@ -33,12 +33,21 @@ class HomeController extends AbstractActionController
 
     public function indexAction()
     {
-        $newProducts = [];
-        $saleProducts = [];
-        $view = new ViewModel(['newProducts' => $newProducts,
-            'saleProducts' => $saleProducts
+        $newProducts = $this->entityManager->getRepository(Product::class)->findBy(['status'=>Product::STATUS_PUBLISHED], ['date_created'=>'DESC'], 5);
+
+        $bestSell = $this->productManager->getBestSellsInCurrentMonth(4);
+
+        $bestSellProducts = $this->entityManager->getRepository(Product::class)->findBy(['id' => $bestSell]);
+        $bestSales = array_keys($this->productManager->getBestSaleProduct(5));
+        $bestSaleProducts = $this->entityManager->getRepository(Product::class)->findBy(['id' => $bestSales]);
+        //var_dump($bestSaleProducts);die();
+        $view = new ViewModel([
+            'newProducts' => $newProducts,
+            'bestSellProducts' => $bestSellProducts,
+            'bestSaleProducts' => $bestSaleProducts
         ]);
         $this->layout('application/layout');
+
         return $view;
     }
 

@@ -1,8 +1,10 @@
+
 <!-- Collect the nav links, forms, and other content for toggling -->
 <div class="collapse navbar-collapse bgwhite" id="navbar-menu">
     <ul class="nav navbar-nav megamenu" data-in="fadeInDown" data-out="fadeOutUp">
         <?php foreach ($mainCategories as $mainCategory) : ?>
             <?php $mainCategoryId = $mainCategory->getId(); ?>
+
             <li class="dropdown megamenu-fw">
                 <a href="/category/view/<?php echo $mainCategoryId ?>"
                    class="dropdown-toggle heading_anchor"
@@ -39,7 +41,9 @@
                             <div class="col-md-9 sub_menu" id="menu<?php echo $mainCategoryId ?>">
 
                             </div>
+
                             <?php foreach ($arrCateTree[$mainCategoryId] as $sub) : ?>
+                                
                                 <div class="col-md-9 sub_menu"
                                      id="menu<?php echo $mainCategoryId . '' . $sub->getId(); ?>">
                                     <div class="row">
@@ -47,12 +51,13 @@
                                             <div class="content">
 <!--                                                Sub menu level 3-->
                                                 <ul class="menu-col">
+
+                                                    <?php foreach($sub->getChildrens() as $children) : ?>
                                                     <li>
-                                                        <a href="#"><b>Placeholder <?php echo $sub->getName(); ?></b></a>
+                                                        <a href="/category/view/<?php echo $children->getId(); ?>"><b>Placeholder <?php echo $children->getName(); ?></b></a>
                                                     </li>
-                                                    <li><a href="#">Placeholder <?php echo $sub->getName(); ?></a></li>
-                                                    <li><a href="#">Placeholder <?php echo $sub->getName(); ?></a></li>
-                                                    <li><a href="#">Placeholder <?php echo $sub->getName(); ?></a></li>
+                                                    <?php endforeach; ?>
+                                                    
                                                 </ul>
                                             </div>
                                         </div><!-- end col-4 -->
