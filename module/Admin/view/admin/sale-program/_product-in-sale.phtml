@@ -3,6 +3,7 @@
         <tr>
             <th>Name</th>
             <th>Image</th>
+            <th>Color</th>
             <th>Category</th>
             <th>Sale</th>
             <th style="width: 12px">Option</th>
@@ -14,6 +15,14 @@
             <td id="name-<?php echo $product->getID() ?>"><?php echo $product->getName(); ?></td>
             <td>
                 <img src="<?php echo $this->basePath($product->getImage()) ?>" class="image_product">
+            </td>
+            <td>
+                <?php foreach ($product->getColors() as $c) { ?>
+                        <i class="set-size-icon pull-right color-<?php echo $c ?>" >
+                            <p class="hidden"><?php echo $list_color[$c] ?></p>
+                        </i>
+                <?php } ?>
+            </td>
             </td>
             <td>
                 <?php if ($product->getCategory() != null){ ?>
