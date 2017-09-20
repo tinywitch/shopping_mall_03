@@ -390,4 +390,9 @@ class Product
 
         return max($arr);
     }
+    public function getCurrentPrice()
+    {
+        return (int)($this->getPrice()*(100-$this->getCurrentSale())/100);
+    }
+
 }
