@@ -79,6 +79,18 @@ class Order
         $this->address = $address;
     }
     
+    public function getFullAddress()
+    {
+        if ($this->getAddress() != null) {
+            $a = $this->getAddress()->getAddress();
+            $d = $this->getAddress()->getDistrict()->getName();
+            $p = $this->getAddress()->getDistrict()->getProvince()->getName();
+
+            $format = '%s, %s District %s Province';
+            return sprintf($format, $a, $d, $p);
+        } else return null;
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

@@ -51,6 +51,12 @@ $(function(){
       "lengthMenu": [[3, 5, 10, 25, -1], [3, 5, 10, 25, "All"]]
     } );
 });
+
+$(function(){
+    $('#example-2').DataTable( {
+      "lengthMenu": [[3, 5, 10, 25, -1], [3, 5, 10, 25, "All"]]
+    } );
+});
 var i = 0;
 function add_new_field() {
     var html = '<br><hr /><div class="row"><div class="col-md-6"><div class="form-group"><label for="image[]">Image</label><input type="file" name="image[]" class="file form-control width-custom" id="image[]"></div><div class="form-group"><label for="color[]">Color :</label>                            <select name="color[]" class="form-control width-custom" id="color"><option value="1">White</option><option value="2">Black</option><option value="3">Blue</option><option value="4">Yellow</option><option value="5">Red</option><option value="6">Green</option><option value="7">Purple</option><option value="8">Orange</option><option value="9">Light blue</option><option value="10">Sky blue</option><option value="11">Grey</option></select>'

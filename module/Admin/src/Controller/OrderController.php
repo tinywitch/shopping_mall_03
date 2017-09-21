@@ -48,9 +48,21 @@ class OrderController extends AbstractActionController
             $this->getResponse()->setStatusCode(404);                      
         }
         $order_items = $order->getOrderItems();
+        $items = [];
+        foreach ($order_items as $o_i) {
+            $pM = $o_i->getProductMaster();
+            $item['product_name'] = $pM->getProduct()->getName();
+            $item['product_image'] = $pM->getProduct()->getImage();
+            $item['product_id'] = $pM->getProduct()->getId();
+            $item['color'] = $pM->getColorInWord();
+            $item['size'] = $pM->getSizeInWord();
+            $item['quantity'] = $o_i->getQuantity();
+            $item['cost'] = $o_i->getCost();
+            array_push($items, $item);
+        }
 
         return new ViewModel([
-            'order_items' => $order_items,
+            'items' => $items,
             'order' => $order
             ]);
     }

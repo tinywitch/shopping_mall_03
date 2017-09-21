@@ -23,7 +23,7 @@
                     <?php } ?>
                     <?php if($countOfOrderByStatus[2] > 0) { ?>
                         <small class="label pull-right bg-blue margin-r-5">
-                            <?php echo $countOfOrderByStatus[2]." skip";?>
+                            <?php echo $countOfOrderByStatus[2]." ship";?>
                         </small>
                     <?php } ?>
                     <?php if($countOfOrderByStatus[3] > 0) { ?>
@@ -56,7 +56,7 @@
             Address
         </strong>
         <p class="text-muted">
-            <?php echo $user->getAddress(); ?>
+            <?php echo $user->getFullAddress(); ?>
         </p>
         <hr>
         <strong>

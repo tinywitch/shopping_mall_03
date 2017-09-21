@@ -30,8 +30,10 @@
             <th>Address</th>
             <th>Items</th>
             <th>Cost</th>
-            <th>Status</th>
             <th>Time Created</th>
+            <th>Shipped At</th>
+            <th>Completed At</th>
+            <th>Status</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -46,15 +48,17 @@
                     echo "<td><a href=\"{$this->url('users', ['action' => 'view', 'id' => $order->getUser()->getId()])}\">".$order->getName()."</a></td>";
             ?>
             <td><?php echo $order->getPhone(); ?></td>
-            <td><?php echo $order->getAddress(); ?></td>
+            <td><?php echo $order->getFullAddress(); ?></td>
             <td><?php echo $order->getNumberOfItems(); ?></td>
             <td><?php echo $order->getCost(); ?></td>
+            <td><?php echo $order->getDateCreated(); ?></td>
+            <td><?php echo $order->getShipAt(); ?></td>
+            <td><?php echo $order->getCompletedAt(); ?></td>
             <td>
                 <small class="label <?php echo status_class($order->getStatus())?>">
                     <?php echo status_content($order->getStatus()); ?>
                 </small>
             </td>
-            <td><?php echo $order->getDateCreated(); ?></td>
             <td>
                 <a href="<?php echo $this->url('orders',
                     ['action' => 'view', 'id' => $order->getId()])?>", title="Show details">

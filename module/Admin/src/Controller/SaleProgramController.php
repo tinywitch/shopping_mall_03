@@ -56,12 +56,20 @@ class SaleProgramController extends AbstractActionController
         $sale_array = $this->saleProgramManager->getSaleArray($saleProgram);
 
         $currentDate = date('d-m-Y');
+        if ($saleProgram->getStatus() == 1 && $saleProgram->getCurrentStatus() == 0) {
+            $status_of_status = "Need to Active";
+        }
+        if ($saleProgram->getStatus() == 0 && $saleProgram->getCurrentStatus() == 2) {
+            $status_of_status = "Expired";
+        }
+        
         return new ViewModel([
             'products_in_sale' => $products_in_sale,
             'saleProgram' => $saleProgram,
             'products' => $products,
             'currentDate' => $currentDate,
-            'sale_array' => $sale_array
+            'sale_array' => $sale_array,
+            'status_of_status' => $status_of_status
             ]);
     }
 
