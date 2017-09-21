@@ -13,10 +13,10 @@
 .width-50{
 	width:50px;
 }
-.image_product{
-    width:50px;
-    height: 50px;
+.height-500{
+    height:500px;
 }
+
 .inline {
     display: inline-block;
 }
@@ -253,4 +253,92 @@
 
 .book-image:hover {
   box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.image_product{
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    transition: 0.3s;
+}
+
+.image_product:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.selected img {
+    opacity:0.5;
+}
+
+.img-thumbnail {
+    height: 60px;
+    width: 60px;
+}
+
+.img-slider {
+    max-height: 500px;
+    text-align: center;
+    display:block;
+    margin: auto auto;
+}
+
+.btn-icon {
+    border: none;
+    float: right;
+    background-color: #fff;
+}
+
+.btn-icon i {
+    font-size: 20px;
+    color: lightblue;
+}
+.set-size {
+    height: 30px;
+    width: 50px;
+}
+
+.set-size-icon {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    border: 1px solid #ddd; 
+}
+
+.color-1 {
+    background-color: white;  
+}
+
+.color-5 {
+    background-color: green;
+}
+
+.color-3{
+    background-color: yellow;
+}
+
+.color-2 {
+    background-color: black;
+}
+
+.color-4 {
+    background-color: red;
+}
+
+.color-6 {
+    background-color: purple;
+}
+
+.color-7 {
+    background-color: orange;
+}
+
+.color-8 {
+    background-color: blue;
+}
+
+.color-9 {
+    background-color: grey;
 }

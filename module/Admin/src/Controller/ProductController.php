@@ -33,6 +33,24 @@ class ProductController extends AbstractActionController
      * @var Admin\Service\ImageManager
      */
     private $imageManager;
+    private $list_color = [
+                ProductMaster::WHITE => 'White',
+                ProductMaster::BLACK => 'Black',
+                ProductMaster::YELLOW => 'Yellow',
+                ProductMaster::RED => 'Red',
+                ProductMaster::GREEN => 'Green',
+                ProductMaster::PURPLE => 'Purple',
+                ProductMaster::ORANGE => 'Orange',
+                ProductMaster::BLUE => 'Blue',
+                ProductMaster::GREY => 'Grey',
+                ];
+    private $list_size = [
+                ProductMaster::S => 'S',
+                ProductMaster::M => 'M',
+                ProductMaster::L => 'L',
+                ProductMaster::XL => 'XL',
+                ProductMaster::XXL => 'XXL',
+                ];
     /**
      * Constructor is used for injecting dependencies into the controller.
      */
@@ -62,9 +80,10 @@ class ProductController extends AbstractActionController
 
     public function listAction(){
         $products = $this->entityManager->getRepository(Product::class)->findAll();
-
+        
         return new ViewModel([
-        'products' => $products
+            'products' => $products,
+            'list_color' => $this->list_color
         ]);
     }
 
@@ -80,11 +99,13 @@ class ProductController extends AbstractActionController
             return;                        
         }
 
-        $size_and_images = $this->productManager->getSizeAndImageEachColors($product);
-      
+        $size_and_images = $product->getSizeAndImageEachColors();
+
         return new ViewModel([
             'product' => $product,
             'size_and_images' => $size_and_images,
+            'list_color' => $this->list_color,
+            'list_size' => $this->list_size
             ]);     
     }
 
@@ -148,8 +169,24 @@ class ProductController extends AbstractActionController
             ]);
     }
 
-    public function editcolorAction()
+    public function removecolorAction()
     {
+        $productId = $this->params()->fromRoute('id', -1);
+        $product = $this->entityManager->getRepository(Product::class)->find($productId);
+
+        if ($product == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;                      
+        }
+
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+
+            $this->productManager->removeColor($product, $data['color_id']);
+
+            return $this->redirect()->toRoute('products', ['action'=>'view', 'id' => $product->getId()]);
+        }
+
     }
 
     public function editAction()
@@ -169,50 +206,12 @@ class ProductController extends AbstractActionController
         $form = new ProductForm('edit', $categories, $this->entityManager);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            //var_dump($_POST);echo "<pre>";print_r($_FILES);echo "<pre>";die();
     
             $form->setData($data);
 
             if ($form->isValid()) {
                 $data = $form->getData();
 
-                // //edit $_FILES :
-                // $countOfFiles = count($_FILES['image']['name']);
-                // $temp = [];
-                // for ($i = 0; $i < $countOfFiles; $i++){
-                //     $temp['image']['name'][$i] = $_FILES['image']['name'][$i]['image'];
-                //     $temp['image']['type'][$i] = $_FILES['image']['type'][$i]['image'];
-                //     $temp['image']['tmp_name'][$i] = $_FILES['image']['tmp_name'][$i]['image'];
-                //     $temp['image']['error'][$i] = $_FILES['image']['error'][$i]['image'];
-                //     $temp['image']['size'][$i] = $_FILES['image']['size'][$i]['image'];
-                //     for ($j = 1; $j < 5; $j++){
-                //         $temp['imageDetail' . $j]['name'][$i] = $_FILES['image']['name'][$i]['imageDetail' . $j];
-                //         $temp['imageDetail' . $j]['type'][$i] = $_FILES['image']['type'][$i]['imageDetail' . $j];
-                //         $temp['imageDetail' . $j]['tmp_name'][$i] = $_FILES['image']['tmp_name'][$i]['imageDetail' . $j];
-                //         $temp['imageDetail' . $j]['error'][$i] = $_FILES['image']['error'][$i]['imageDetail' . $j];
-                //         $temp['imageDetail' . $j]['size'][$i] = $_FILES['image']['size'][$i]['imageDetail' . $j];
-                //     }
-                // }
-
-                // $_FILES = $temp;
-                
-                // $data['picture'] = $this->imageManager->saveImages($temp);
-               
-                // // covert $data['image'] string to array
-                // if (is_string($data['picture'])) {
-                //     for ($i = 0; $i < $countOfFiles; $i++) {
-                //         if (!empty($temp['image']['name'][$i])) {
-                //             $data['picture'] = ['image_' . $i . '_' => $data['picture']];
-                //         }
-                //         for ($j = 1; $j < 5; $j++) {
-                //             if (!empty($temp['imageDetail' . $j]['name'][$i])) {
-                //                 $data['picture'] = ['imageDetail' . $j . '_' . $i . "_" => $data['picture']];
-                //             }
-                //         }
-                //     }
-                // }
-
-                //$mesDelete = $this->imageManager->deleteFiles($images, $data['picture']);
                 $files =  $_FILES;
                 $httpadapter = new \Zend\File\Transfer\Adapter\Http();
                 $httpadapter->setDestination('public/img/products/');
