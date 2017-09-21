@@ -10,6 +10,7 @@ use Application\Entity\User;
 use Application\Entity\OrderItem;
 use Zend\Filter\StaticFilter;
 use Application\Entity\Comment;
+use Application\Entity\Review;
 
 
 class ProductManager
@@ -53,7 +54,7 @@ class ProductManager
     {
         // Create new Comment entity.
         $user = $this->entityManager->
-        getRepository('Application\Entity\User')->find($data['user_id']);
+            getRepository('Application\Entity\User')->find($data['user_id']);
         $comment = new Comment();
         $comment->setProduct($product);
         $comment->setUser($user);
@@ -77,7 +78,8 @@ class ProductManager
 
     public function addReview($product, $data)
     {
-        $user = $this->entityManager->getRepository('Application\Entity\User')->find($data['user_id']);
+        $user = $this->entityManager
+            ->getRepository('Application\Entity\User')->find($data['user_id']);
         $review = new Review();
         $review->setProduct($product);
         $review->setUser($user);

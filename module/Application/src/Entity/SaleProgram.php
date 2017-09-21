@@ -164,4 +164,17 @@ class SaleProgram
     {
         $this->date_created = $date_created;
     }
+
+    public function getCurrentStatus()
+    {
+        $currentDate = new \DateTime();
+        $currentDate = $currentDate->format('d-m-Y');
+
+        if($currentDate < $this->getDateStart())
+            return 1;
+        if($currentDate >= $this->getDateStart() && $currentDate <= $this->getDateEnd())
+            return 0;
+        if($currentDate > $this->getDateEnd())
+            return 2;
+    }
 }

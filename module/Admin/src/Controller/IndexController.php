@@ -13,6 +13,7 @@ use Application\Entity\Product;
 use Application\Entity\User;
 use Application\Entity\Store;
 use Application\Entity\Province;
+use Application\Entity\Order;
 
 class IndexController extends AbstractActionController
 {
@@ -47,12 +48,18 @@ class IndexController extends AbstractActionController
         $sale_prodgram_need_active = $this->saleProgramManager->getSaleProgramNeedActive();
         $sale_prodgram_need_done = $this->saleProgramManager->getSaleProgramNeedDone();
 
+        $order_pendings = $this->entityManager->getRepository(Order::class)
+            ->findBy(["status" => Order::STATUS_PENDING]);
+        $order_shippings = $this->entityManager->getRepository(Order::class)
+            ->findBy(["status" => Order::STATUS_SHIPPING]);
         return new ViewModel([
             'number_of_users' => $number_of_users,
             'number_of_products' => $number_of_products,
             'number_of_stores' => $number_of_stores,
             'sale_prodgram_need_active' => $sale_prodgram_need_active,
-            'sale_prodgram_need_done' => $sale_prodgram_need_done
+            'sale_prodgram_need_done' => $sale_prodgram_need_done,
+            'order_pendings' => $order_pendings,
+            'order_shippings' => $order_shippings
             ]);
     }
 }

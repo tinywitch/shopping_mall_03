@@ -18,9 +18,9 @@ class Version20170822024134_activity extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $table = $schema->createTable('activities');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);        
-        $table->addColumn('sender_id', 'integer');
-        $table->addColumn('target_id', 'integer');
-        $table->addColumn('receiver_id', 'integer');
+        $table->addColumn('sender_id', 'integer', ['notnull' => false]);
+        $table->addColumn('target_id', 'integer', ['notnull' => false]);
+        $table->addColumn('receiver_id', 'integer', ['notnull' => false]);
         $table->addColumn('type', 'integer');
         $table->addColumn('date_created', 'datetime');
         $table->setPrimaryKey(['id']);

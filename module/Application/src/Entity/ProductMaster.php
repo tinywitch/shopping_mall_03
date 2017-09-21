@@ -30,6 +30,25 @@ class ProductMaster
     const ORANGE = 7;
     const BLUE = 8;
     const GREY = 9;
+
+    private $list_color = [
+                ProductMaster::WHITE => 'white',
+                ProductMaster::BLACK => 'black',
+                ProductMaster::YELLOW => 'yellow',
+                ProductMaster::RED => 'red',
+                ProductMaster::GREEN => 'green',
+                ProductMaster::PURPLE => 'purple',
+                ProductMaster::ORANGE => 'orange',
+                ProductMaster::BLUE => 'blue',
+                ProductMaster::GREY => 'grey',
+                ];
+    private $list_size = [
+                ProductMaster::S => 'S',
+                ProductMaster::M => 'M',
+                ProductMaster::L => 'L',
+                ProductMaster::XL => 'XL',
+                ProductMaster::XXL => 'XXL',
+                ];
     /**
      * @ORM\ManyToOne(targetEntity="\Application\Entity\Product", inversedBy="product_masters")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
@@ -140,6 +159,10 @@ class ProductMaster
         return $this->color_id;
     }
 
+    public function getColorInWord()
+    {
+        return $this->list_color[$this->getColorId()];
+    }
 
     public function getSizeId() 
     {
@@ -149,6 +172,11 @@ class ProductMaster
     public function setSizeId($size_id) 
     {
         $this->size_id = $size_id;
+    }
+
+    public function getSizeInWord()
+    {
+        return $this->list_size[$this->getSizeId()];
     }
 
     public function findOrderByMonth() {
