@@ -37,11 +37,7 @@ $this->headTitle('View User');
                 <tr>
                     <th>Address:</th>
                     <td>
-                        <?php echo $user->getAddress()->getAddress(); ?>
-                        <?php echo $user->getAddress()->getDistrict()->getName(); ?>
-                        <?php echo "District" ?>
-                        <?php echo $user->getAddress()->getDistrict()->getProvince()->getName(); ?>
-                        <?php echo "Province" ?>
+                        <?php echo $user->getFullAddress() ?>
                     </td>
                 </tr>
                 <tr>
