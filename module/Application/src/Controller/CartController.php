@@ -23,6 +23,7 @@ class CartController extends AbstractActionController
     private $sessionContainer;
     private $cartManager;
     private $orderManager;
+
     /**
      * Constructor.
      */
@@ -82,13 +83,14 @@ class CartController extends AbstractActionController
             }
             $this->orderManager->addNewOrder($data_formated, $cart_info);
 
+
             $cookie = new \Zend\Http\Header\SetCookie(
                 'Cart',
                 '',
                 strtotime('-1 Year', time()), // -1 year lifetime (negative from now)
                 '/'
             );
-            // $this->getResponse()->getHeaders()->addHeader($cookie); // Xoa cookie
+             $this->getResponse()->getHeaders()->addHeader($cookie); // Xoa cookie
 
             // response data
             $res = [

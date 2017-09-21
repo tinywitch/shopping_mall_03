@@ -164,7 +164,7 @@ $(function () {
                             this.review.content = '';
                         })
                         .catch(err => {
-
+                            console.log(err);
                         });
 
                     this.is_write_review = false;

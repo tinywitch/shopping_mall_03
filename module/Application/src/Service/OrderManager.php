@@ -64,7 +64,9 @@ class OrderManager
         
         $order->setName($data['full_name']);
         $order->setPhone($data['phone_number']);
+
         $order->setAddress($address);
+
         $order->setNumberOfItems($cart->totalItem);
         $order->setCost($data['total_price']);
         $order->setStatus(Order::STATUS_PENDING);
@@ -105,18 +107,6 @@ class OrderManager
         }
 
         $this->entityManager->flush();
-  
+        return $order;
     }
-    public function addNewOrderItems($arrItems)
-    {
-        $count = count($arrItems);
-        foreach ($arrItems as $item) {
-            $order = new OrderItem();
-            
-            $order->setName($data['full_name']);
-            $order->setPhone($data['phone']);
-            $order->setAddress($data['address']);
-        }
-    }
-   
 }

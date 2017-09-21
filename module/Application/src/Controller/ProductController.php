@@ -139,8 +139,10 @@ class ProductController extends AbstractActionController
 
                     $res = [
                         'comment_id' => $data->comment_id,
+                        'type' => $data->type,
                     ];
                     $this->productManager->deleteComment($res);
+                    $res['status'] = 'done';
                     $this->response->setContent(json_encode($res));
                     break;
                 case 'delete_reply':
@@ -152,8 +154,11 @@ class ProductController extends AbstractActionController
 
                     $res = [
                         'comment_id' => $data->comment_id,
+                        'type' => $data->type,
+                        'parent_id' => $data->parent_id,
                     ];
                     $this->productManager->deleteComment($res);
+                    $res['status'] = 'done';
                     $this->response->setContent(json_encode($res));
                     break;
                 default:
