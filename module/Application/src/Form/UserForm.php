@@ -106,47 +106,42 @@ class UserForm extends Form
                     'label' => 'Re-enter password',
                 ],
             ]);
+        } else {
+            $this->add([
+                'type'  => 'select',
+                'name' => 'province',
+                'attributes' => [
+                    'class' => 'form-control',                
+                    'id' => 'province',
+                ],
+                'options' => [
+                    'label' => 'Province',
+                    'value_options' => $provinces_for_select,
+                ],
+            ]);
+            $this->add([
+                'type'  => 'select',
+                'name' => 'district',
+                'attributes' => [
+                    'class' => 'form-control',                
+                    'id' => 'district',
+                ],
+                'options' => [
+                    'disable_inarray_validator' => true,
+                    'label' => 'District',
+                    'value_options' => $districts_for_select,
+                ],
+            ]);
+            // Add "address" field
+            $this->add([
+                'type' => 'text',
+                'name' => 'address',
+                'options' => [
+                    'label' => 'Address',
+                ],
+            ]);
         }
-        $this->add([
-            'type'  => 'select',
-            'name' => 'province',
-            'attributes' => [
-                'class' => 'form-control',                
-                'id' => 'province',
-            ],
-            'options' => [
-                'label' => 'Province',
-                'value_options' => $provinces_for_select,
-            ],
-        ]);
-        $this->add([
-            'type'  => 'select',
-            'name' => 'district',
-            'attributes' => [
-                'class' => 'form-control',                
-                'id' => 'district',
-            ],
-            'options' => [
-                'disable_inarray_validator' => true,
-                'label' => 'District',
-                'value_options' => $districts_for_select,
-            ],
-        ]);
-        // Add "address" field
-        $this->add([
-            'type' => 'text',
-            'name' => 'address',
-            'options' => [
-                'label' => 'Address',
-            ],
-        ]);
-        $this->add([
-            'type' => 'text',
-            'name' => 'address',
-            'options' => [
-                'label' => 'Address',
-            ],
-        ]);
+ 
 
         // Add "phone-number" field
         $this->add([
