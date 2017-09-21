@@ -9,7 +9,8 @@ use Application\Entity\ProductColorImage;
  */
 class image
 {
-   
+   const MAIN = 1;
+   const SUB = 2;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -23,9 +24,9 @@ class image
     protected $image;
 
     /**
-     * @ORM\Column(name="parent_id")
+     * @ORM\Column(name="type")
      */
-    protected $parent_id = 0;
+    protected $type;
 
     /**
      * @ORM\Column(name="date_created")
@@ -35,7 +36,7 @@ class image
     /**
     * @ORM\Column(name="status")
     */
-    protected $status;
+    protected $status = 1;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Application\Entity\ProductColorImage", inversedBy="images")
@@ -88,14 +89,14 @@ class image
         return $this->status;
     }
 
-    public function getParentId() 
+    public function getType() 
     {
-        return $this->parent_id;
+        return $this->type;
     }
 
-    public function setParentId($parent_id) 
+    public function setType($type) 
     {
-        $this->parent_id = $parent_id;
+        $this->type = $type;
     }
 
     public function setStatus($status) 

@@ -22,12 +22,17 @@
             ->prependStylesheet($this->basePath('assets/bootstrap/dist/css/bootstrap.min.css'))
             ->prependStylesheet($this->basePath('assets/datatables/media/css/dataTables.semanticui.min.css'))
             ->prependStylesheet($this->basePath('assets/semantic/dist/semantic.min.css'))
+            ->prependStylesheet($this->basePath('assets/bootstrap-fileinput/themes/explorer/theme.css'))
+            ->prependStylesheet($this->basePath('assets/bootstrap-fileinput/css/fileinput.min.css'))
             ->prependStylesheet($this->basePath('assets/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css'))        
         ?>
 
         <!-- Scripts -->
+
         <?= $this->headScript()
             ->prependFile($this->basePath('js/me.js'))
+            ->prependFile($this->basePath('assets/bootstrap-fileinput/themes/explorer/theme.min.js'))
+            ->prependFile($this->basePath('js/fileinput.min.js'))
             ->prependFile($this->basePath('assets/select2/dist/js/select2.min.js'))
             ->prependFile($this->basePath('assets/semantic/dist/semantic.min.js'))
             ->prependFile($this->basePath('assets/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'))

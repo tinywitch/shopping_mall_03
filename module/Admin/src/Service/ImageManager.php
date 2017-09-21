@@ -24,7 +24,7 @@ class ImageManager
         $httpadapter->setDestination('public/img/products/');
                 
         $files = $httpadapter->getFileInfo();
-       
+
         foreach ($files as $file => $info) {
             $httpadapter->receive($file);
         } 
