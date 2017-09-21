@@ -9,7 +9,7 @@ use Application\Entity\User;
 use Application\Entity\OrderItem;
 use Zend\Filter\StaticFilter;
 use Application\Entity\Comment;
-use Zend\Json;
+
 
 class ProductManager 
 {
@@ -117,23 +117,12 @@ class ProductManager
        return $arr;
     }
 
-    public function findSizeByProductIdColorId($productId, $colorId) 
-    {
-
-        $product_masters =$this->entityManager->getRepository(ProductMaster::class)
-            ->findSizeByProductIdColorId($productId, $colorId);
-
-            foreach ($product_masters as $product_master){
-                $size[] = $product_master['size_id'];
-            };
-            sort($size);
-            return $size;
-    }
+    
 
     public function getDataProductDetail($productId) {
         $data = [];
-        $product = $this->entityManager->getRepository(Product::class)->find($productId);
-        
+        $product = $this->entityManager->getRepository(Product::class)->findOneById($productId);
+        $size_colors = $product->getSizeAndImageEachColors();
         $data['id'] = $productId;
         $data['name'] = $product->getName();
         $data['price'] = $product->getCurrentPrice();
@@ -141,24 +130,15 @@ class ProductManager
         $data['rate_count'] = $product->getRateCount();
         $data['intro'] = $product->getIntro();
 
-        // find colors, images
-        foreach ($product->getProductColorImages() as $productCI) {       
-            $data['colors'][] = $this->color[$productCI->getColorId()];
-            $count = 1;
-            $images = $productCI->getImages();
-            $colorId = $productCI->getColorId();
-            for ($i = 0; $i < count($images); $i++) {
-                if ($images[$i]->getParentId() == 0) {
-                    $data['images'][$this->color[$colorId]][0] = 
-                        $images[$i]->getImage(); 
-
-                } else {
-                    $data['images'][$this->color[$colorId]][$count] = 
-                        $images[$i]->getImage();$count++; 
-                }
+        
+        foreach ($size_colors as $key => $size_color) {
+            $data['colors'][] = $this->color[$key];
+            $data['sizes'][$this->color[$key]] = $size_color['size']; 
+            $data['images'][$this->color[$key]][0] = $size_color['image'][0];
+            foreach ($size_color['image'][1] as $image) {
+                $data['images'][$this->color[$key]][] = $image;
             }
-            $data['sizes'][$this->color[$colorId]] =
-                $this->findSizeByProductIdColorId($productId, $colorId);
+            
         }
         // find review
         $data['review']['size'] = 10;

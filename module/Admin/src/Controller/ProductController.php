@@ -100,7 +100,7 @@ class ProductController extends AbstractActionController
         }
 
         $size_and_images = $product->getSizeAndImageEachColors();
-
+        
         return new ViewModel([
             'product' => $product,
             'size_and_images' => $size_and_images,
