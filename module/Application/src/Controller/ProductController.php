@@ -66,7 +66,16 @@ class ProductController extends AbstractActionController
 //        $commentCount = $this->productManager->getCommentCountStr($product);
 
 //        $comment_form = new CommentForm();
-//
+        $productId = $this->params()->fromRoute('id', -1);
+
+        $product = $this->entityManager->getRepository(Product::class)
+            ->findOneById($productId);
+
+        if ($product == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+
         if ($this->getRequest()->isPost()) {
 
             $data = $this->getRequest()->getContent();
@@ -81,13 +90,12 @@ class ProductController extends AbstractActionController
                     // $data->product_id
 
                     $res = [
-                        'id' => 100,
                         'content' => $data->content,
                         'user_id' => $data->user_id,
                     ];
-
+                    $comment = $this->productManager->addComment($product, $res);
+                    $res['id'] = $comment->getId();
                     $this->response->setContent(json_encode($res));
-
                     break;
                 case 'reply':
 
@@ -98,14 +106,13 @@ class ProductController extends AbstractActionController
                     // $data->comment_id // parent comment
 
                     $res = [
-                        'id' => 123,
                         'comment_id' => $data->comment_id,
                         'user_id' => $data->user_id,
                         'content' => $data->content,
                     ];
-
+                    $comment = $this->productManager->addComment($product, $res);
+                    $res['id'] = $comment->getId();
                     $this->response->setContent(json_encode($res));
-
                     break;
                 case 'review':
 
@@ -116,14 +123,13 @@ class ProductController extends AbstractActionController
                     // $data->review->content
 
                     $res = [
-                        'id' => 1,
                         'rate' => $data->review->rate,
+                        'user_id' => $data->user_id,
                         'content' => $data->review->content,
-                        'date_created' => '',
                     ];
-
+                    $review = $this->productManager->addReview($product, $res);
+                    $res['id'] = $review->getId();
                     $this->response->setContent(json_encode($res));
-
                     break;
                 case 'delete_comment':
                     // database
@@ -132,13 +138,10 @@ class ProductController extends AbstractActionController
                     // $data->comment_id
 
                     $res = [
-                        'status' => 'done',
-                        'type' => $data->type,
                         'comment_id' => $data->comment_id,
                     ];
-
+                    $this->productManager->deleteComment($res);
                     $this->response->setContent(json_encode($res));
-
                     break;
                 case 'delete_reply':
                     // database
@@ -148,36 +151,19 @@ class ProductController extends AbstractActionController
                     // $data->parent_id
 
                     $res = [
-                        'status' => 'done',
-                        'type' => $data->type,
                         'comment_id' => $data->comment_id,
-                        'parent_id' => $data->parent_id,
                     ];
-
+                    $this->productManager->deleteComment($res);
                     $this->response->setContent(json_encode($res));
                     break;
                 default:
                     $this->response->setContent(json_encode('error'));
-
             }
-
-//            $comment_form->setData($data);
-//            if($comment_form->isValid()) {
-//
-//                // Get validated form data.
-//                $data = $comment_form->getData();
-//                $data['user_id'] = $this->sessionContainer->id;
-//                // Use product manager service to add new comment to product.
-//                $this->productManager->addCommentToProduct($product, $data);
 
             return $this->response;
         }
         $view = new ViewModel([
-//            'user_id' => $this->sessionContainer->id,
-//            'commentCount' => $commentCount,
-//            'comment_form' => $comment_form,
-//            'comments' => $comments,
-//            'product' => $product
+
         ]);
         $this->layout('application/layout');
         return $view;

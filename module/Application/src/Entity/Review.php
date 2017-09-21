@@ -32,7 +32,7 @@ class Review
     public function setUser($user) 
     {
         $this->user = $user;
-        $user->addComment($this);
+        $user->addReview($this);
     }
     /**
      * @ORM\ManyToOne(targetEntity="\Application\Entity\Product", inversedBy="reviews")

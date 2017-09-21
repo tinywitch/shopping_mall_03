@@ -147,6 +147,7 @@ $(function () {
 
                     axios.post('/product/view/' + this.product.id, data)
                         .then(res => {
+                            console.log(res);
                             // res.data
                             let receive = res.data;
                             receive.user_name = this.user.full_name;
