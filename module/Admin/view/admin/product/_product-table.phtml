@@ -27,7 +27,7 @@
             </td>
             <td><?php echo $product->getPrice(); ?></td>
             <td>
-                <?php foreach ($product->getColors() as $c) { ?>
+                <?php foreach ($product->getColorsInWord() as $c) { ?>
                         <i class="set-size-icon pull-right color-<?php echo $c ?>" >
                             <p class="hidden"><?php echo $c ?></p>
                         </i>
