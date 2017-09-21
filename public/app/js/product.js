@@ -121,9 +121,9 @@ $(function () {
                     },
                     colors: ['Black', 'White', 'Blue'],
                     sizes: {
-                        'Black': [28, 29, 31],
-                        'White': [27, 28, 29, 30],
-                        'Blue': [26, 27, 30],
+                        'Black': [1, 2, 3],
+                        'White': [1, 2, 3, 4],
+                        'Blue': [3, 4, 1],
                     },
                     images: {
                         'Black': [

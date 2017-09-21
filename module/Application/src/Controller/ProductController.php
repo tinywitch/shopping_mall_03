@@ -44,7 +44,8 @@ class ProductController extends AbstractActionController
     {
         $productId = (int)$this->params()->fromRoute('id', -1);
         
-        $product_data = $this->productManager->getDataProductDetail($productId);           
+        $product_data = $this->productManager->getDataProductDetail($productId); 
+                  
         if ($product_data == null) {
             echo "Product Not Found";
             $this->getResponse()->setStatusCode(404);

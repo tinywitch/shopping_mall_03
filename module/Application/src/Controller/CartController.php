@@ -54,29 +54,16 @@ class CartController extends AbstractActionController
     {
         $cookie = $this->getRequest()->getCookie('Cart', 'default');
         $cart_info = json_decode($cookie["Cart"]);
-        $user = null;
-        if (isset($this->sessionContainer->id)) {
-            $id = $this->sessionContainer->id;
-            $user = $this->entityManager->getRepository(User::class)
-                ->find($id);
-
-            if ($user == null) {
-                $this->getResponse()->setStatusCode(500);
-                return;
-            }
-            $form = new ShippingForm('update', $this->entityManager);
-            $data = [
-                "full_name" => $user->getName(),
-                "address" => $user->getAddress(),
-                "phone" => $user->getPhone(),
-                'user_id' => $user->getId(),
-            ];
-
-            $form->setData($data);
-        } else {
-            $form = new ShippingForm('create', $this->entityManager);
-        }
-
+        $user['full_name'] = "vu truong";
+        $user['phone_number'] = "0912593240";
+        $user['email'] = "vutruong@gmail.com";
+        $user['province'] = "Ha noi";
+        $user['district'] = "vu truong";
+        $user['address'] = "vu truong";
+        $user['totalPrice'] = 100;
+        $user['user_id'] = 1;
+        $this->orderManager->addNewOrder($user, $cart_info);
+        //var_dump($cart_info);die();
         // Check if user has submitted the form
         if ($this->getRequest()->isPost()) {
 
@@ -84,6 +71,7 @@ class CartController extends AbstractActionController
             $data = $this->getRequest()->getContent();
 
             $data = json_decode($data);
+            var_dump($data);
 
             // $data->ship_add->full_name;
             // $data->ship_add->phone_number;
