@@ -45,7 +45,7 @@
                 <div class="col-sm-3">
                     <div class="card">
                         <img class="card-img-top img-responsive" src="<?= $this->basePath($bestSellProduct->getImage()) ?>" alt="Card image cap">
-                        <div class="card-block sm card-block-new">
+                        <div class="card-block sm card-block-new" onclick="location.href = '/product/view/<?php echo $bestSellProduct->getId(); ?>';">
                             <p class="card-title"><?= $bestSellProduct->getName()?></p>
                             <div class="clearfix">
                                 <span class="card-shop-name pull-left">B & O</span>
@@ -76,7 +76,7 @@
                     <div class="col-sm-2 sm-2">
                     <div class="card">
                         <img class="card-img-top img-responsive" src="<?= $this->basePath($product->getImage()) ?>" alt="Card image cap">
-                        <div class="card-block sm card-block-new">
+                        <div class="card-block sm card-block-new" onclick="location.href = '/product/view/<?php echo $product->getId(); ?>';">
                             <p class="card-title"><?= $product->getName(); ?></p>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                 <div class="col-sm-2 sm-2">
                     <div class="card">
                         <img class="card-img-top img-responsive" src="<?= $this->basePath($product->getImage()) ?>" alt="Card image cap">
-                        <div class="card-block sm card-block-new">
+                        <div class="card-block sm card-block-new" onclick="location.href = '/product/view/<?php echo $product->getId(); ?>';">
                             <p class="card-title"><?= $product->getName(); ?></p>
                         </div>
                     </div>

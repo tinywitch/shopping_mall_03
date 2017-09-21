@@ -42,15 +42,15 @@ class ProductController extends AbstractActionController
      */
     public function viewAction()
     {
-//        $id = (int)$this->params()->fromRoute('id', -1);
-//
-//        $product = $this->entityManager->getRepository(Product::class)
-//            ->find($id);
-//
-//        if ($product == null) {
-//            $this->getResponse()->setStatusCode(404);
-//            return;
-//        }
+        $productId = (int)$this->params()->fromRoute('id', -1);
+        
+        $product_data = $this->productManager->getDataProductDetail($productId);           
+        if ($product_data == null) {
+            echo "Product Not Found";
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+        
 //        $comments = $product->getComments();
 //        $commentCount = $this->productManager->getCommentCountStr($product);
 
@@ -78,7 +78,7 @@ class ProductController extends AbstractActionController
 //            'commentCount' => $commentCount,
 //            'comment_form' => $comment_form,
 //            'comments' => $comments,
-//            'product' => $product
+            'product' => $product
         ]);
         $this->layout('application/layout');
         return $view;

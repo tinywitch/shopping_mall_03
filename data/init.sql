@@ -3,6 +3,9 @@ insert into stores (name,address,phone,date_created) values ('Lazada','Hoang Mai
 insert into stores (name,address,phone,date_created) values ('Vietel','Hoang Mai,Ha Noi',0912593240,'2017-08-08');
 insert into stores (name,address,phone,date_created) values ('The gioi di dong','Hoang Mai,Ha Noi',0912593240,'2017-08-08');
 
+insert into reviews (product_id,user_id,rate,content,date_created) values (9,1,5,'ok','2017-08-08');
+insert into reviews (product_id,user_id,rate,content,date_created) values (2,1,5,'ok','2017-08-08');
+
 insert into categories (id,name,alias,description,parent_id,date_created) values (1,'Thời trang nam','thoi-trang-nam','Thời trang cho nam',0,'2017-08-16');
 insert into categories (id,name,alias,description,parent_id,date_created) values (2,'Thời trang nữ','thoi-trang-nu','Thời trang cho nữ',0,'2017-08-16');
 
