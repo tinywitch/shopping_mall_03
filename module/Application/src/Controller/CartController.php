@@ -81,21 +81,32 @@ class CartController extends AbstractActionController
         if ($this->getRequest()->isPost()) {
 
             // Fill in the form with POST data
-            $data = $this->params()->fromPost();
-           
-            $form->setData($data);
+            $data = $this->getRequest()->getContent();
+
+            $data = json_decode($data);
+
+            // $data->ship_add->full_name;
+            // $data->ship_add->phone_number;
+            // $data->ship_add->email;
+            // $data->ship_add->province;
+            // $data->ship_add->dist;
+            // $data->ship_add->address;
+
+            // $data->sub_total;
+            // $data->ship_tax;
+            // $totalPrice = $data->sub_total + $data->ship_tax;
 
             // Validate form
-            if ($form->isValid()) {
+            if (true) {
 
                 // Get filtered and validated data
-                $data = $form->getData();
-                $currentDate = date('Y-m-d H:i:s');
-                $data['date_created'] = $currentDate;
-                $data['status'] = 1;
-                $arrItems = $cart_info->items;
-                
-                $this->orderManager->addNewOrder($data, $cart_info, $arrItems);
+                // lay du lieu
+//                $currentDate = date('Y-m-d H:i:s');
+//                $data['date_created'] = $currentDate;
+//                $data['status'] = 1;
+//                $arrItems = $cart_info->items;
+//
+//                $this->orderManager->addNewOrder($data, $cart_info, $arrItems);
 
                 $cookie = new \Zend\Http\Header\SetCookie(
                     'Cart',
@@ -103,27 +114,20 @@ class CartController extends AbstractActionController
                     strtotime('-1 Year', time()), // -1 year lifetime (negative from now)
                     '/'
                 );
-                $this->getResponse()->getHeaders()->addHeader($cookie);
+                // $this->getResponse()->getHeaders()->addHeader($cookie); // Xoa cookie
 
-                // Redirect to "notify" page
-                return $this->redirect()->toRoute('cart',
-                    ['action' => 'notify']);
+                // response data
+                $res = [
+                    'status' => 'ok',
+                    'order_id' => '12314kj',
+                ];
+
+                print_r(json_encode($res)); die();
             }
+        } else {
+
         }
 
-
-
-        $view = new ViewModel([
-            'data' => $cart_info,
-            'user' => $user,
-            'form' => $form,
-        ]);
-        $this->layout('application/layout');
-        return $view;
-    }
-
-    public function successAction()
-    {
         $view = new ViewModel([
 
         ]);

@@ -1,29 +1,3 @@
-<?php
-$this->headTitle('Shipping information');
-
-$form->get('full_name')->setAttributes([
-    'class' => 'form-control',
-]);
-
-$form->get('address')->setAttributes([
-    'class' => 'form-control',
-]);
-
-$form->get('phone')->setAttributes([
-    'class' => 'form-control',
-]);
-if ($user != null) {
-    $form->get('user_id')->setAttributes([
-        'value' => $user->getId(),
-    ]);
-}
-
-$form->get('submit')
-    ->setAttributes(['class' => 'btn btn-primary btn-lg']);
-
-$form->prepare();
-?>
-
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="row">
