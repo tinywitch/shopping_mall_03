@@ -196,12 +196,13 @@ class UserController extends AbstractActionController
             $data = [
                 'full_name' => $user->getName(),
                 'email' => $user->getEmail(),
-                'phone' => $user->getPhone(),
-                'address' => $user->getAddress()->getAddress(),
+                'phone' => $user->getPhone()
             ];
             if($user->getAddress()!=NULL){
                 $data['province']= $user->getAddress()->getDistrict()->getProvince()->getId();
                 $data['district']= $user->getAddress()->getDistrict()->getId();
+                $data['address'] = $user->getAddress()->getAddress();
+                
                 $province_id = $data['province'];
                 $province = $this->entityManager->getRepository(Province::class)
                     ->find($province_id);
@@ -213,6 +214,7 @@ class UserController extends AbstractActionController
                 $form->get('district')->setOptions([
                     'value_options' => $districts_for_select,  
                 ]);
+
             }
             $form->setData($data);
         }
