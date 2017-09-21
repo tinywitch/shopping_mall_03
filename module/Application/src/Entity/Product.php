@@ -432,6 +432,17 @@ class Product
         $colors = [];
         $product_color_images = $this->getProductColorImages();
         foreach ($product_color_images as $pci) {
+            array_push($colors, $pci->getColorId());
+        }
+
+        return $colors;
+    }
+
+    public function getColorsInWord()
+    {
+        $colors = [];
+        $product_color_images = $this->getProductColorImages();
+        foreach ($product_color_images as $pci) {
             array_push($colors, $pci->getColorInWord());
         }
 

@@ -72,7 +72,7 @@ class OrderItem
     /**
      * @ORM\Column(name="status")
      */
-    protected $status;
+    protected $status = 1;
 
     /**
      * @ORM\Column(name="cost")

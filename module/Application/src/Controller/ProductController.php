@@ -29,15 +29,15 @@ class ProductController extends AbstractActionController
     private $productManager;
 
     private $list_color = [
-        ProductMaster::WHITE => 'White',
-        ProductMaster::BLACK => 'Black',
-        ProductMaster::YELLOW => 'Yellow',
-        ProductMaster::RED => 'Red',
-        ProductMaster::GREEN => 'Green',
-        ProductMaster::PURPLE => 'Purple',
-        ProductMaster::ORANGE => 'Orange',
-        ProductMaster::BLUE => 'Blue',
-        ProductMaster::GREY => 'Grey',
+        ProductMaster::WHITE => 'white',
+        ProductMaster::BLACK => 'black',
+        ProductMaster::YELLOW => 'yellow',
+        ProductMaster::RED => 'red',
+        ProductMaster::GREEN => 'green',
+        ProductMaster::PURPLE => 'purple',
+        ProductMaster::ORANGE => 'orange',
+        ProductMaster::BLUE => 'blue',
+        ProductMaster::GREY => 'grey',
     ];
     private $list_size = [
         ProductMaster::S => 'S',
