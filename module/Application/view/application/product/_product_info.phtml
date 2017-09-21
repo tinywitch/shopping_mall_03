@@ -38,6 +38,7 @@
                                        :class="{active: color == selected_color}"
                                        :style="{background: color}"
                                        @click="selectColor(color)">
+                                <md-tooltip md-direction="top">{{color}}</md-tooltip>
                             </md-button>
                         </md-button-toggle>
                     </div>
@@ -51,6 +52,7 @@
                                        class="md-icon-button md-raised margin-button"
                                        :class="{'md-toggle': size == selected_size}">
                                 {{size}}
+                                <md-tooltip md-direction="top">{{size}}</md-tooltip>
                             </md-button>
                         </md-button-toggle>
                     </div>

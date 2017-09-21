@@ -213,7 +213,7 @@ return [
             Controller\UserController::class => [
                 // Give access to "resetPassword", "message" and "setPassword" actions
                 // to anyone.
-                ['actions' => ['resetPassword', 'message', 'setPassword', 'add'], 'allow' => '*'],
+                ['actions' => ['resetPassword', 'message', 'setPassword', 'add', 'getinfo'], 'allow' => '*'],
                 // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
                 ['actions' => ['edit', 'view', 'changePassword'], 'allow' => '@']
             ],
@@ -227,7 +227,7 @@ return [
             Controller\ProductController::class => [
                 // Give access to "resetPassword", "message" and "setPassword" actions
                 // to anyone.
-                ['actions' => ['view'], 'allow' => '*'],
+                ['actions' => ['view', 'getinfo'], 'allow' => '*'],
                 // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
                 // ['actions' => ['changePassword'], 'allow' => '@']
             ],

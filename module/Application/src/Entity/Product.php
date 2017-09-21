@@ -437,4 +437,16 @@ class Product
 
         return $color;
     }
+
+    public function getMainComments()
+    {
+        $mainComments = [];
+        foreach ($this->comments as $c) {
+            if ($c->getParentId() == null) {
+                array_push($mainComments, $c);
+            }
+        }
+
+        return $mainComments;
+    }
 }
