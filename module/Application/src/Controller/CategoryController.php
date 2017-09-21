@@ -5,6 +5,8 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Entity\Product;
+use Application\Entity\ProductMaster;
+use Application\Entity\ProductColorImage;
 use Application\Entity\category;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
@@ -19,6 +21,17 @@ class CategoryController extends AbstractActionController
      * Entity manager.
      * @var
      */
+    private $color = [
+        ProductMaster::WHITE => 'White',
+        ProductMaster::BLACK => 'Black',
+        ProductMaster::YELLOW => 'Yellow',
+        ProductMaster::RED => 'Red',
+        ProductMaster::GREEN => 'Green',
+        ProductMaster::PURPLE => 'Purple',
+        ProductMaster::ORANGE => 'Orange',
+        ProductMaster::BLUE => 'Blue',
+        ProductMaster::GREY => 'Grey',
+        ];
     private $entityManager;
 
 
@@ -41,34 +54,45 @@ class CategoryController extends AbstractActionController
     public function viewAction()
     {   
         $categoryId = $this->params()->fromRoute('id', -1);
+        $colorName = $this->params()->fromRoute('color', -1);
         $arr = [];
         $arr = $this->categoryManager->arrCate($arr,$categoryId);
-
+        
         $page = $this->params()->fromQuery('page', 1);
-        $category = $this->entityManager->getRepository(category::class)->find($categoryId);
-        $products = $this->entityManager->getRepository(Product::class)
-            ->findProductsByCategory($arr);
 
-        //var_dump($products);    
+        $category = $this->entityManager->getRepository(category::class)->find($categoryId);
+        if($this->getRequest()->isPost()){
+            $data = $_POST;
+            $products = $this->entityManager->getRepository(Product::class)
+                ->findProductsByCategory($arr,$data);
+        } elseif ($colorName != -1) {
+            $color = array_flip($this->color);
+            $color_id = $color[$colorName];
+            $products = $this->entityManager->getRepository(ProductColorImage::class)
+                ->findProductsByColor($arr,$color_id);
+                
+        } else {
+            $products = $this->entityManager->getRepository(Product::class)
+                ->findProductsByCategory($arr);
+        }
+           
         $adapter = new DoctrineAdapter(new ORMPaginator($products, false));
+        
         $paginator = new Paginator($adapter);
-        $paginator->setDefaultItemCountPerPage(6);                
+        $paginator->setDefaultItemCountPerPage(2);                
         $paginator->setCurrentPageNumber($page);
 
         $mainCategories = $this->categoryManager->mainCategories();
         $arrCateTree = $this->categoryManager->arrCateTree();
-
-        foreach ($paginator as $product) {
-            $truncate = new TrunCate();
-            $truncate_name = $truncate($product->getName(), 30);
-            $product->setName($truncate_name);
-        }
+        
+        
         //var_dump($paginator);die();
         $view = new ViewModel([
             'products' => $paginator,
             'category' => $category,
             'mainCategories' => $mainCategories,
             'arrCateTree' => $arrCateTree,
+            
         ]);
         $this->layout('application/layout');
         return $view;

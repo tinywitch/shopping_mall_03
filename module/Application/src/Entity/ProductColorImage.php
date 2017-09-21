@@ -8,6 +8,7 @@ use Application\Entity\Product;
 
 /**
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\Application\Repository\ProductColorImageRepository")
  * @ORM\Table(name="product_color_images")
  */
 class ProductColorImage
@@ -123,9 +124,21 @@ class ProductColorImage
         $this->date_created = $date_created;
     }
 
+
     public function getColorInWord()
     {
         return $this->list_color[$this->getColorId()];
+
+    }
+    public function getMainImage() 
+    {
+        $images = $this->getImages();
+        
+        foreach ($images as $image) {
+            if($image->getType() == 1)
+                return $image->getImage();
+        }
+
     }
 
 }
