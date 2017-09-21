@@ -58,7 +58,7 @@
 </div>
 
 <div class="write_review"
-     v-show="is_write_review">
+     v-show="is_write_review && login">
     <h5>Please share your experience about this item</h5>
     <md-layout md-column>
         <md-layout md-vertical-align="center"
@@ -88,4 +88,9 @@
             Submit review
         </md-button>
     </md-layout>
+</div>
+
+<div class="write_review"
+     v-show="is_write_review && !login">
+    <h5>Please <a :href="'/login?redirectUrl=/product/view/' + product.id">login</a> to write review</h5>
 </div>

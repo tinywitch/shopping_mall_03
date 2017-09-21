@@ -110,7 +110,8 @@ class CartController extends AbstractActionController
                     'order_id' => '12314kj',
                 ];
 
-                print_r(json_encode($res)); die();
+                $this->response->setContent(json_encode($res));
+                return $this->response;
             }
         } else {
 

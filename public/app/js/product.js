@@ -4,6 +4,7 @@ $(function () {
         data: {
             login: true,
             user_id: 1,
+            user: {},
 
             product: {},
             selected_color: '',
@@ -24,6 +25,7 @@ $(function () {
             replies: {},
         },
         mounted: function () {
+            this.fetchLoginInfo();
             this.fetchData();
         },
         computed: {
@@ -39,118 +41,36 @@ $(function () {
         },
         methods: {
             fetchData: function () {
-                let product_data = {
-                    id: 1,
-                    name: 'EMBROIDERED JACQUARD SWEATSHIRT WITH THREAD DETAIL',
-                    price: 40,
-                    rate_sum: 160,
-                    rate_count: 45,
-                    review: {
-                        size: 10,
-                        page: 1,
-                        total: this.rate_count,
-                        items: [
-                            {
-                                id: 1,
-                                rate: 5,
-                                user_name: 'Thuy Ninh',
-                                province: 'Ha Noi',
-                                content: 'Ao rat dep, minh chon size 30 vua luon',
-                                date_created: (new Date()).toDateString(),
-                            },
-                            {
-                                id: 2,
-                                rate: 4,
-                                user_name: 'Truong',
-                                province: 'Ha Noi',
-                                content: 'Ao rat dep, minh chon size 30 vua luon',
-                                date_created: (new Date()).toDateString(),
-                            },
-                            {
-                                id: 3,
-                                rate: 2,
-                                user_name: 'Nguyen Trung Duc',
-                                province: 'Ha Noi',
-                                content: 'Ao rat dep, minh chon size 30 vua luon',
-                                date_created: (new Date()).toDateString(),
-                            },
-                            {
-                                id: 4,
-                                rate: 5,
-                                user_name: 'Nguyen Phuc Long',
-                                province: 'Ha Noi',
-                                content: 'Ao rat dep, minh chon size 30 vua luon',
-                                date_created: (new Date()).toDateString(),
-                            },
-                            {
-                                id: 5,
-                                rate: 1,
-                                user_name: 'Nguyen Phuc Long',
-                                province: 'Ha Noi',
-                                content: 'Ao rat dep, minh chon size 30 vua luon',
-                                date_created: (new Date()).toDateString(),
-                            },
-                        ],
-                    },
-                    comment: {
-                        size: 10,
-                        page: 1,
-                        total: 30,
-                        items: [
-                            {
-                                id: 1,
-                                user_id: 1,
-                                user_name: 'Admin',
-                                content: 'Minh nang 80 can mac mau gi thi hop nhi?',
-                                replies: [
-                                    {
-                                        id: 30,
-                                        user_id: 1,
-                                        user_name: 'Admin',
-                                        content: 'wtf :|',
-                                    },
-                                ],
-                            },
-                            {
-                                id: 2,
-                                user_id: 2,
-                                user_name: 'Ninh Ninh',
-                                content: 'Ao the nay ma cung ban :|',
-                            },
-                        ],
-                    },
-                    colors: ['Black', 'White', 'Blue'],
-                    sizes: {
-                        'Black': [1, 2, 3],
-                        'White': [1, 2, 3, 4],
-                        'Blue': [3, 4, 1],
-                    },
-                    images: {
-                        'Black': [
-                            'https://static.zara.net/photos///2017/I/0/1/p/7252/223/800/2/w/560/7252223800_1_1_1.jpg',
-                            'https://static.zara.net/photos///2017/I/0/1/p/7252/223/800/2/w/400/7252223800_2_1_1.jpg',
-                            'https://static.zara.net/photos///2017/I/0/1/p/7252/223/800/2/w/400/7252223800_2_4_1.jpg',
-                            'https://static.zara.net/photos///2017/I/0/1/p/7252/223/800/2/w/560/7252223800_6_1_1.jpg',
-                        ],
-                        'White': [
-                            'https://static.zara.net/photos///2017/I/0/1/p/7252/223/800/2/w/560/7252223800_1_1_1.jpg',
-                            'https://static.zara.net/photos///2017/I/0/1/p/7252/223/800/2/w/400/7252223800_2_1_1.jpg',
-                            'https://static.zara.net/photos///2017/I/0/1/p/7252/223/800/2/w/400/7252223800_2_4_1.jpg',
-                        ],
-                        'Blue': [
-                            'https://static.zara.net/photos///2017/I/0/1/p/7252/223/800/2/w/560/7252223800_1_1_1.jpg',
-                            'https://static.zara.net/photos///2017/I/0/1/p/7252/223/800/2/w/400/7252223800_2_1_1.jpg',
-                        ],
-                    },
-                    intro: 'Jacquard sweatshir',
-                };
+                let url = location.href;
+                let id = url.split('/').pop();
 
-                this.product = product_data;
-                this.selected_color = this.product.colors[0];
-                this.current_list_size = this.product.sizes[this.selected_color];
-                this.selected_size = this.current_list_size[0];
-                this.selected_image = 0;
-                this.updateImage();
+                axios.get('/product/getinfo/' + id)
+                    .then(res => {
+                        this.product = res.data;
+                        this.selected_color = this.product.colors[0];
+                        this.current_list_size = this.product.sizes[this.selected_color];
+                        this.selected_size = this.current_list_size[0];
+                        this.selected_image = 0;
+                        this.updateImage();
+                    })
+                    .catch(err => {
+
+                    });
+            },
+            fetchLoginInfo: function () {
+                axios.get('/user/getinfo')
+                    .then(res => {
+                        if (res.data.login) {
+                            this.login = true;
+                            this.user_id = res.data.user.id;
+                            this.user = res.data.user;
+                        } else {
+                            this.login = false;
+                            this.user_id = -1;
+                        }
+                    })
+                    .catch(err => {
+                    });
             },
             selectSize: function (size) {
                 this.selected_size = size;
@@ -218,79 +138,96 @@ $(function () {
                     this.review.error = 'You must rate the product';
                     Snackbar.pushMessage(this.review.error, 'danger');
                 } else {
-                    // receive data
-                    let receive = {
-                        id: 1,
-                        rate: this.review.rate,
-                        user_name: 'Nguyen Phuc Long',
-                        province: 'Ha Noi',
-                        content: this.review.content,
-                        date_created: (new Date()).toDateString(),
+                    let data = {
+                        type: 'review',
+                        user_id: this.user_id,
+                        product_id: this.product.id,
+                        review: this.review,
                     };
 
-                    this.product.review.items.unshift(receive);
+                    axios.post('/product/view/' + this.product.id, data)
+                        .then(res => {
+                            // res.data
+                            let receive = res.data;
+                            receive.user_name = this.user.full_name;
+                            receive.province = this.user.province;
 
-                    this.product.rate_sum += this.review.rate;
-                    this.product.rate_count++;
+                            this.product.review.items.unshift(receive);
 
-                    Snackbar.pushMessage('Post review success', 'success');
+                            this.product.rate_sum += this.review.rate;
+                            this.product.rate_count++;
 
-                    this.review.rate = 0;
-                    this.review.content = '';
+                            Snackbar.pushMessage('Post review success', 'success');
+
+                            this.review.rate = 0;
+                            this.review.content = '';
+                        })
+                        .catch(err => {
+
+                        });
+
                     this.is_write_review = false;
                 }
             },
             postComment: function () {
                 let data = {
                     content: this.comment_content,
-                };
-                console.log(data);
-
-                // Post and receive data
-                let receive = {
-                    id: 100,
+                    type: 'comment',
                     user_id: this.user_id,
-                    user_name: 'Admin',
-                    content: this.comment_content,
+                    product_id: this.product.id,
                 };
 
-                this.product.comment.items.unshift(receive);
-                this.product.comment.total++;
+                axios.post('/product/view/' + this.product.id, data)
+                    .then(res => {
+                        // res.data
+                        let receive = res.data;
+                        receive.user_name = this.user.full_name;
 
-                this.comment_content = '';
+                        this.product.comment.items.unshift(receive);
+                        this.product.comment.total++;
+                        this.comment_content = '';
+                    })
+                    .catch(err => {
+
+                    });
             },
             postReply: function (comment_id) {
-                let data = {};
+                let data = {
+                    user_id: this.user_id,
+                    product_id: this.product.id,
+                };
+                data.type = 'reply';
                 data.content = this.replies[comment_id];
                 data.comment_id = comment_id;
-                console.log(data);
 
-                // Post and receive data
-                let receive = {
-                    id: 123,
-                    comment_id: comment_id,
-                    user_id: this.user_id,
-                    user_name: 'Admin',
-                    content: this.replies[comment_id],
-                };
+                axios.post('/product/view/' + this.product.id, data)
+                    .then(res => {
+                        // res.data
+                        let receive = res.data;
+                        receive.user_name = this.user.full_name;
 
-                let items = this.product.comment.items;
+                        let items = this.product.comment.items;
 
-                let idx = items.findIndex(item => {
-                    return item.id === receive.comment_id;
-                });
+                        let idx = items.findIndex(item => {
+                            return item.id === receive.comment_id;
+                        });
 
-                if (!items[idx].replies) {
-                    items[idx].replies = [];
-                }
+                        if (!items[idx].replies) {
+                            items[idx].replies = [];
+                        }
 
-                items[idx].replies.push(receive);
+                        items[idx].replies.push(receive);
+                        this.replies[comment_id] = '';
+                    })
+                    .catch(err => {
 
-                this.replies[comment_id] = '';
+                    });
             },
             deleteComment: function (comment_id, parent_id) {
                 let data = {
                     comment_id: comment_id,
+                    user_id: this.user_id,
+                    product_id: this.product.id,
                 };
 
                 if (parent_id) {
@@ -300,41 +237,37 @@ $(function () {
                     data.type = 'delete_comment';
                 }
 
-                // Post and receive data
-                let receive = {
-                    status: 'done',
-                    type: data.type,
-                    comment_id: data.comment_id,
-                };
+                axios.post('/product/view/' + this.product.id, data)
+                    .then(res => {
+                        // res.data
+                        let receive = res.data;
 
-                if (parent_id) {
-                    receive.parent_id = parent_id;
-                }
+                        let comments = this.product.comment.items;
 
-                console.log(receive);
+                        if (receive.status === 'done') {
+                            if (receive.type === 'delete_comment') {
+                                let idx = comments.findIndex(item => {
+                                    return item.id === receive.comment_id;
+                                });
+                                comments.splice(idx, 1);
+                            } else {
+                                let idx = comments.findIndex(item => {
+                                    return item.id === receive.parent_id;
+                                });
+                                let replies = comments[idx].replies;
+                                idx = replies.findIndex(item => {
+                                    return item.id === receive.comment_id;
+                                });
+                                replies.splice(idx, 1);
 
-                let comments = this.product.comment.items;
+                                comments.push({});
+                                comments.pop();
+                            }
+                        }
+                    })
+                    .catch(err => {
 
-                if (receive.status === 'done') {
-                    if (receive.type === 'delete_comment') {
-                        let idx = comments.findIndex(item => {
-                            return item.id === receive.comment_id;
-                        });
-                        comments.splice(idx, 1);
-                    } else {
-                        let idx = comments.findIndex(item => {
-                            return item.id === receive.parent_id;
-                        });
-                        let replies = comments[idx].replies;
-                        idx = replies.findIndex(item => {
-                            return item.id === receive.comment_id;
-                        });
-                        replies.splice(idx, 1);
-
-                        comments.push({});
-                        comments.pop();
-                    }
-                }
+                    });
             },
         },
     });
