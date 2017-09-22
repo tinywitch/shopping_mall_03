@@ -68,9 +68,8 @@ $(document).ready(function () {
             getCurrentUser: function () {
                 axios.get('/getCurrentUser')
                     .then(response => {
-                        console.log(response.data.status);
-
                         if (response.data.status !== 0) {
+                            console.log(response.data.status);
                             this.user = response.data.current_user;
 
                             if (this.user.id === "1")

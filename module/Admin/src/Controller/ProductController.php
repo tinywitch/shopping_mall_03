@@ -127,7 +127,10 @@ class ProductController extends AbstractActionController
                 $httpadapter->setDestination('public/img/products/');
                 $httpadapter->receive();
                 $data['image'] = $httpadapter->getFileName();
-                $data['image'] = ltrim($data['image'], "public");
+                if ($data['image'] != null){
+                    $data['image'] = ltrim($data['image'], "public");
+                }
+
                 
                 $this->productManager->addNewProduct($data);             
                 

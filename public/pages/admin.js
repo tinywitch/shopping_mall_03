@@ -16,12 +16,12 @@ $(document).ready(function () {
             messages: [],
             text: '',
             user: '',
-            isChatBoxClosed: false,
+            isChatBoxClosed: true,
             chatlist: [],
             current_chatroom: '',
             current_chatting_user: 'Chat',
             isInited: true,
-            isChatListClosed: false,
+            isChatListClosed: true,
         },
         created: function () {
              this.getCurrentUser();
@@ -67,7 +67,7 @@ $(document).ready(function () {
             getCurrentUser: function () {
                 axios.get('/getCurrentUser')
                     .then(response => {
-                        this.user = response.data;
+                        this.user = response.data.current_user;
                         if (response.data !== '')
                         {
                             this.getChatrooms();

@@ -403,7 +403,7 @@ class Product
     {
         $product_masters = $this->getProductMasters();
         $product_color_images = $this->getProductColorImages();
-
+        $size_and_images = [];
         // get Size each Color
         foreach ($product_masters as $pm){
             if ($size_and_images[$pm->getColorId()] == null) {
