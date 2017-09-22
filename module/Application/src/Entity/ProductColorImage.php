@@ -8,11 +8,22 @@ use Application\Entity\Product;
 
 /**
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\Application\Repository\ProductColorImageRepository")
  * @ORM\Table(name="product_color_images")
  */
 class ProductColorImage
 {
-
+    private $list_color = [
+                ProductMaster::WHITE => 'white',
+                ProductMaster::BLACK => 'black',
+                ProductMaster::YELLOW => 'yellow',
+                ProductMaster::RED => 'red',
+                ProductMaster::GREEN => 'green',
+                ProductMaster::PURPLE => 'purple',
+                ProductMaster::ORANGE => 'orange',
+                ProductMaster::BLUE => 'blue',
+                ProductMaster::GREY => 'grey',
+                ];
     /**
      * @ORM\ManyToOne(targetEntity="\Application\Entity\Product", inversedBy="product_color_images")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
@@ -111,6 +122,23 @@ class ProductColorImage
     public function setDateCreated($date_created) 
     {
         $this->date_created = $date_created;
+    }
+
+
+    public function getColorInWord()
+    {
+        return $this->list_color[$this->getColorId()];
+
+    }
+    public function getMainImage() 
+    {
+        $images = $this->getImages();
+        
+        foreach ($images as $image) {
+            if($image->getType() == 1)
+                return $image->getImage();
+        }
+
     }
 
 }

@@ -11,6 +11,24 @@ use Zend\File\Transfer\Adapter\Http;
 
 class ProductController extends AbstractActionController
 {
+    private $list_color = [
+                ProductMaster::WHITE => 'white',
+                ProductMaster::BLACK => 'black',
+                ProductMaster::YELLOW => 'yellow',
+                ProductMaster::RED => 'red',
+                ProductMaster::GREEN => 'green',
+                ProductMaster::PURPLE => 'purple',
+                ProductMaster::ORANGE => 'orange',
+                ProductMaster::BLUE => 'blue',
+                ProductMaster::GREY => 'grey',
+                ];
+    private $list_size = [
+                ProductMaster::S => 'S',
+                ProductMaster::M => 'M',
+                ProductMaster::L => 'L',
+                ProductMaster::XL => 'XL',
+                ProductMaster::XXL => 'XXL',
+                ];
     /**
      * Entity manager.
      * @var Doctrine\ORM\EntityManager
@@ -33,24 +51,7 @@ class ProductController extends AbstractActionController
      * @var Admin\Service\ImageManager
      */
     private $imageManager;
-    private $list_color = [
-                ProductMaster::WHITE => 'White',
-                ProductMaster::BLACK => 'Black',
-                ProductMaster::YELLOW => 'Yellow',
-                ProductMaster::RED => 'Red',
-                ProductMaster::GREEN => 'Green',
-                ProductMaster::PURPLE => 'Purple',
-                ProductMaster::ORANGE => 'Orange',
-                ProductMaster::BLUE => 'Blue',
-                ProductMaster::GREY => 'Grey',
-                ];
-    private $list_size = [
-                ProductMaster::S => 'S',
-                ProductMaster::M => 'M',
-                ProductMaster::L => 'L',
-                ProductMaster::XL => 'XL',
-                ProductMaster::XXL => 'XXL',
-                ];
+
     /**
      * Constructor is used for injecting dependencies into the controller.
      */
@@ -80,10 +81,9 @@ class ProductController extends AbstractActionController
 
     public function listAction(){
         $products = $this->entityManager->getRepository(Product::class)->findAll();
-        
+    
         return new ViewModel([
             'products' => $products,
-            'list_color' => $this->list_color
         ]);
     }
 
@@ -100,7 +100,7 @@ class ProductController extends AbstractActionController
         }
 
         $size_and_images = $product->getSizeAndImageEachColors();
-
+        
         return new ViewModel([
             'product' => $product,
             'size_and_images' => $size_and_images,

@@ -18,6 +18,12 @@ class OrderController extends AbstractActionController
 
     function trackAction()
     {
+        if ($this->getRequest()->isPost()) {
+
+            $data = $this->getRequest()->getContent();
+            $data = json_decode($data);
+        }
+
         $view = new ViewModel([
 
         ]);
@@ -27,6 +33,12 @@ class OrderController extends AbstractActionController
 
     function viewAction()
     {
+        if ($this->getRequest()->isPost()) {
+
+            $data = $this->getRequest()->getContent();
+            $data = json_decode($data);
+        }
+
         $view = new ViewModel([
 
         ]);

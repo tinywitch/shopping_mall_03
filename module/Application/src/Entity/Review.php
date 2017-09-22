@@ -32,7 +32,7 @@ class Review
     public function setUser($user) 
     {
         $this->user = $user;
-        $user->addComment($this);
+        $user->addReview($this);
     }
     /**
      * @ORM\ManyToOne(targetEntity="\Application\Entity\Product", inversedBy="reviews")
@@ -121,6 +121,21 @@ class Review
     public function setDateCreated($date_created) 
     {
         $this->date_created = $date_created;
+    }
+
+    public function getInfoReview()
+    {
+        $item['id'] = $this->getId();
+        $item['rate'] = $this->getRate();
+        $item['user_name'] = $this->getUser()->getName();
+        if ($this->getUser()->getAddress() != null ) {
+            $item['province'] = $this->getUser()->getAddress()
+                ->getDistrict()->getProvince()->getName();
+        } else $item['province'] = null;
+        $item['content'] = $this->getContent();
+        $item['date_created'] = $this->getDateCreated();
+
+        return $item;
     }
     
 }

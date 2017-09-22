@@ -2,8 +2,6 @@ $(function () {
     const order = new Vue({
         el: '#track-order',
         data: {
-            login: false,
-
             track_form: true,
             order_id: '',
             email: '',

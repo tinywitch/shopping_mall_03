@@ -33,7 +33,7 @@ class HomeController extends AbstractActionController
 
     public function indexAction()
     {
-        $newProducts = $this->entityManager->getRepository(Product::class)->findBy(['status'=>Product::STATUS_PUBLISHED], ['date_created'=>'DESC'], 5);
+        $newProducts = $this->entityManager->getRepository(Product::class)->findBy(['status' => Product::STATUS_PUBLISHED], ['date_created' => 'DESC'], 5);
 
         $bestSell = $this->productManager->getBestSellsInCurrentMonth(4);
 
@@ -84,9 +84,15 @@ class HomeController extends AbstractActionController
     public function loaddistrictAction()
     {
         $data = $this->params()->fromPost();
-        $province_id = $data['province_id'];
-        $province = $this->entityManager->getRepository(Province::class)
-            ->find($province_id);
+        if ($data['province_id']) {
+            $province_id = $data['province_id'];
+            $province = $this->entityManager->getRepository(Province::class)
+                ->find($province_id);
+        } else {
+            $province_name = $data['province_name'];
+            $province = $this->entityManager->getRepository(Province::class)
+                ->findOneBy(array('name' => $province_name));;
+        }
 
         if ($province == null) {
             $this->getResponse()->setStatusCode(404);
@@ -100,6 +106,18 @@ class HomeController extends AbstractActionController
 
         $data_json = json_encode($districts_for_select);
         $this->response->setContent($data_json);
+        return $this->response;
+    }
+
+    public function loadprovinceAction()
+    {
+        $provinces = $this->entityManager->getRepository(Province::class)
+            ->findAll();
+        $arr = [];
+        foreach ($provinces as $prov) {
+            array_push($arr, $prov->getName());
+        }
+        $this->response->setContent(json_encode($arr));
         return $this->response;
     }
 }

@@ -1,10 +1,10 @@
 <div class="Timeline">
-    <?php if ($saleProgram->getStatus() == 2) {?>
+    <?php if ($saleProgram->getCurrentStatus() == 2) {?>
         <?php include_once '_date-start-before.phtml';?> 
         <?php include_once '_date-end-before.phtml';?> 
     <?php } ?>
 
-    <?php if ($saleProgram->getStatus() == 0) {?>
+    <?php if ($saleProgram->getCurrentStatus() == 0) {?>
         <?php include_once '_date-start-before.phtml';?> 
     <?php } ?>
 
@@ -17,11 +17,11 @@
         TODAY
     </div>
 
-    <?php if ($saleProgram->getStatus() == 0) {?>
+    <?php if ($saleProgram->getCurrentStatus() == 0) {?>
         <?php include_once '_date-end-after.phtml';?> 
     <?php } ?> 
 
-    <?php if ($saleProgram->getStatus() == 1) {?>
+    <?php if ($saleProgram->getCurrentStatus() == 1) {?>
         <?php include_once '_date-start-after.phtml';?> 
         <?php include_once '_date-end-after.phtml';?>
     <?php } ?> 

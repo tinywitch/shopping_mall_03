@@ -23,6 +23,7 @@ class CartController extends AbstractActionController
     private $sessionContainer;
     private $cartManager;
     private $orderManager;
+
     /**
      * Constructor.
      */
@@ -52,32 +53,6 @@ class CartController extends AbstractActionController
 
     public function checkoutAction()
     {
-        $cookie = $this->getRequest()->getCookie('Cart', 'default');
-        $cart_info = json_decode($cookie["Cart"]);
-        $user = null;
-        if (isset($this->sessionContainer->id)) {
-            $id = $this->sessionContainer->id;
-            $user = $this->entityManager->getRepository(User::class)
-                ->find($id);
-
-            if ($user == null) {
-                $this->getResponse()->setStatusCode(500);
-                return;
-            }
-            $form = new ShippingForm('update', $this->entityManager);
-            $data = [
-                "full_name" => $user->getName(),
-                "address" => $user->getAddress(),
-                "phone" => $user->getPhone(),
-                'user_id' => $user->getId(),
-            ];
-
-            $form->setData($data);
-        } else {
-            $form = new ShippingForm('create', $this->entityManager);
-        }
-
-        // Check if user has submitted the form
         if ($this->getRequest()->isPost()) {
 
             // Fill in the form with POST data
@@ -85,45 +60,46 @@ class CartController extends AbstractActionController
 
             $data = json_decode($data);
 
-            // $data->ship_add->full_name;
-            // $data->ship_add->phone_number;
-            // $data->ship_add->email;
-            // $data->ship_add->province;
-            // $data->ship_add->dist;
-            // $data->ship_add->address;
+            $totalPrice = $data->sub_total + $data->ship_tax;
 
-            // $data->sub_total;
-            // $data->ship_tax;
-            // $totalPrice = $data->sub_total + $data->ship_tax;
+            $data_formated = [
+                'full_name' => $data->ship_add->full_name,
+                'phone_number' => $data->ship_add->phone_number,
+                'email' => $data->ship_add->email,
+                'address' => $data->ship_add->address . ' - ' . $data->ship_add->dist
+                    . ' - ' . $data->ship_add->province,
+                'total_price' => $totalPrice,
+            ];
 
-            // Validate form
-            if (true) {
+//            $this->response->setContent(json_encode($data_formated));
+//            return $this->response;
 
-                // Get filtered and validated data
-                // lay du lieu
-//                $currentDate = date('Y-m-d H:i:s');
-//                $data['date_created'] = $currentDate;
-//                $data['status'] = 1;
-//                $arrItems = $cart_info->items;
-//
-//                $this->orderManager->addNewOrder($data, $cart_info, $arrItems);
-
-                $cookie = new \Zend\Http\Header\SetCookie(
-                    'Cart',
-                    '',
-                    strtotime('-1 Year', time()), // -1 year lifetime (negative from now)
-                    '/'
-                );
-                // $this->getResponse()->getHeaders()->addHeader($cookie); // Xoa cookie
-
-                // response data
-                $res = [
-                    'status' => 'ok',
-                    'order_id' => '12314kj',
-                ];
-
-                print_r(json_encode($res)); die();
+            $cookie = $this->getRequest()->getCookie('Cart', 'default');
+            $cart_info = json_decode($cookie["Cart"]);
+            
+            $sessionContainer = new Container('UserLogin');
+            if (isset($sessionContainer->id)) {
+                $data_formated['user_id'] = $sessionContainer->id;
             }
+            $this->orderManager->addNewOrder($data_formated, $cart_info);
+
+
+            $cookie = new \Zend\Http\Header\SetCookie(
+                'Cart',
+                '',
+                strtotime('-1 Year', time()), // -1 year lifetime (negative from now)
+                '/'
+            );
+             $this->getResponse()->getHeaders()->addHeader($cookie); // Xoa cookie
+
+            // response data
+            $res = [
+                'status' => 'ok',
+                'order_id' => '12314kj',
+            ];
+
+            $this->response->setContent(json_encode($res));
+            return $this->response;
         } else {
 
         }
@@ -134,4 +110,5 @@ class CartController extends AbstractActionController
         $this->layout('application/layout');
         return $view;
     }
+
 }

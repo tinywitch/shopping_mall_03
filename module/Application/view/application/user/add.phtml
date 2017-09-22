@@ -17,10 +17,6 @@ $form->get('full_name')->setAttributes([
     'class' => 'form-control'
 ]);
 
-$form->get('address')->setAttributes([
-    'class' => 'form-control'
-]);
-
 $form->get('phone')->setAttributes([
     'class' => 'form-control'
 ]);
@@ -74,14 +70,6 @@ $form->prepare();
                 <?= $this->formElement($form->get('confirm_password')); ?>
                 <?= $this->formElementErrors($form->get('confirm_password')); ?>
             </div>
-
-            <?php $this->formLabel($form->get('address')); ?>
-            <?php $this->formElement($form->get('address')); ?>
-            <?php $this->formElementErrors($form->get('address')); ?>
-
-            <?php $this->formLabel($form->get('phone')); ?>
-            <?php $this->formElement($form->get('phone')); ?>
-            <?php $this->formElementErrors($form->get('phone')); ?>
 
             <?= $this->formElement($form->get('submit')); ?>
 

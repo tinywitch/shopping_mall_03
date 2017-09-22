@@ -141,10 +141,11 @@ return [
             'category' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route' => '/category[/:action[/:id]]',
+                    'route' => '/category[/:action[/:id[/:color]]]',
                     'constraints' => [
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-zA-Z0-9_-]*',
+                        'color' => '[a-zA-Z0-9_-]*',
                     ],
                     'defaults' => [
                         'controller' => Controller\CategoryController::class,
@@ -223,7 +224,7 @@ return [
             Controller\UserController::class => [
                 // Give access to "resetPassword", "message" and "setPassword" actions
                 // to anyone.
-                ['actions' => ['resetPassword', 'message', 'setPassword', 'add'], 'allow' => '*'],
+                ['actions' => ['resetPassword', 'message', 'setPassword', 'add', 'getinfo'], 'allow' => '*'],
                 // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
                 ['actions' => ['edit', 'view', 'changePassword'], 'allow' => '@']
             ],
@@ -237,7 +238,7 @@ return [
             Controller\ProductController::class => [
                 // Give access to "resetPassword", "message" and "setPassword" actions
                 // to anyone.
-                ['actions' => ['view'], 'allow' => '*'],
+                ['actions' => ['view', 'getinfo'], 'allow' => '*'],
                 // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
                 // ['actions' => ['changePassword'], 'allow' => '@']
             ],

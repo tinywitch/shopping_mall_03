@@ -429,12 +429,35 @@ class Product
 
     public function getColors()
     {
-        $color = [];
+        $colors = [];
         $product_color_images = $this->getProductColorImages();
         foreach ($product_color_images as $pci) {
-            array_push($color, $pci->getColorId());
+            array_push($colors, $pci->getColorId());
         }
 
-        return $color;
+        return $colors;
+    }
+
+    public function getColorsInWord()
+    {
+        $colors = [];
+        $product_color_images = $this->getProductColorImages();
+        foreach ($product_color_images as $pci) {
+            array_push($colors, $pci->getColorInWord());
+        }
+
+        return $colors;
+    }
+
+    public function getMainComments()
+    {
+        $mainComments = [];
+        foreach ($this->comments as $c) {
+            if ($c->getParentId() == null) {
+                array_push($mainComments, $c);
+            }
+        }
+
+        return $mainComments;
     }
 }

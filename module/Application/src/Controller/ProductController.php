@@ -5,6 +5,7 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Entity\Product;
+use Application\Entity\ProductMaster;
 use Application\Entity\Product_image;
 use Zend\Session\Container;
 use Application\Form\CommentForm;
@@ -27,6 +28,25 @@ class ProductController extends AbstractActionController
 
     private $productManager;
 
+    private $list_color = [
+        ProductMaster::WHITE => 'white',
+        ProductMaster::BLACK => 'black',
+        ProductMaster::YELLOW => 'yellow',
+        ProductMaster::RED => 'red',
+        ProductMaster::GREEN => 'green',
+        ProductMaster::PURPLE => 'purple',
+        ProductMaster::ORANGE => 'orange',
+        ProductMaster::BLUE => 'blue',
+        ProductMaster::GREY => 'grey',
+    ];
+    private $list_size = [
+        ProductMaster::S => 'S',
+        ProductMaster::M => 'M',
+        ProductMaster::L => 'L',
+        ProductMaster::XL => 'XL',
+        ProductMaster::XXL => 'XXL',
+    ];
+
     /**
      * Constructor.
      */
@@ -42,45 +62,202 @@ class ProductController extends AbstractActionController
      */
     public function viewAction()
     {
-        $productId = (int)$this->params()->fromRoute('id', -1);
-        
-        $product_data = $this->productManager->getDataProductDetail($productId);           
-        if ($product_data == null) {
-            echo "Product Not Found";
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-        
 //        $comments = $product->getComments();
 //        $commentCount = $this->productManager->getCommentCountStr($product);
 
 //        $comment_form = new CommentForm();
-//
-        if($this->getRequest()->isPost()) {
+        $productId = $this->params()->fromRoute('id', -1);
 
-            $data = $this->params()->fromPost();
-            print_r($data); die();
-//            $comment_form->setData($data);
-//            if($comment_form->isValid()) {
-//
-//                // Get validated form data.
-//                $data = $comment_form->getData();
-//                $data['user_id'] = $this->sessionContainer->id;
-//                // Use product manager service to add new comment to product.
-//                $this->productManager->addCommentToProduct($product, $data);
-//
-//                // Redirect the user again to "view" page.
-//                return $this->redirect()->toRoute('product', ['action'=>'view', 'id' => $id]);
-//            }
+        $product = $this->entityManager->getRepository(Product::class)
+            ->findOneById($productId);
+
+        if ($product == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+
+        if ($this->getRequest()->isPost()) {
+
+            $data = $this->getRequest()->getContent();
+            $data = json_decode($data);
+
+            switch ($data->type) {
+                case 'comment':
+
+                    // db
+                    // $data->content
+                    // $data->user_id
+                    // $data->product_id
+
+                    $res = [
+                        'content' => $data->content,
+                        'user_id' => $data->user_id,
+                    ];
+                    $comment = $this->productManager->addComment($product, $res);
+                    $res['id'] = $comment->getId();
+                    $this->response->setContent(json_encode($res));
+                    break;
+                case 'reply':
+
+                    //db
+                    // $data->content
+                    // $data->user_id
+                    // $data->product_id
+                    // $data->comment_id // parent comment
+
+                    $res = [
+                        'comment_id' => $data->comment_id,
+                        'user_id' => $data->user_id,
+                        'content' => $data->content,
+                    ];
+                    $comment = $this->productManager->addComment($product, $res);
+                    $res['id'] = $comment->getId();
+                    $this->response->setContent(json_encode($res));
+                    break;
+                case 'review':
+
+                    // database
+                    // $data->user_id
+                    // $data->product_id
+                    // $data->review->rate
+                    // $data->review->content
+
+                    $res = [
+                        'rate' => $data->review->rate,
+                        'user_id' => $data->user_id,
+                        'content' => $data->review->content,
+                    ];
+                    $review = $this->productManager->addReview($product, $res);
+                    $res['id'] = $review->getId();
+                    $this->response->setContent(json_encode($res));
+                    break;
+                case 'delete_comment':
+                    // database
+                    // $data->user_id
+                    // $data->product_id
+                    // $data->comment_id
+
+                    $res = [
+                        'comment_id' => $data->comment_id,
+                        'type' => $data->type,
+                    ];
+                    $this->productManager->deleteComment($res);
+                    $res['status'] = 'done';
+                    $this->response->setContent(json_encode($res));
+                    break;
+                case 'delete_reply':
+                    // database
+                    // $data->user_id
+                    // $data->product_id
+                    // $data->comment_id
+                    // $data->parent_id
+
+                    $res = [
+                        'comment_id' => $data->comment_id,
+                        'type' => $data->type,
+                        'parent_id' => $data->parent_id,
+                    ];
+                    $this->productManager->deleteComment($res);
+                    $res['status'] = 'done';
+                    $this->response->setContent(json_encode($res));
+                    break;
+                default:
+                    $this->response->setContent(json_encode('error'));
+            }
+
+            return $this->response;
         }
         $view = new ViewModel([
-            'user_id' => $this->sessionContainer->id,
-//            'commentCount' => $commentCount,
-//            'comment_form' => $comment_form,
-//            'comments' => $comments,
-            'product' => $product
+
         ]);
         $this->layout('application/layout');
         return $view;
+    }
+
+    public function getinfoAction()
+    {
+        $productId = $this->params()->fromRoute('id', -1);
+
+        $product = $this->entityManager->getRepository(Product::class)
+            ->findOneById($productId);
+
+        if ($product == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+
+        // get color in word 
+        $colors = $product->getColors();
+        $colors_in_word = [];
+        foreach ($colors as $c) {
+            array_push($colors_in_word, $this->list_color[$c]);
+        }
+        // get color in word
+        $colors = $product->getColors();
+        $colors_in_word = [];
+        foreach ($colors as $c) {
+            array_push($colors_in_word, $this->list_color[$c]);
+        }
+
+        // get size and image each Color
+        $size_and_images = $product->getSizeAndImageEachColors();
+
+        foreach ($size_and_images as $key => $s_a_i) {
+            $sizes_each_color[$this->list_color[$key]] = [];
+            $images_each_color[$this->list_color[$key]] = [];
+
+            foreach ($s_a_i['size'] as $size) {
+                array_push($sizes_each_color[$this->list_color[$key]], $this->list_size[$size]);
+            }
+
+            array_push($images_each_color[$this->list_color[$key]], $s_a_i['image'][0]);
+            foreach ($s_a_i['image'][1] as $img) {
+                array_push($images_each_color[$this->list_color[$key]], $img);
+            }
+        }
+
+        // get Review
+        $reviews = $product->getReviews();
+        $review_items = [];
+        foreach ($reviews as $r) {
+            $item = $r->getInfoReview();
+            array_push($review_items, $item);
+        }
+
+        //comment
+        $comments = $product->getMainComments();
+        $comment_items = [];
+        foreach ($comments as $c) {
+            $item = $c->getInfoComment();
+            array_push($comment_items, $item);
+        }
+
+        $data = [
+            'id' => $product->getId(),
+            'name' => $product->getName(),
+            'price' => $product->getPrice(),
+            'rate_sum' => $product->getRateSum(),
+            'rate_count' => $product->getRateCount(),
+            'review' => [
+                'size' => 10,
+                'page' => 1,
+                'total' => 120,
+                'items' => $review_items,
+            ],
+            'comment' => [
+                'size' => 10,
+                'page' => 1,
+                'total' => 30,
+
+                'items' => $comment_items,
+            ],
+            'colors' => $colors_in_word,
+            'sizes' => $sizes_each_color,
+            'images' => $images_each_color,
+            'intro' => $product->getIntro(),
+        ];
+
+        $this->response->setContent(json_encode($data));
+        return $this->response;
     }
 }

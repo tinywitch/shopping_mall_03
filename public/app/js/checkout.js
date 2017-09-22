@@ -21,22 +21,31 @@ $(function () {
         },
         mounted: function () {
             this.fetchShipAddress();
-            this.selected_state = this.ship_add.province;
-            this.selectState();
-            this.selected_dist = this.ship_add.dist;
+            this.fetchProvince();
         },
         methods: {
             fetchShipAddress: function () {
-                let add = {
-                    full_name: 'Nguyen Phuc Long',
-                    phone_number: '012345678',
-                    email: 'admin@gmail.com',
-                    province: 'Ha Noi',
-                    dist: 'Hai Ba Trung',
-                    address: 'No1 - Dai Co Viet',
-                };
-                this.login = true;
-                this.ship_add = add;
+                axios.get('/user/getinfo')
+                    .then(res => {
+                        if (res.data.login) {
+                            this.login = true;
+                            this.ship_add = res.data.user;
+
+                            if (this.ship_add.province) {
+                                this.selected_state = this.ship_add.province;
+                                this.selectState();
+                            }
+
+                            this.selected_dist = this.ship_add.district ? this.ship_add.district : '';
+                        } else {
+                            this.login = false;
+                        }
+                        this.selected_state = this.ship_add.province;
+                        this.selectState();
+                        this.selected_dist = this.ship_add.dist;
+                    })
+                    .catch(err => {
+                    });
             },
             // selectState: function () {
             //     this.districts = address[this.selected_state];
@@ -50,7 +59,6 @@ $(function () {
                     sub_total: this.sub_total,
                     ship_tax: this.ship_tax,
                 };
-                console.log(data);
 
                 if (!this.validateData(data.ship_add)) {
                     Snackbar.pushMessage('You must fill all information.', 'warning');
@@ -60,15 +68,14 @@ $(function () {
                 // post data and receive order_id
                 axios.post('/cart/checkout', data)
                     .then(res => {
-                        console.log(res.data);
                         // show success page
+                        console.log(res.data);
                         if (res.data.status === 'ok') {
                             this.success = true;
                             this.order_id = res.data.order_id;
                         }
                     })
                     .catch(error => {
-                        console.log(error);
                     });
             },
             validateData: function (data) {

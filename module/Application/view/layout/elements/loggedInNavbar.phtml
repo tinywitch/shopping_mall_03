@@ -1,4 +1,7 @@
 <ul id="hlink" class="nav navbar-nav navbar-right hidden-xs hidden-sm">
+    <?php if ($user["id"] == 1) { ?>
+    <li><a href="/admin">Admin</a></li>
+    <?php }; ?>
     <li><a href="/">Home</a></li>
     <li>
         <a href="/order">

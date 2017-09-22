@@ -307,39 +307,39 @@
     border: 1px solid #ddd; 
 }
 
-.color-1 {
+.color-white {
     background-color: white;  
 }
 
-.color-5 {
+.color-green {
     background-color: green;
 }
 
-.color-3{
+.color-yellow {
     background-color: yellow;
 }
 
-.color-2 {
+.color-black {
     background-color: black;
 }
 
-.color-4 {
+.color-red {
     background-color: red;
 }
 
-.color-6 {
+.color-purple {
     background-color: purple;
 }
 
-.color-7 {
+.color-orange {
     background-color: orange;
 }
 
-.color-8 {
+.color-blue {
     background-color: blue;
 }
 
-.color-9 {
+.color-grey {
     background-color: grey;
 }
 

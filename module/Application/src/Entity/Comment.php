@@ -2,6 +2,7 @@
 namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Application\Entity\Product;
 use Application\Entity\User;
 /**
@@ -11,10 +12,53 @@ use Application\Entity\User;
 class Comment
 {
     /**
+     * One Comment has Many Comments.
+     * @ORM\OneToMany(targetEntity="\Application\Entity\Comment", mappedBy="parent")
+     */
+    private $childrens;
+
+    /**
+     * Many Comments have One Comment.
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\Comment", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     */
+    private $parent;
+    /**
+     * @ORM\OneToMany(targetEntity="\Application\Entity\Product", mappedBy="category")
+     * @ORM\JoinColumn(name="id", referencedColumnName="category_id")
+     */
+    /**
      * @ORM\ManyToOne(targetEntity="\Application\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
+
+    public function __construct() 
+    {
+        $this->childrens = new ArrayCollection();
+    }
+
+    public function getChildrens() 
+    {
+        return $this->childrens;
+    }
+
+    public function addChildrens($children) 
+    {
+        $this->childrens[] = $children;
+    }
+
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
+        $parent->addChildrens($this);
+    }
+    
     /*
      * Returns associated user.
      * @return \Application\Entity\User
@@ -133,5 +177,23 @@ class Comment
     public function setParentId($parent_id)
     {
         $this->parent_id = $parent_id;
+    }
+
+    public function getInfoComment()
+    {
+        $item['id'] = $this->getId();
+        $item['user_id'] = $this->getUser()->getId();
+        $item['user_name'] = $this->getUser()->getName();
+        $item['content'] = $this->getContent();
+        $item['replies'] = [];
+        foreach ($this->getChildrens() as $reply) {
+            $item_reply['id'] = $reply->getId();
+            $item_reply['user_id'] = $reply->getUser()->getId();
+            $item_reply['user_name'] = $reply->getUser()->getName();
+            $item_reply['content'] = $reply->getContent();
+            array_push($item['replies'], $item_reply);
+        }
+
+        return $item;
     }
 }

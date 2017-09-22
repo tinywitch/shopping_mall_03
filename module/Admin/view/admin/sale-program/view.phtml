@@ -1,6 +1,34 @@
-<h2>Sale Programs: <?php echo $saleProgram->getName() ?></h2>
+<?php 
+    function statusInWord($status)
+    {
+        $sta = ["Active", "Pending", "Done", "Cancel"];
+        return $sta[$status];
+    }
+?>
 <div class="row">
-    <div class="col-sm-2"></div>
+    <div class="col-md-8">
+        <h2>
+            Sale Programs: <?php echo $saleProgram->getName() ?>
+            (<?php echo $status_of_status ?>)
+        </h2>
+    </div>
+    <div class="col-md-2">
+        <span class="now color-green"><?php echo statusInWord($saleProgram->getStatus()) ?></span>
+        <?php if ($saleProgram->getStatus() != $saleProgram->getCurrentStatus()) { ?>
+            <span><i class="fa fa-hand-o-right"></i></span>
+            <a href="<?= $this->url('sale_programs',
+                ['action' => 'setStatus', 'id' => $saleProgram->getId()]) ?>">
+                <button class="now">
+                    <?php echo statusInWord($saleProgram->getCurrentStatus()) ?>
+                </button>
+            </a>
+        <?php } ?>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-2">
+
+    </div>
     <div class="col-sm-8">
         <?php include_once '_timeline.phtml';?>
     </div>

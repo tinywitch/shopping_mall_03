@@ -55,13 +55,13 @@ class UserController extends AbstractActionController
                 // The below check is to prevent possible redirect attack
                 // (if someone tries to redirect user to another domain).
                 $uri = new Uri($redirectUrl);
-                if (!$uri->isValid() || $uri->getHost()!=null)
+                if (!$uri->isValid() || $uri->getHost() != null)
                     throw new \Exception('Incorrect redirect URL: ' . $redirectUrl);
             }
 
             // If redirect URL is provided, redirect the user to that URL;
             // otherwise redirect to Home page.
-            if(empty($redirectUrl)) {
+            if (empty($redirectUrl)) {
                 return $this->redirect()->toRoute('home');
             } else {
                 $this->redirect()->toUrl($redirectUrl);
@@ -136,6 +136,48 @@ class UserController extends AbstractActionController
         return $view;
     }
 
+    public function getinfoAction()
+    {
+        if (isset($this->sessionContainer->id)) {
+            $id = $this->sessionContainer->id;
+
+            // Find a user with such ID.
+            $user = $this->entityManager->getRepository(User::class)
+                ->find($id);
+
+            if ($user == null) {
+                $this->getResponse()->setStatusCode(404);
+                return;
+            } else {
+                $data = [
+                    'login' => true,
+                    'user' => [
+                        'id' => $user->getId(),
+                        'full_name' => $user->getName(),
+                        'email' => $user->getEmail(),
+                        'phone_number' => $user->getPhone(),
+                    ],
+                ];
+
+                if ($user->getAddress() != null) {
+                    $data['user']['province'] = $user->getAddress()->getDistrict()->getProvince()->getName();
+                    $data['user']['district'] = $user->getAddress()->getDistrict()->getName();
+                    $data['user']['address'] = $user->getAddress()->getAddress();
+                }
+
+                $this->response->setContent(json_encode($data));
+                return $this->response;
+            }
+        } else {
+            $data = [
+                'login' => false,
+            ];
+
+            $this->response->setContent(json_encode($data));
+            return $this->response;
+        }
+    }
+
     /**
      * The "edit" action displays a page allowing to edit user.
      */
@@ -198,11 +240,12 @@ class UserController extends AbstractActionController
                 'email' => $user->getEmail(),
                 'phone' => $user->getPhone()
             ];
+
             if($user->getAddress()!=NULL){
                 $data['province']= $user->getAddress()->getDistrict()->getProvince()->getId();
                 $data['district']= $user->getAddress()->getDistrict()->getId();
                 $data['address'] = $user->getAddress()->getAddress();
-                
+
                 $province_id = $data['province'];
                 $province = $this->entityManager->getRepository(Province::class)
                     ->find($province_id);
@@ -212,7 +255,7 @@ class UserController extends AbstractActionController
                     $districts_for_select[$d->getId()] = $d->getName();
                 }
                 $form->get('district')->setOptions([
-                    'value_options' => $districts_for_select,  
+                    'value_options' => $districts_for_select,
                 ]);
 
             }
