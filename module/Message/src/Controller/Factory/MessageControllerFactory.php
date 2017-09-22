@@ -9,6 +9,7 @@
 namespace Message\Controller\Factory;
 
 
+use Application\Service\UserManager;
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
 use Message\Controller\MessageController;
@@ -40,8 +41,9 @@ class MessageControllerFactory implements FactoryInterface
         $messageManager = $container->get(MessageManager::class);
         $sessionManager = $container->get(SessionManager::class);
         $authService = $container->get(\Zend\Authentication\AuthenticationService::class);
+        $userManager = $container->get(UserManager::class);
 
         // Instantiate the controller and inject dependencies
-        return new MessageController($entityManager, $sessionManager, $messageManager, $authService);
+        return new MessageController($entityManager, $sessionManager, $userManager, $messageManager, $authService);
     }
 }

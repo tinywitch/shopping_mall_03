@@ -11,6 +11,7 @@ namespace Message\Service;
 
 use Doctrine\ORM\EntityManager;
 use Message\Entity\Message;
+use Zend\Session\Container;
 
 class MessageManager
 {

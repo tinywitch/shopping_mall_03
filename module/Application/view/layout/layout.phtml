@@ -76,8 +76,8 @@
         <span style="color: #000;"><b>{{notifyMessage}}.</b></span>
         <md-button @click="notifyActionAdapter" style="color: #000;">{{ notifyAction }}</md-button>
     </md-snackbar>
-    <div id="chatbox">
-        <div class="chat_window">
+    <div id="chatbox" v-if="isLogedIn">
+        <div class="chat_window" style="right: 10px">
             <div class="top_menu" >
                 <div class="buttons">
                     <div class="button close" @click="closeChatbox()"></div>
@@ -86,7 +86,7 @@
                 </div>
                 <div class="title">{{ current_chatting_user }}</div>
             </div>
-            <div v-if="!isClosed">
+            <div v-if="!isChatBoxClosed">
                 <ul id="messages_list" class="messages" v-chat-scroll>
                     <div v-for="message in messages" >
                         <li class="message left appeared" v-if="message.sender_id != user.id" >

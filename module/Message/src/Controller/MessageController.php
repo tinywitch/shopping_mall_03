@@ -45,12 +45,15 @@ class MessageController extends AbstractActionController
      */
     private $sessionManager;
 
+    private $userManager;
+
     /**
      * Constructor.
      */
     public function __construct(
         $entityManager,
         $sessionManager,
+        $userManager,
         MessageManager $messageManager,
         AuthenticationService $authService
     )
@@ -59,6 +62,7 @@ class MessageController extends AbstractActionController
         $this->messageManager = $messageManager;
         $this->authService = $authService;
         $this->sessionManager = $sessionManager;
+        $this->userManager = $userManager;
     }
 
     public function sendMessageAction()
@@ -83,16 +87,18 @@ class MessageController extends AbstractActionController
 
     public function getMessagesAction()
     {
-        $user = $this->entityManager
-            ->getRepository(User::class)
-            ->findOneBy(['email' => $this->authService->getIdentity()]);
+        $user = $this->userManager->currentUser();
         $chatroom = $this->entityManager
             ->getRepository(Chatroom::class)
             ->findOneBy(['user' => $user->getId()]);
         $messages = $this->messageManager->messages($chatroom->getId());
         $response = $this->getResponse();
-        $response->setContent(json_encode($messages));
-
+        $response->setContent(json_encode([
+                'messages' => $messages,
+                'chatroom_id' => $chatroom->getId(),
+            ]
+        ));
+//        $response->setContent(json_encode($user));
         return $response;
     }
 
@@ -103,6 +109,8 @@ class MessageController extends AbstractActionController
             ->getRepository(Chatroom::class)
             ->findAll();
         foreach ($chatrooms as $chatroom) {
+            if ($chatroom->getUser() == 1)
+                continue;
             $msg = $this->entityManager
                 ->getRepository(Message::class)
                 ->findBy(['chatroom_id' => $chatroom->getId()], ['id' => 'ASC']);

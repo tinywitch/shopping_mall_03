@@ -3,14 +3,11 @@ $(document).ready(function () {
     var socket = io.connect('http://shopping.app:8056/');
 
     function emitMessage(message) {
-        console.log(socket);
-        console.log(message);
         socket.emit('new message', message);
     }
 
     socket.on('new message', msg => {
         app.messages.push(msg);
-        console.log(msg);
     });
 
     var app = new Vue({
@@ -19,14 +16,16 @@ $(document).ready(function () {
             messages: [],
             text: '',
             user: '',
-            isChatBoxClosed: true,
-            chatrooms: [],
+            isChatBoxClosed: false,
+            chatlist: [],
             current_chatroom: '',
             current_chatting_user: 'Chat',
-            isLogedIn: false,
+            isInited: true,
+            isChatListClosed: false,
         },
         created: function () {
-            this.getCurrentUser();
+             this.getCurrentUser();
+
         },
 
         methods: {
@@ -40,7 +39,7 @@ $(document).ready(function () {
             getChatrooms: function () {
                 axios.get('/getchatrooms')
                     .then(response => {
-                        this.chatrooms = response.data;
+                        this.chatlist = response.data;
                     })
             },
             sendMessage: function () {
@@ -68,17 +67,10 @@ $(document).ready(function () {
             getCurrentUser: function () {
                 axios.get('/getCurrentUser')
                     .then(response => {
-                        console.log(response.data.status);
-
-                        if (response.data.status !== 0) {
-                            this.user = response.data.current_user;
-
-                            if (this.user.id === "1")
-                                this.getChatrooms();
-                            else {
-                                this.isLogedIn = true;
-                                this.getMessages();
-                            }
+                        this.user = response.data;
+                        if (response.data !== '')
+                        {
+                            this.getChatrooms();
 
                         }
                     });
@@ -91,12 +83,18 @@ $(document).ready(function () {
             openChatbox: function () {
                 this.isChatBoxClosed = false;
             },
+            closeChatList: function () {
+                this.isChatListClosed = true;
+            },
+            openChatList: function () {
+                this.isChatListClosed = false;
+            },
 
             openChatroom: function (id) {
-                cr = this.chatrooms.find(c => c.id === id);
+                cr = this.chatlist.find(c => c.id === id);
                 this.messages = cr.messages;
                 this.current_chatroom = id;
-                this.current_chatting_user = cr.user.fullname;
+                this.current_chatting_user = cr.user.name;
                 this.openChatbox();
             }
         }
