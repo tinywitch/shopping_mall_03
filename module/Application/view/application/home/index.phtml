@@ -1,59 +1,31 @@
 <div id="content">
     <div class="container-fluid">
-        <div class="col-sm-4">
-            <div class="media">
-                <a class="media-left" href="#">
-                    <img class="media-object" src="app/img/img1.png" alt="Generic placeholder image">
-                </a>
-                <div class="media-body">
-                    <h4 class="media-heading home-sm-title sm">Get something you love</h4>
-                    <p>More than a million independent sellers from everywhere are right here</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-4">
-            <div class="media">
-                <a class="media-left" href="#">
-                    <img class="media-object" src="app/img/img2.png" alt="Generic placeholder image">
-                </a>
-                <div class="media-body">
-                    <h4 class="media-heading home-sm-title sm">Find your new favourite shop</h4>
-                    <p>More than a million independent sellers from everywhere are right here</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-4">
-            <div class="media">
-                <a class="media-left" href="#">
-                    <img class="media-object" src="app/img/img3.png" alt="Generic placeholder image">
-                </a>
-                <div class="media-body">
-                    <h4 class="media-heading home-sm-title sm">Buy safely and securely</h4>
-                    <p>More than a million independent sellers from everywhere are right here</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-fluid">
         <div>
             <h2 class="home-content-title recently_viewed">Trending on Infini Shop</h2>
             <div class="clearfix">
-                <?php foreach ($bestSellProducts as $bestSellProduct) :?>
-                <div class="col-sm-3">
-                    <div class="card">
-                        <img class="card-img-top img-responsive" src="<?= $this->basePath($bestSellProduct->getImage()) ?>" alt="Card image cap">
-                        <div class="card-block sm card-block-new" onclick="location.href = '/product/view/<?php echo $bestSellProduct->getId(); ?>';">
-                            <p class="card-title"><?= $bestSellProduct->getName()?></p>
-                            <div class="clearfix">
-                                <span class="card-shop-name pull-left">B & O</span>
-                                <span class="card-price pull-right">US$<?= $bestSellProduct->getPrice()?></span>
+                <?php foreach ($bestSellProducts as $bestSellProduct) : ?>
+                    <div class="col-sm-2">
+                        <div class="card clearfix">
+                            <?php if ($bestSellProduct->getCurrentSale() > 0) { ?>
+                                <div class="badge badge-sale">Sale</div>
+                            <?php }; ?>
+                            <img class="card-img-top img-responsive"
+                                 src="<?= $this->basePath($bestSellProduct->getImage()) ?>"
+                                 onclick="location.href = '/product/view/<?php echo $bestSellProduct->getId(); ?>';">
+                            <div class="card-block sm card-block-new"
+                                 onclick="location.href = '/product/view/<?php echo $bestSellProduct->getId(); ?>';">
+                                <p class="card-title"><?= $bestSellProduct->getName() ?></p>
+                                <div class="clearfix">
+                                <span class="card-shop-name pull-left">
+                                    <a href="/category/view/<?php echo $bestSellProduct->getCategory()->getId(); ?>">
+                                        <?php echo $bestSellProduct->getCategory()->getName(); ?>
+                                    </a>
+                                </span>
+                                    <span class="card-price pull-right">$<?= $bestSellProduct->getCurrentPrice() ?></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -62,26 +34,28 @@
             <h2 class="home-content-title">Sale</h2>
             <div class="clearfix">
                 <?php foreach ($bestSaleProducts as $product) : ?>
-                <div class="col-sm-2 sm-2">
-                    <!-- <div class="card">
-                        <img class="card-img-top img-responsive" src="app/img/05pro1.jpg" alt="Card image cap">
-                        <div class="card-block sm card-block-sc">
-                            <p class="card-title"><a href="categorylist.html">APPLE ACCESSORIES</a></p>
+                    <div class="col-sm-2">
+                        <div class="card">
+                            <?php if ($product->getCurrentSale() > 0) { ?>
+                                <div class="badge badge-sale">Sale</div>
+                            <?php }; ?>
+                            <img class="card-img-top img-responsive"
+                                 src="<?= $this->basePath($product->getImage()) ?>"
+                                 onclick="location.href='/product/view/<?php echo $product->getId(); ?>';">
+                            <div class="card-block sm card-block-new"
+                                 onclick="location.href = '/product/view/<?php echo $product->getId(); ?>';">
+                                <p class="card-title"><?= $product->getName(); ?></p>
                                 <div class="clearfix">
-                                <span class="card-shop-name pull-left">plains shopwood</span>
-                                <span class="card-price pull-right">US$200</span>
+                                <span class="card-shop-name pull-left">
+                                    <a href="/category/view/<?php echo $product->getCategory()->getId(); ?>">
+                                        <?php echo $product->getCategory()->getName(); ?>
+                                    </a>
+                                </span>
+                                    <span class="card-price pull-right">$<?= $product->getCurrentPrice() ?></span>
+                                </div>
                             </div>
                         </div>
-                    </div> --> 
-                    <div class="col-sm-2 sm-2">
-                    <div class="card">
-                        <img class="card-img-top img-responsive" src="<?= $this->basePath($product->getImage()) ?>" alt="Card image cap">
-                        <div class="card-block sm card-block-new" onclick="location.href = '/product/view/<?php echo $product->getId(); ?>';">
-                            <p class="card-title"><?= $product->getName(); ?></p>
-                        </div>
                     </div>
-                </div>
-                </div>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -89,49 +63,30 @@
         <div>
             <h2 class="home-content-title">New on Infini Shop</h2>
             <div class="clearfix">
-            <?php foreach ($newProducts as $product) : ?>
-               
-            
-                <div class="col-sm-2 sm-2">
-                    <div class="card">
-                        <img class="card-img-top img-responsive" src="<?= $this->basePath($product->getImage()) ?>" alt="Card image cap">
-                        <div class="card-block sm card-block-new" onclick="location.href = '/product/view/<?php echo $product->getId(); ?>';">
-                            <p class="card-title"><?= $product->getName(); ?></p>
+                <?php foreach ($newProducts as $product) : ?>
+                    <div class="col-sm-2 sm-2">
+                        <div class="card">
+                            <?php if ($product->getCurrentSale() > 0) { ?>
+                                <div class="badge badge-sale">Sale</div>
+                            <?php }; ?>
+                            <img class="card-img-top img-responsive" src="<?= $this->basePath($product->getImage()) ?>"
+                                 onclick="location.href = '/product/view/<?php echo $product->getId(); ?>';">
+                            <div class="card-block sm card-block-new"
+                                 onclick="location.href = '/product/view/<?php echo $product->getId(); ?>';">
+                                <p class="card-title"><?= $product->getName(); ?></p>
+                                <div class="clearfix">
+                                <span class="card-shop-name pull-left">
+                                    <a href="/category/view/<?php echo $product->getCategory()->getId(); ?>">
+                                        <?php echo $product->getCategory()->getName(); ?>
+                                    </a>
+                                </span>
+                                    <span class="card-price pull-right">$<?= $product->getCurrentPrice() ?></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            <?php endforeach; ?>   
-
+                <?php endforeach; ?>
             </div>
-        </div>
-
-        <div class="text-center more mt30">
-            <a href="">See More <i class="fa fa-chevron-right"></i></a>
-        </div>
-
-
-    </div>
-    <div class="safebanner clearfix text-center">
-        <div class="col-sm-2">
-            <img src="app/img/sell11.png" />
-        </div>
-        <div class="col-sm-8">
-            <h2 class="home-banner-title">keeps you safe</h2>
-            <div class="col-sm-4"><h4 class="home-sm-title white">Trust worth seller</h4>
-                <p>Whether you use a credit card, a bank transfer or Paypal, we make it our top priority to keep
-                    your payment information encrypted and secure.
-                    <a href="#" class="link">Find out more</a></p></div>
-            <div class="col-sm-4"><h4 class="home-sm-title white">Trust worth seller</h4>
-                <p>Whether you use a credit card, a bank transfer or Paypal, we make it our top priority to keep
-                    your payment information encrypted and secure.
-                    <a href="#" class="link">Find out more</a></p></div>
-            <div class="col-sm-4"><h4 class="home-sm-title white">Trust worth seller</h4>
-                <p>Whether you use a credit card, a bank transfer or Paypal, we make it our top priority to keep
-                    your payment information encrypted and secure.
-                    <a href="#" class="link">Find out more</a></p></div>
-        </div>
-        <div class="col-sm-2">
-            <img src="app/img/sell22.png" />
         </div>
     </div>
 </div>

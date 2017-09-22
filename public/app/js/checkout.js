@@ -21,9 +21,7 @@ $(function () {
         },
         mounted: function () {
             this.fetchShipAddress();
-            this.selected_state = this.ship_add.province;
-            this.selectState();
-            this.selected_dist = this.ship_add.dist;
+            this.fetchProvince();
         },
         methods: {
             fetchShipAddress: function () {
@@ -35,13 +33,16 @@ $(function () {
 
                             if (this.ship_add.province) {
                                 this.selected_state = this.ship_add.province;
-                                this.districts = address_data[this.selected_state];
+                                this.selectState();
                             }
 
                             this.selected_dist = this.ship_add.district ? this.ship_add.district : '';
                         } else {
                             this.login = false;
                         }
+                        this.selected_state = this.ship_add.province;
+                        this.selectState();
+                        this.selected_dist = this.ship_add.dist;
                     })
                     .catch(err => {
                     });
@@ -68,6 +69,7 @@ $(function () {
                 axios.post('/cart/checkout', data)
                     .then(res => {
                         // show success page
+                        console.log(res.data);
                         if (res.data.status === 'ok') {
                             this.success = true;
                             this.order_id = res.data.order_id;
