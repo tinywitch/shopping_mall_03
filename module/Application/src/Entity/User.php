@@ -356,4 +356,17 @@ class User
     {
         $this->dateCreated = $date;
     }
+
+    public function getData()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'role' => $this->role,
+            'phone' => $this->phone,
+            'status' => $this->status,
+            'email' => $this->email,
+            'address' => $this->address,
+        ];
+    }
 }

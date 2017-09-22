@@ -195,6 +195,16 @@ return [
                     ]
                 ]
             ],
+            'getCurrentUser' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/getCurrentUser',
+                    'defaults' => [
+                        'controller' => Controller\UserController::class,
+                        'action' => 'getCurrentUser',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
