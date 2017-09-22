@@ -4,6 +4,7 @@ namespace Application\Service;
 use Application\Entity\User;
 use Application\Entity\District;
 use Application\Entity\Address;
+use Message\Entity\Chatroom;
 use Zend\Crypt\Password\Bcrypt;
 use Zend\Math\Rand;
 use Zend\Session\Container;
@@ -29,6 +30,21 @@ class UserManager
     {
         $this->entityManager = $entityManager;
         $this->sessionContainer = new Container('UserLogin');
+    }
+
+    public function currentUser()
+    {
+        if ($this->isLogin())
+        {
+            $user = $this->entityManager
+                ->getRepository(User::class)
+                ->find($this->sessionContainer->id);
+            return $user;
+        }
+        else
+        {
+            return null;
+        }
     }
 
 
@@ -72,7 +88,14 @@ class UserManager
         
         // Apply changes to database.
         $this->entityManager->flush();
-        
+
+        $chatroom = new Chatroom();
+        $chatroom->setId($user->getId());
+        $chatroom->setInitor(1);
+        $chatroom->setUser($user->getId());
+        $this->entityManager->persist($chatroom);
+        $this->entityManager->flush();
+
         return $user;
     }
     

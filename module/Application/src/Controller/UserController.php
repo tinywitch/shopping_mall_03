@@ -416,4 +416,29 @@ class UserController extends AbstractActionController
         $this->layout('application/layout');
         return $view;
     }
+
+    public function getCurrentUserAction()
+    {
+        if ($this->userManager->isLogin())
+        {
+            $user = $this->userManager->currentUser();
+            $response = $this->getResponse();
+            $response->setContent(json_encode(
+                [
+                    'current_user' => $user->getData(),
+                    'status' => 1
+            ]));
+            return $response;
+        }
+        else
+        {
+            $response = $this->getResponse();
+            $response->setContent(json_encode(
+                [
+                    'status' => 0
+                ]));
+            return $response;
+        }
+
+    }
 }
